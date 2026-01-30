@@ -118,7 +118,7 @@ export function ShareResults({ result, grossIncome }: ShareResultsProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-blue-100 hover:text-white hover:bg-blue-700/50"
+          className="text-emerald-100 hover:text-white hover:bg-emerald-700/50"
         >
           <Share2 className="h-4 w-4 mr-2" />
           Share
@@ -128,7 +128,7 @@ export function ShareResults({ result, grossIncome }: ShareResultsProps) {
         <DropdownMenuItem onClick={handleCopy} className="cursor-pointer">
           {copied ? (
             <>
-              <Check className="h-4 w-4 mr-2 text-blue-600" />
+              <Check className="h-4 w-4 mr-2 text-emerald-600" />
               Copied!
             </>
           ) : (

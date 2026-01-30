@@ -259,15 +259,15 @@ export function NetToGrossCalculator() {
               </div>
               <div className="flex justify-between py-2 font-semibold">
                 <span className="text-foreground">Take-Home Pay</span>
-                <span className="text-blue-600">{formatCurrency(result.yearly.takeHomePay, 0)}</span>
+                <span className="text-emerald-600">{formatCurrency(result.yearly.takeHomePay, 0)}</span>
               </div>
             </div>
 
             {/* Monthly breakdown */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-blue-600/10 dark:bg-blue-500/10 p-4 ring-1 ring-blue-600/20 dark:ring-blue-500/20 text-center">
+              <div className="rounded-xl bg-emerald-600/10 dark:bg-emerald-500/10 p-4 ring-1 ring-emerald-600/20 dark:ring-emerald-500/20 text-center">
                 <div className="text-xs text-muted-foreground mb-1">Monthly Net</div>
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(result.monthly.takeHomePay)}
                 </div>
               </div>

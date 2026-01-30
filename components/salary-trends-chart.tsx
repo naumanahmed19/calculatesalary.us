@@ -36,12 +36,12 @@ export function SalaryTrendsChart({ jobTitle, trends }: SalaryTrendsChartProps) 
   const totalGrowth = latestYear.average - oldestYear.average
   const annualGrowthRate = (Math.pow(latestYear.average / oldestYear.average, 1 / (trends.length - 1)) - 1) * 100
   
-  // Calculate inflation-adjusted (using approx UK inflation averages)
+  // Calculate inflation-adjusted (using approx US inflation averages)
   const inflationRates: Record<number, number> = {
-    2021: 2.5,
-    2022: 9.1,
-    2023: 7.3,
-    2024: 4.0,
+    2021: 7.0,
+    2022: 6.5,
+    2023: 3.4,
+    2024: 2.9,
     2025: 2.5,
   }
   
@@ -85,7 +85,7 @@ export function SalaryTrendsChart({ jobTitle, trends }: SalaryTrendsChartProps) 
                 axisLine={false}
               />
               <YAxis 
-                tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
+                tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                 tick={{ fontSize: 12 }}
                 tickLine={false}
                 axisLine={false}

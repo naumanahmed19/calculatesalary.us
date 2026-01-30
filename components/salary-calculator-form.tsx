@@ -250,7 +250,7 @@ export function SalaryCalculatorForm({
         </div>
 
         {/* Results Panel - Right */}
-        <div className="relative rounded-3xl bg-blue-600 dark:bg-blue-700 p-8 shadow-2xl sm:p-10 flex flex-col min-h-[600px]">
+        <div className="relative rounded-3xl bg-emerald-600 dark:bg-emerald-700 p-8 shadow-2xl sm:p-10 flex flex-col min-h-[600px]">
           <div className="flex items-center justify-between">
             <h3 className="text-base/7 font-semibold text-white">
               Take Home Pay
@@ -263,10 +263,10 @@ export function SalaryCalculatorForm({
 
           {/* Period Tabs */}
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'yearly' | 'monthly' | 'biweekly')} className="mt-4">
-            <TabsList className="grid w-full grid-cols-3 bg-blue-700/50">
-              <TabsTrigger value="yearly" className="text-blue-100 data-[state=active]:bg-white data-[state=active]:text-blue-700 text-xs">Yearly</TabsTrigger>
-              <TabsTrigger value="monthly" className="text-blue-100 data-[state=active]:bg-white data-[state=active]:text-blue-700 text-xs">Monthly</TabsTrigger>
-              <TabsTrigger value="biweekly" className="text-blue-100 data-[state=active]:bg-white data-[state=active]:text-blue-700 text-xs">Bi-weekly</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-emerald-700/50">
+              <TabsTrigger value="yearly" className="text-emerald-100 data-[state=active]:bg-white data-[state=active]:text-emerald-700 text-xs">Yearly</TabsTrigger>
+              <TabsTrigger value="monthly" className="text-emerald-100 data-[state=active]:bg-white data-[state=active]:text-emerald-700 text-xs">Monthly</TabsTrigger>
+              <TabsTrigger value="biweekly" className="text-emerald-100 data-[state=active]:bg-white data-[state=active]:text-emerald-700 text-xs">Bi-weekly</TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -275,19 +275,19 @@ export function SalaryCalculatorForm({
             <span className="text-5xl font-semibold tracking-tight text-white">
               {formatCurrency(currentBreakdown.takeHomePay)}
             </span>
-            <span className="text-base text-blue-100">
+            <span className="text-base text-emerald-100">
               /{activeTab === 'yearly' ? 'year' : activeTab === 'monthly' ? 'month' : '2 weeks'}
             </span>
           </p>
 
           {grossIncome > 0 && (
-            <p className="mt-2 text-sm text-blue-100">
+            <p className="mt-2 text-sm text-emerald-100">
               {((currentBreakdown.takeHomePay / (grossIncome / (activeTab === 'yearly' ? 1 : activeTab === 'monthly' ? 12 : 26))) * 100).toFixed(1)}% of gross income
             </p>
           )}
 
           {/* Breakdown List */}
-          <ul role="list" className="mt-8 space-y-3 text-sm/6 text-blue-50 sm:mt-10 flex-1">
+          <ul role="list" className="mt-8 space-y-3 text-sm/6 text-emerald-50 sm:mt-10 flex-1">
             <li className="flex justify-between gap-x-3">
               <span>Gross Income</span>
               <span className="font-medium text-white">{formatCurrency(grossIncome)}</span>
@@ -340,11 +340,11 @@ export function SalaryCalculatorForm({
           <div className="mt-8 pt-6 border-t border-blue-500/40 grid grid-cols-2 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold text-white">{result.yearly.effectiveTaxRate.toFixed(1)}%</p>
-              <p className="text-xs text-blue-100 mt-1">Effective Rate</p>
+              <p className="text-xs text-emerald-100 mt-1">Effective Rate</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-white">{result.yearly.marginalTaxRate}%</p>
-              <p className="text-xs text-blue-100 mt-1">Marginal Rate</p>
+              <p className="text-xs text-emerald-100 mt-1">Marginal Rate</p>
             </div>
           </div>
         </div>

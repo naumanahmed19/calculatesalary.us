@@ -60,7 +60,7 @@ export function USSalaryComparisonChart({ salary, formattedSalary }: { salary: n
         <h3 className="text-lg font-semibold text-foreground">
           {formattedSalary || formatCurrency(salary, 0)} vs US Wages
         </h3>
-        <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mt-1">{percentileText}</p>
+        <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium mt-1">{percentileText}</p>
       </div>
 
       <ChartContainer
@@ -95,7 +95,7 @@ export function USSalaryComparisonChart({ salary, formattedSalary }: { salary: n
                 return (
                   <div className="rounded-xl border bg-background p-3 shadow-lg">
                     <p className="font-semibold text-foreground">{data?.name}</p>
-                    <p className="text-blue-600 font-medium">{formatCurrency(data?.value, 0)}</p>
+                    <p className="text-emerald-600 font-medium">{formatCurrency(data?.value, 0)}</p>
                   </div>
                 )
               }}
@@ -110,8 +110,8 @@ export function USSalaryComparisonChart({ salary, formattedSalary }: { salary: n
       </ChartContainer>
 
       <div className="mt-6 grid grid-cols-2 gap-3">
-        <div className="text-center p-4 bg-blue-50 dark:bg-blue-950/30 rounded-2xl">
-          <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+        <div className="text-center p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-2xl">
+          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
             {Number(percentageVsMedian) > 0 ? '+' : ''}{percentageVsMedian}%
           </p>
           <p className="text-xs text-muted-foreground mt-1">vs US Median</p>
@@ -316,7 +316,7 @@ export function RetirementBenefitsChart({ salary, retirement401k, formattedSalar
                 return (
                   <div className="rounded-xl border bg-background p-3 shadow-lg">
                     <p className="font-semibold text-foreground">{formatCurrency(data?.amount, 0)} Contribution</p>
-                    <p className="text-blue-600">Tax Saved: {formatCurrency(data?.federalSavings, 0)}</p>
+                    <p className="text-emerald-600">Tax Saved: {formatCurrency(data?.federalSavings, 0)}</p>
                   </div>
                 )
               }}
@@ -331,11 +331,11 @@ export function RetirementBenefitsChart({ salary, retirement401k, formattedSalar
       </ChartContainer>
 
       {retirement401k > 0 && (
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-2xl">
+        <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-2xl">
           <h4 className="font-semibold text-sm text-foreground mb-3">Your Current 401(k) Benefits</h4>
           <div className="grid grid-cols-3 gap-3 text-center">
             <div>
-              <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{formatCurrency(currentSavings.totalSavings, 0)}</p>
+              <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{formatCurrency(currentSavings.totalSavings, 0)}</p>
               <p className="text-xs text-muted-foreground mt-1">Tax Saved</p>
             </div>
             <div>

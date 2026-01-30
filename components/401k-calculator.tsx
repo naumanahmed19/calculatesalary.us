@@ -273,22 +273,22 @@ export function Calculator401k() {
         </div>
 
         {/* Results Panel */}
-        <div className="relative rounded-3xl bg-blue-600 dark:bg-blue-700 p-8 shadow-2xl sm:p-10 flex flex-col">
+        <div className="relative rounded-3xl bg-emerald-600 dark:bg-emerald-700 p-8 shadow-2xl sm:p-10 flex flex-col">
           <h3 className="text-base/7 font-semibold text-white">
             {isRoth ? 'Roth' : 'Traditional'} 401(k) Summary
           </h3>
 
           {/* Main Stats */}
           <div className="mt-6 grid grid-cols-2 gap-4">
-            <div className="bg-blue-700/50 rounded-2xl p-4">
-              <PiggyBank className="h-5 w-5 text-blue-200 mb-2" />
+            <div className="bg-emerald-700/50 rounded-2xl p-4">
+              <PiggyBank className="h-5 w-5 text-emerald-200 mb-2" />
               <p className="text-2xl font-bold text-white">{formatCurrency(calculation.annualContribution, 0)}</p>
-              <p className="text-xs text-blue-200">Your Annual Contribution</p>
+              <p className="text-xs text-emerald-200">Your Annual Contribution</p>
             </div>
-            <div className="bg-blue-700/50 rounded-2xl p-4">
+            <div className="bg-emerald-700/50 rounded-2xl p-4">
               <DollarSign className="h-5 w-5 text-emerald-300 mb-2" />
               <p className="text-2xl font-bold text-emerald-300">{formatCurrency(calculation.employerMatch, 0)}</p>
-              <p className="text-xs text-blue-200">Employer Match</p>
+              <p className="text-xs text-emerald-200">Employer Match</p>
             </div>
           </div>
 
@@ -301,16 +301,16 @@ export function Calculator401k() {
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-blue-200">Federal Tax Saved</p>
+                  <p className="text-emerald-200">Federal Tax Saved</p>
                   <p className="text-lg font-bold text-emerald-300">{formatCurrency(calculation.federalTaxSavings, 0)}</p>
                 </div>
                 <div>
-                  <p className="text-blue-200">State Tax Saved (est.)</p>
+                  <p className="text-emerald-200">State Tax Saved (est.)</p>
                   <p className="text-lg font-bold text-emerald-300">{formatCurrency(calculation.stateTaxSavings, 0)}</p>
                 </div>
               </div>
               <div className="mt-3 pt-3 border-t border-emerald-500/30">
-                <p className="text-blue-200">Effective Cost After Tax Savings</p>
+                <p className="text-emerald-200">Effective Cost After Tax Savings</p>
                 <p className="text-xl font-bold text-white">{formatCurrency(calculation.effectiveCost, 0)}/year</p>
               </div>
             </div>
@@ -319,7 +319,7 @@ export function Calculator401k() {
           {/* Projected Growth */}
           <div className="mt-6">
             <div className="flex items-center gap-2 mb-3">
-              <TrendingUp className="h-5 w-5 text-blue-200" />
+              <TrendingUp className="h-5 w-5 text-emerald-200" />
               <span className="font-semibold text-white">Projected Balance</span>
             </div>
             <div className="space-y-2">
@@ -330,12 +330,12 @@ export function Calculator401k() {
                 { years: 30, value: calculation.projectedBalance30Years },
               ].map(({ years, value }) => (
                 <div key={years} className="flex justify-between items-center">
-                  <span className="text-blue-200">{years} years</span>
+                  <span className="text-emerald-200">{years} years</span>
                   <span className="font-bold text-white">{formatCurrency(value, 0)}</span>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-blue-300 mt-3">
+            <p className="text-xs text-emerald-300 mt-3">
               Based on {expectedReturn}% annual return, {formatCurrency(calculation.totalAnnualSavings, 0)}/year total contributions
             </p>
           </div>
@@ -345,11 +345,11 @@ export function Calculator401k() {
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
                 <p className="text-2xl font-bold text-white">{formatCurrency(calculation.monthlyContribution, 0)}</p>
-                <p className="text-xs text-blue-200">Per Month</p>
+                <p className="text-xs text-emerald-200">Per Month</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{formatCurrency(calculation.perPaycheckContribution, 0)}</p>
-                <p className="text-xs text-blue-200">Per Paycheck (bi-weekly)</p>
+                <p className="text-xs text-emerald-200">Per Paycheck (bi-weekly)</p>
               </div>
             </div>
           </div>

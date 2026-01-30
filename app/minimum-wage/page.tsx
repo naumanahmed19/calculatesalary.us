@@ -40,14 +40,14 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 const appSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Minimum Wage Calculator',
-  description: `Calculate earnings on National Minimum Wage for ${TAX_YEAR}`,
+  name: 'US Minimum Wage Calculator',
+  description: `Calculate earnings on Federal and State Minimum Wage for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -57,42 +57,42 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'What is the National Living Wage for 2025/26?',
+      name: 'What is the Federal Minimum Wage for 2025?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The National Living Wage from April 2025 is £12.21 per hour for workers aged 23 and over. This applies to the 2025/26 tax year. Workers aged 21-22 also receive £12.21 per hour.',
+        text: 'The Federal Minimum Wage remains at $7.25 per hour, which has been the rate since 2009. However, many states have higher minimum wages, and some cities have even higher local minimums.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the difference between National Minimum Wage and National Living Wage?',
+      name: 'Which states have the highest minimum wage?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The National Living Wage (NLW) is the minimum rate for workers aged 23 and over (£12.21/hour). The National Minimum Wage (NMW) applies to younger workers: 21-22 (£12.21), 18-20 (£10.00), under 18 (£7.55), and apprentices (£7.55).',
+        text: 'Washington state has the highest statewide minimum wage at $16.66/hour. California is at $16.50/hour, and New York varies by region from $15.00 to $16.50/hour. Some cities like Seattle and San Francisco have even higher local minimums.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How much is the apprentice minimum wage?',
+      name: 'What is the tipped minimum wage?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The apprentice minimum wage is £7.55 per hour for 2025/26. This applies to apprentices under 19, or apprentices 19+ in their first year of apprenticeship. After the first year, apprentices 19+ move to the age-appropriate NMW rate.',
+        text: 'The federal tipped minimum wage is $2.13/hour for employees who regularly receive more than $30/month in tips. Employers must ensure total earnings (wages + tips) equal at least the regular minimum wage. Many states require higher tipped wages or the full minimum wage for tipped workers.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the annual salary on National Living Wage?',
+      name: 'What is the annual salary on federal minimum wage?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Working 37.5 hours per week at £12.21/hour (National Living Wage), your annual gross salary is £23,809. After tax and National Insurance, take-home pay is approximately £20,800 per year or £1,733 per month.',
+        text: 'Working 40 hours per week at $7.25/hour (Federal Minimum Wage), your annual gross salary is $15,080. After federal and state taxes, take-home pay varies by state but is typically around $13,500-$14,500 per year.',
       },
     },
     {
       '@type': 'Question',
-      name: 'When does the minimum wage increase?',
+      name: 'When do minimum wage increases take effect?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'UK minimum wage rates are reviewed annually and typically increase each April. The Low Pay Commission recommends new rates to the government, who then confirm the increases. The April 2025 rates apply from 1 April 2025.',
+        text: 'The federal minimum wage requires an act of Congress to change. State minimum wages typically increase on January 1st of each year, with some states having automatic cost-of-living adjustments. Check your specific state for scheduled increases.',
       },
     },
   ],
@@ -124,11 +124,11 @@ export default function MinimumWagePage() {
                 {TAX_YEAR} Tax Year
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Minimum Wage Calculator
+                US Minimum Wage Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Calculate your annual salary and take-home pay on National Minimum Wage or 
-                National Living Wage. See earnings by age and hours worked.
+                Calculate your annual salary and take-home pay on Federal or State Minimum Wage.
+                See earnings by state and hours worked.
               </p>
             </div>
           </div>
@@ -146,54 +146,66 @@ export default function MinimumWagePage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
-                UK Minimum Wage Rates {TAX_YEAR}
+                Minimum Wage Rates by State {TAX_YEAR}
               </h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="py-3 px-4 font-semibold text-foreground">Age Group</th>
-                      <th className="py-3 px-4 font-semibold text-foreground">Rate Type</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">State</th>
                       <th className="py-3 px-4 font-semibold text-foreground">Hourly Rate</th>
-                      <th className="py-3 px-4 font-semibold text-foreground">Annual (37.5h/week)</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">Annual (40h/week)</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">Notes</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground font-medium">23 and over</td>
-                      <td className="py-3 px-4 text-muted-foreground">National Living Wage</td>
-                      <td className="py-3 px-4 text-accent font-bold">£12.21</td>
-                      <td className="py-3 px-4 text-foreground">£23,809</td>
+                    <tr className="border-b border-border/50 bg-muted/30">
+                      <td className="py-3 px-4 text-foreground font-medium">Federal</td>
+                      <td className="py-3 px-4 text-accent font-bold">$7.25</td>
+                      <td className="py-3 px-4 text-foreground">$15,080</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">Applies if state has no higher rate</td>
                     </tr>
                     <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground font-medium">21 to 22</td>
-                      <td className="py-3 px-4 text-muted-foreground">National Minimum Wage</td>
-                      <td className="py-3 px-4 text-accent font-bold">£12.21</td>
-                      <td className="py-3 px-4 text-foreground">£23,809</td>
+                      <td className="py-3 px-4 text-foreground font-medium">Washington</td>
+                      <td className="py-3 px-4 text-accent font-bold">$16.66</td>
+                      <td className="py-3 px-4 text-foreground">$34,653</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">Highest statewide rate</td>
                     </tr>
                     <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground font-medium">18 to 20</td>
-                      <td className="py-3 px-4 text-muted-foreground">National Minimum Wage</td>
-                      <td className="py-3 px-4 text-accent font-bold">£10.00</td>
-                      <td className="py-3 px-4 text-foreground">£19,500</td>
+                      <td className="py-3 px-4 text-foreground font-medium">California</td>
+                      <td className="py-3 px-4 text-accent font-bold">$16.50</td>
+                      <td className="py-3 px-4 text-foreground">$34,320</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">Some cities higher</td>
                     </tr>
                     <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground font-medium">Under 18</td>
-                      <td className="py-3 px-4 text-muted-foreground">National Minimum Wage</td>
-                      <td className="py-3 px-4 text-accent font-bold">£7.55</td>
-                      <td className="py-3 px-4 text-foreground">£14,723</td>
+                      <td className="py-3 px-4 text-foreground font-medium">New York</td>
+                      <td className="py-3 px-4 text-accent font-bold">$15.00-$16.50</td>
+                      <td className="py-3 px-4 text-foreground">$31,200-$34,320</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">Varies by region</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-4 text-foreground font-medium">Massachusetts</td>
+                      <td className="py-3 px-4 text-accent font-bold">$15.00</td>
+                      <td className="py-3 px-4 text-foreground">$31,200</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">-</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-4 text-foreground font-medium">Florida</td>
+                      <td className="py-3 px-4 text-accent font-bold">$13.00</td>
+                      <td className="py-3 px-4 text-foreground">$27,040</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">Increasing annually</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 text-foreground font-medium">Apprentice</td>
-                      <td className="py-3 px-4 text-muted-foreground">Apprentice Rate</td>
-                      <td className="py-3 px-4 text-accent font-bold">£7.55</td>
-                      <td className="py-3 px-4 text-foreground">£14,723</td>
+                      <td className="py-3 px-4 text-foreground font-medium">Texas</td>
+                      <td className="py-3 px-4 text-accent font-bold">$7.25</td>
+                      <td className="py-3 px-4 text-foreground">$15,080</td>
+                      <td className="py-3 px-4 text-muted-foreground text-sm">Federal rate applies</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <p className="text-sm text-muted-foreground mt-4 text-center">
-                Rates effective from April 2025. Annual salary calculated at 37.5 hours per week, 52 weeks per year.
+                Annual salary calculated at 40 hours per week, 52 weeks per year. Rates as of January 2025.
               </p>
             </div>
           </div>

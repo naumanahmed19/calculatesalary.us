@@ -34,14 +34,14 @@ export const metadata: Metadata = {
 const calcSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Net to Gross Calculator UK',
+  name: 'Net to Gross Calculator US',
   description: `Reverse tax calculator - find gross salary from desired net pay for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -54,15 +54,15 @@ const faqSchema = {
       name: 'How do I calculate gross salary from net pay?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'To calculate gross from net, you need to work backwards through the tax system. Our calculator uses an iterative approach to find the exact gross salary that, after Income Tax and National Insurance deductions, equals your desired take-home pay.',
+        text: 'To calculate gross from net, you need to work backwards through the tax system. Our calculator uses an iterative approach to find the exact gross salary that, after Federal taxes, State taxes, Social Security, and Medicare deductions, equals your desired take-home pay.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What gross salary do I need for £2,500 net per month?',
+      name: 'What gross salary do I need for $4,000 net per month?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'To take home £2,500 per month (£30,000 per year), you need a gross salary of approximately £38,000-£39,000 depending on your tax situation. This accounts for Income Tax and National Insurance deductions.',
+        text: 'To take home $4,000 per month ($48,000 per year), you need a gross salary of approximately $60,000-$65,000 depending on your state and filing status. This accounts for Federal Income Tax, State Income Tax, Social Security, and Medicare deductions.',
       },
     },
     {
@@ -70,28 +70,28 @@ const faqSchema = {
       name: 'Why is there no simple formula for net to gross?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The UK tax system has multiple thresholds (Personal Allowance, Basic Rate, Higher Rate, Additional Rate) and the Personal Allowance tapers above £100k. National Insurance also has different rates at different levels. This makes a simple formula impossible - iterative calculation is required.',
+        text: 'The US tax system has multiple progressive federal tax brackets (10%, 12%, 22%, 24%, 32%, 35%, 37%), plus FICA taxes at different rates, and varying state taxes. This complexity makes a simple formula impossible - iterative calculation is required.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What gross salary gives £40,000 take-home pay?',
+      name: 'What gross salary gives $60,000 take-home pay?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'To achieve £40,000 annual take-home pay in the UK, you need a gross salary of approximately £53,000-£54,000. At this level, you\'re in the Higher Rate tax band (40%) for some of your income.',
+        text: 'To achieve $60,000 annual take-home pay in the US, you typically need a gross salary of approximately $78,000-$85,000 depending on your state. States with no income tax (like Texas or Florida) require lower gross salaries than high-tax states like California.',
       },
     },
   ],
 }
 
-// Common net salary targets with their approximate gross
+// Common net salary targets with their approximate gross (federal only, no state tax)
 const COMMON_TARGETS = [
-  { net: 2000, label: '£2,000/mo', gross: 29500 },
-  { net: 2500, label: '£2,500/mo', gross: 38500 },
-  { net: 3000, label: '£3,000/mo', gross: 47500 },
-  { net: 3500, label: '£3,500/mo', gross: 58000 },
-  { net: 4000, label: '£4,000/mo', gross: 70000 },
-  { net: 5000, label: '£5,000/mo', gross: 95000 },
+  { net: 3000, label: '$3,000/mo', gross: 45000 },
+  { net: 4000, label: '$4,000/mo', gross: 60000 },
+  { net: 5000, label: '$5,000/mo', gross: 75000 },
+  { net: 6000, label: '$6,000/mo', gross: 92000 },
+  { net: 7500, label: '$7,500/mo', gross: 120000 },
+  { net: 10000, label: '$10,000/mo', gross: 165000 },
 ]
 
 export default function NetToGrossPage() {
@@ -145,7 +145,7 @@ export default function NetToGrossPage() {
                 Common Take-Home Pay Targets
               </h2>
               <p className="text-muted-foreground text-center mb-8">
-                Quick reference for popular monthly take-home amounts
+                Quick reference for popular monthly take-home amounts (federal taxes only)
               </p>
 
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -168,7 +168,7 @@ export default function NetToGrossPage() {
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mt-6 text-center">
-                Values are approximate. Actual amounts depend on pension contributions, student loans, and other deductions.
+                Values are approximate for single filer, no state tax. Actual amounts depend on filing status, state taxes, and 401(k) contributions.
               </p>
             </div>
           </div>
@@ -187,15 +187,15 @@ export default function NetToGrossPage() {
                   <h3 className="font-semibold text-foreground mb-3">Why It's Complex</h3>
                   <p className="text-sm text-muted-foreground">
                     Unlike gross-to-net which is straightforward, net-to-gross requires reverse
-                    engineering multiple tax thresholds:
+                    engineering multiple tax brackets and deductions:
                   </p>
                   <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                    <li>• Personal Allowance (£12,570)</li>
-                    <li>• Basic Rate band (20%)</li>
-                    <li>• Higher Rate band (40%)</li>
-                    <li>• Additional Rate (45%)</li>
-                    <li>• National Insurance thresholds</li>
-                    <li>• Personal Allowance taper above £100k</li>
+                    <li>• Standard Deduction ($15,000 single)</li>
+                    <li>• 7 Federal Tax Brackets (10%-37%)</li>
+                    <li>• Social Security (6.2% up to $176,100)</li>
+                    <li>• Medicare (1.45% + 0.9% over $200k)</li>
+                    <li>• State Income Tax (varies 0%-13.3%)</li>
+                    <li>• Pre-tax deductions (401k, health)</li>
                   </ul>
                 </div>
 
@@ -211,8 +211,8 @@ export default function NetToGrossPage() {
                     <li>Repeat until we find the exact match</li>
                   </ol>
                   <p className="mt-3 text-sm text-muted-foreground">
-                    This ensures accuracy across all tax bands, including the complex
-                    60% effective rate zone between £100k-£125k.
+                    This ensures accuracy across all tax brackets, including state variations
+                    and FICA wage bases.
                   </p>
                 </div>
               </div>
@@ -266,7 +266,7 @@ export default function NetToGrossPage() {
                 <div className="rounded-xl bg-card/60 dark:bg-card/40 p-5 ring-1 ring-border/50">
                   <div className="font-medium text-foreground mb-2">Contract Rates</div>
                   <p className="text-sm text-muted-foreground">
-                    Calculate equivalent day rates for contractors vs permanent salary equivalents.
+                    Calculate equivalent hourly rates for contractors vs permanent salary equivalents.
                   </p>
                 </div>
                 <div className="rounded-xl bg-card/60 dark:bg-card/40 p-5 ring-1 ring-border/50">

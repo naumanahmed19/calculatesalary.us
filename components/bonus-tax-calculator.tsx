@@ -216,45 +216,45 @@ export function BonusTaxCalculator({
         </div>
 
         {/* Results Panel */}
-        <div className="rounded-3xl bg-blue-600 dark:bg-blue-700 p-8 ring-1 ring-blue-500/20 sm:p-10 sm:mx-8 lg:mx-0 flex flex-col">
+        <div className="rounded-3xl bg-emerald-600 dark:bg-emerald-700 p-8 ring-1 ring-emerald-500/20 sm:p-10 sm:mx-8 lg:mx-0 flex flex-col">
           <h3 className="text-base/7 font-semibold text-white flex items-center gap-2">
             <Calculator className="h-5 w-5" />
             Bonus After Tax
           </h3>
-          <p className="mt-2 text-sm text-blue-200">
+          <p className="mt-2 text-sm text-emerald-200">
             Your bonus breakdown for {TAX_YEAR}
           </p>
 
           <div className="mt-6">
             <div className="text-center py-4">
-              <p className="text-sm text-blue-200">Net Bonus (Actual Tax)</p>
+              <p className="text-sm text-emerald-200">Net Bonus (Actual Tax)</p>
               <p className="text-4xl font-bold text-white mt-2">
                 {formatCurrency(calculation.netBonusActual, 0)}
               </p>
-              <p className="text-sm mt-2 text-blue-200">
+              <p className="text-sm mt-2 text-emerald-200">
                 From {formatCurrency(calculation.bonusAmount, 0)} gross bonus
               </p>
             </div>
 
             <div className="mt-6 space-y-3">
               <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
-                <span className="text-sm text-blue-200">Gross Bonus</span>
+                <span className="text-sm text-emerald-200">Gross Bonus</span>
                 <span className="font-semibold text-white">{formatCurrency(calculation.bonusAmount, 0)}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
-                <span className="text-sm text-blue-200">Federal Tax</span>
+                <span className="text-sm text-emerald-200">Federal Tax</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualFederalTax, 0)}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
-                <span className="text-sm text-blue-200">State Tax</span>
+                <span className="text-sm text-emerald-200">State Tax</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualStateTax, 0)}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
-                <span className="text-sm text-blue-200">Social Security</span>
+                <span className="text-sm text-emerald-200">Social Security</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualSocialSecurity, 0)}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
-                <span className="text-sm text-blue-200">Medicare</span>
+                <span className="text-sm text-emerald-200">Medicare</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualMedicare, 0)}</span>
               </div>
               <div className="flex justify-between items-center py-2 pt-3">
@@ -267,11 +267,11 @@ export function BonusTaxCalculator({
           <div className="mt-6 pt-4 border-t border-blue-500/40">
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
-                <p className="text-xs text-blue-200">Effective Tax Rate</p>
+                <p className="text-xs text-emerald-200">Effective Tax Rate</p>
                 <p className="text-xl font-bold text-white">{calculation.effectiveBonusTaxRate.toFixed(1)}%</p>
               </div>
               <div>
-                <p className="text-xs text-blue-200">Marginal Rate</p>
+                <p className="text-xs text-emerald-200">Marginal Rate</p>
                 <p className="text-xl font-bold text-white">{calculation.marginalRate}%</p>
               </div>
             </div>

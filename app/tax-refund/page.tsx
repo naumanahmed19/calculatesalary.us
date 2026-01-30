@@ -35,14 +35,14 @@ export const metadata: Metadata = {
 const taxRefundSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Tax Refund Calculator',
-  description: `Check if you're owed a tax refund from HMRC for ${TAX_YEAR}`,
+  name: 'US Tax Refund Calculator',
+  description: `Check if you're owed a tax refund from the IRS for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -55,23 +55,23 @@ const faqSchema = {
       name: 'How do I know if I\'m owed a tax refund?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'You may be owed a refund if: you were on the wrong tax code, you have unclaimed work expenses (uniforms, tools, professional fees), you worked from home, you paid into a pension without claiming higher rate relief, or you left a job part way through the year.',
+        text: 'You may be owed a refund if: you had too much withheld from your paycheck (check your W-4), you qualify for refundable credits like EITC or Child Tax Credit, you had significant deductions (mortgage interest, student loans, medical expenses), or you overpaid estimated taxes.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How far back can I claim a tax refund UK?',
+      name: 'How long does the IRS take to process a tax refund?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'You can claim tax refunds for the last 4 complete tax years. For example, in 2025/26 you can claim back to 2021/22. Claims older than 4 years are generally not accepted.',
+        text: 'The IRS typically processes e-filed returns in 21 days or less. Paper returns can take 6-8 weeks. You can check your refund status using the "Where\'s My Refund?" tool on IRS.gov or the IRS2Go mobile app.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How long does HMRC take to process a tax refund?',
+      name: 'What is the average tax refund in the US?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'HMRC typically processes tax refunds within 5 days for online claims. Paper claims can take up to 6 weeks. Refunds are paid by cheque or directly to your bank account.',
+        text: 'The average federal tax refund is approximately $3,000. However, this varies widely based on income, withholding elections, filing status, and eligible credits and deductions.',
       },
     },
   ],
@@ -112,11 +112,11 @@ export default function TaxRefundPage() {
                 {TAX_YEAR} Tax Year
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Tax Refund Calculator
+                US Tax Refund Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Check if HMRC owes you money. Many people overpay tax due to wrong tax codes,
-                unclaimed expenses, or missed reliefs.
+                Check if the IRS owes you money. Many people overpay taxes due to incorrect W-4
+                withholdings or unclaimed credits and deductions.
               </p>
             </div>
           </div>
@@ -142,34 +142,38 @@ export default function TaxRefundPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                  <h3 className="font-semibold text-foreground mb-2">Wrong Tax Code</h3>
+                  <h3 className="font-semibold text-foreground mb-2">Overwithholding</h3>
                   <p className="text-sm text-muted-foreground">
-                    If you&apos;re on an emergency tax code (like BR or 0T) instead of 1257L,
-                    you could be overpaying by hundreds or thousands of pounds.
+                    If your W-4 is set to withhold too much, you&apos;ll get a refund but you&apos;re
+                    essentially giving the IRS an interest-free loan. Consider adjusting your W-4
+                    for larger paychecks instead.
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                  <h3 className="font-semibold text-foreground mb-2">Work From Home</h3>
+                  <h3 className="font-semibold text-foreground mb-2">Earned Income Tax Credit</h3>
                   <p className="text-sm text-muted-foreground">
-                    If your employer required you to work from home, you can claim £6/week
-                    (£312/year) tax relief, worth £62-£140 depending on your tax rate.
+                    The EITC is a refundable credit worth up to $7,430 for low-to-moderate income
+                    workers. It&apos;s especially valuable for families with children and can result
+                    in a significant refund.
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                  <h3 className="font-semibold text-foreground mb-2">Uniform & Tools</h3>
+                  <h3 className="font-semibold text-foreground mb-2">Child Tax Credit</h3>
                   <p className="text-sm text-muted-foreground">
-                    If you wash your own work uniform or buy tools for work, you can claim
-                    a flat rate allowance of £60-£140 per year depending on your job.
+                    The Child Tax Credit is worth up to $2,000 per qualifying child, with up to
+                    $1,700 refundable as the Additional Child Tax Credit. This can significantly
+                    increase your refund.
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                  <h3 className="font-semibold text-foreground mb-2">Professional Subscriptions</h3>
+                  <h3 className="font-semibold text-foreground mb-2">Deductions & Adjustments</h3>
                   <p className="text-sm text-muted-foreground">
-                    Subscriptions to HMRC-approved professional bodies (like CIMA, RICS, BMA)
-                    are tax deductible if required for your job.
+                    Student loan interest, retirement contributions (Traditional IRA/401k), HSA
+                    contributions, and itemized deductions (mortgage interest, state taxes, charity)
+                    can all reduce your tax bill.
                   </p>
                 </div>
               </div>
@@ -182,32 +186,29 @@ export default function TaxRefundPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto space-y-6">
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">How to Claim Your Refund</h3>
+                <h3 className="font-semibold text-foreground mb-3">How to Get Your Refund</h3>
                 <p className="text-sm text-muted-foreground">
-                  For PAYE employees, you can claim many refunds through HMRC&apos;s online portal
-                  without needing a Self Assessment. For larger claims or multiple sources of income,
-                  you may need to file a Self Assessment tax return.
+                  File your federal tax return (Form 1040) by April 15th to claim your refund.
+                  E-file with direct deposit is the fastest way - most refunds arrive within 21 days.
+                  You can file free through IRS Free File if your income is under $79,000.
                 </p>
               </div>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">Avoid Tax Refund Companies</h3>
+                <h3 className="font-semibold text-foreground mb-3">Check Your Refund Status</h3>
                 <p className="text-sm text-muted-foreground">
-                  Be cautious of companies offering to claim refunds for you. They often charge
-                  20-50% of your refund as fees. You can claim directly from HMRC for free
-                  using forms P87 (expenses) or P50 (overpaid tax).
+                  Track your refund using the IRS "Where&apos;s My Refund?" tool at IRS.gov or the
+                  IRS2Go mobile app. You&apos;ll need your Social Security number, filing status,
+                  and exact refund amount.
                 </p>
               </div>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">Check Your Tax Code</h3>
+                <h3 className="font-semibold text-foreground mb-3">Optimize Your Withholding</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your tax code is shown on your payslip. The standard code 1257L means you get
-                  £12,570 tax-free. If yours is different, use our{' '}
-                  <Link href="/tax-code-checker" className="text-accent hover:underline">
-                    tax code checker
-                  </Link>{' '}
-                  to see what it means.
+                  Use the IRS Tax Withholding Estimator to check if your W-4 is set correctly.
+                  Ideally, you want minimal refund or tax owed - a large refund means you
+                  could have had that money throughout the year instead.
                 </p>
               </div>
             </div>

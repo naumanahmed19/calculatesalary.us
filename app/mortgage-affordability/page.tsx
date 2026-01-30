@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     'how much mortgage can i get',
     'mortgage based on salary',
     'house affordability calculator',
+    'dti calculator',
     TAX_YEAR,
   ],
   openGraph: {
@@ -31,20 +32,20 @@ export const metadata: Metadata = {
 }
 
 // Common salary amounts for mortgage calculations
-const COMMON_SALARIES = [30000, 40000, 50000, 60000, 75000, 100000]
+const COMMON_SALARIES = [50000, 75000, 100000, 125000, 150000, 200000]
 
 // Structured data for SEO
 const mortgageCalcSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Mortgage Affordability Calculator',
+  name: 'US Mortgage Affordability Calculator',
   description: `Calculate how much mortgage you can afford based on your salary for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -54,26 +55,26 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How much can I borrow for a mortgage in the UK?',
+      name: 'How much mortgage can I afford in the US?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Most UK lenders will offer between 4 to 4.5 times your annual salary. Some may go up to 5x for high earners with good credit. For a £50,000 salary, you could typically borrow £200,000-£225,000.',
+        text: 'US lenders typically use the 28/36 rule: your housing costs should not exceed 28% of gross monthly income, and total debt payments should not exceed 36%. For a $100,000 salary, you could typically afford a home around $350,000-$400,000 with 20% down.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What salary do I need for a £300,000 mortgage?',
+      name: 'What salary do I need for a $400,000 mortgage?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'At a 4.5x income multiple, you would need a salary of approximately £66,667 to borrow £300,000. With a partner, combined income of £66,667 would achieve this.',
+        text: 'To comfortably afford a $400,000 mortgage with current rates, you would need a household income of approximately $100,000-$120,000. This assumes a 20% down payment, good credit, and minimal other debts.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How much deposit do I need for a mortgage UK?',
+      name: 'How much down payment do I need for a house?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The minimum deposit is typically 5-10% of the property value. However, a 10-20% deposit will give you access to better interest rates. For a £250,000 home, you would need £12,500-£50,000.',
+        text: 'Conventional loans typically require 3-20% down. FHA loans require 3.5% with a 580+ credit score. VA loans and USDA loans offer 0% down for qualified buyers. A 20% down payment avoids PMI and gets better rates.',
       },
     },
   ],
@@ -114,11 +115,11 @@ export default function MortgageAffordabilityPage() {
                 {TAX_YEAR} Tax Year
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Mortgage Affordability Calculator
+                US Mortgage Affordability Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Find out how much you could borrow for a mortgage based on your salary,
-                deposit, and current interest rates.
+                Find out how much home you can afford based on your salary,
+                down payment, and current interest rates.
               </p>
             </div>
           </div>
@@ -139,10 +140,10 @@ export default function MortgageAffordabilityPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-foreground mb-4 text-center">
-                Mortgage Affordability by Salary
+                Home Affordability by Salary
               </h2>
               <p className="text-muted-foreground text-center mb-8">
-                How much you could borrow at different income levels
+                How much home you could afford at different income levels
               </p>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 overflow-hidden ring-1 ring-border/50">
@@ -150,18 +151,18 @@ export default function MortgageAffordabilityPage() {
                   <thead>
                     <tr className="border-b border-border/50 bg-muted/50">
                       <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Annual Salary</th>
-                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Can Borrow (4.5x)</th>
-                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground hidden sm:table-cell">With £25k Deposit</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Max Mortgage</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground hidden sm:table-cell">With 20% Down</th>
                       <th className="px-4 py-3 text-right text-sm font-semibold text-foreground hidden md:table-cell">Monthly Payment*</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/50">
                     {COMMON_SALARIES.map((salary) => {
-                      const borrowing = salary * 4.5
-                      const withDeposit = borrowing + 25000
-                      const monthlyRate = 4.5 / 100 / 12
-                      const numPayments = 25 * 12
-                      const monthlyPayment = borrowing * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+                      const maxMortgage = salary * 3.5 // Roughly 3.5x salary with 28% DTI
+                      const homePrice = maxMortgage / 0.8 // Assumes 20% down
+                      const monthlyRate = 6.5 / 100 / 12
+                      const numPayments = 30 * 12
+                      const monthlyPayment = maxMortgage * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
                                             (Math.pow(1 + monthlyRate, numPayments) - 1)
                       return (
                         <tr key={salary} className="hover:bg-muted/30">
@@ -171,10 +172,10 @@ export default function MortgageAffordabilityPage() {
                             </Link>
                           </td>
                           <td className="px-4 py-3 text-sm text-right font-semibold text-accent">
-                            {formatCurrency(borrowing, 0)}
+                            {formatCurrency(maxMortgage, 0)}
                           </td>
                           <td className="px-4 py-3 text-sm text-right text-muted-foreground hidden sm:table-cell">
-                            {formatCurrency(withDeposit, 0)}
+                            {formatCurrency(homePrice, 0)} home
                           </td>
                           <td className="px-4 py-3 text-sm text-right text-muted-foreground hidden md:table-cell">
                             {formatCurrency(monthlyPayment)}/mo
@@ -186,7 +187,7 @@ export default function MortgageAffordabilityPage() {
                 </table>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
-                * Monthly payment based on 4.5% interest rate over 25 years. Actual rates may vary.
+                * Monthly payment based on 6.5% interest rate over 30 years. Actual rates and affordability vary.
               </p>
             </div>
           </div>
@@ -199,27 +200,27 @@ export default function MortgageAffordabilityPage() {
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
                 <h3 className="font-semibold text-foreground mb-3">How Lenders Calculate Affordability</h3>
                 <p className="text-sm text-muted-foreground">
-                  UK mortgage lenders typically use income multiples of 4 to 4.5 times your annual salary.
-                  They also perform affordability assessments based on your outgoings, credit history,
-                  and ability to afford payments if interest rates rise. Higher earners may access 5x multiples.
+                  US mortgage lenders use debt-to-income (DTI) ratios. The 28/36 rule means housing costs
+                  (mortgage, taxes, insurance) should be under 28% of gross income, and total debt under 36%.
+                  Some lenders allow up to 43% DTI for qualified mortgages, or even higher for FHA loans.
                 </p>
               </div>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">Stamp Duty Considerations</h3>
+                <h3 className="font-semibold text-foreground mb-3">Down Payment Options</h3>
                 <p className="text-sm text-muted-foreground">
-                  Remember to factor in Stamp Duty Land Tax (SDLT) when budgeting. First-time buyers
-                  pay no stamp duty on the first £425,000 of properties up to £625,000. Standard buyers
-                  pay 0% up to £250,000, then increasing rates above this threshold.
+                  Conventional loans: 3-20% down (PMI required under 20%). FHA loans: 3.5% down with
+                  580+ credit score. VA loans: 0% down for veterans. USDA loans: 0% down in rural areas.
+                  A larger down payment means lower monthly payments and better rates.
                 </p>
               </div>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">Improving Your Borrowing Power</h3>
+                <h3 className="font-semibold text-foreground mb-3">Additional Costs to Consider</h3>
                 <p className="text-sm text-muted-foreground">
-                  To maximise your borrowing: save a larger deposit (better rates at 10%, 15%, 20% LTV),
-                  improve your credit score, reduce existing debts, and consider a longer mortgage term.
-                  Joint applications with a partner combine both incomes.
+                  Beyond the mortgage payment, budget for property taxes (varies by state), homeowners
+                  insurance, PMI (if under 20% down), HOA fees if applicable, and maintenance costs
+                  (typically 1-2% of home value annually).
                 </p>
               </div>
             </div>

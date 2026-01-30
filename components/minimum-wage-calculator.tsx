@@ -265,7 +265,7 @@ export function MinimumWageCalculator({
 
           <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Wallet className="h-5 w-5 text-blue-500" />
+              <Wallet className="h-5 w-5 text-emerald-500" />
               Take-Home Pay
             </h2>
 
@@ -300,7 +300,7 @@ export function MinimumWageCalculator({
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="text-muted-foreground font-medium">Annual take-home</span>
-                <span className="font-bold text-blue-600 dark:text-blue-400 text-lg">
+                <span className="font-bold text-emerald-600 dark:text-emerald-400 text-lg">
                   {formatCurrency(result.annualTakeHome)}
                 </span>
               </div>

@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { SidebarLayout } from '@/components/sidebar-layout'
 import { PensionCalculator } from '@/components/pension-calculator'
 import { TAX_YEAR, formatCurrency } from '@/lib/us-tax-calculator'
-import { currentTaxConfig } from '@/lib/us-tax-config'
 import { generateBreadcrumbSchema, BREADCRUMB_ITEMS } from '@/lib/breadcrumb-schema'
 import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: `401(k) Contribution Calculator ${TAX_YEAR} - Tax Savings & Retirement`,
-    description: 'Calculate 401(k) tax savings and see the real cost of your retirement contributions after tax savings.',
+    description: 'Calculate 401(k) tax savings and see the real cost of your retirement contributions after tax deferral.',
     type: 'website',
     locale: 'en_US',
   },
@@ -42,14 +41,14 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 const pensionCalcSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Pension Calculator',
-  description: `Calculate pension contributions and tax relief for ${TAX_YEAR}`,
+  name: '401(k) Calculator',
+  description: `Calculate 401(k) contributions and tax savings for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -59,42 +58,42 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How much tax relief do I get on pension contributions?',
+      name: 'How much tax do I save on 401(k) contributions?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: `You get tax relief at your marginal rate. Basic rate taxpayers (20%) get £20 relief for every £80 contributed. Higher rate taxpayers (40%) can claim an additional 20% through self-assessment. Additional rate taxpayers (45%) can claim 25% more. With salary sacrifice, you also save on National Insurance (${currentTaxConfig.niMainRate * 100}%).`,
+        text: `Traditional 401(k) contributions are made pre-tax, reducing your taxable income. You save at your marginal tax rate. For example, if you're in the 22% bracket, a $1,000 contribution saves you $220 in federal taxes. You also save on state income taxes in most states.`,
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the pension annual allowance for 2025/26?',
+      name: 'What is the 401(k) contribution limit for 2025?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The standard pension annual allowance is £60,000 for 2025/26 (or 100% of your earnings, whichever is lower). This includes both your contributions and employer contributions. If you earn over £260,000, your allowance may be reduced to as low as £10,000.',
+        text: 'The 401(k) employee contribution limit for 2025 is $23,500. If you are 50 or older, you can make an additional catch-up contribution of $7,500, for a total of $31,000. The total limit including employer contributions is $70,000 (or $77,500 with catch-up).',
       },
     },
     {
       '@type': 'Question',
-      name: 'Should I use salary sacrifice for pension contributions?',
+      name: 'Should I choose Traditional or Roth 401(k)?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: `Salary sacrifice is usually beneficial because you save National Insurance (${currentTaxConfig.niMainRate * 100}%) as well as income tax. However, it reduces your gross salary which may affect mortgage applications, statutory pay calculations, and contribution-based benefits. Consider your circumstances carefully.`,
+        text: `Traditional 401(k) contributions reduce your taxable income now, and you pay taxes when you withdraw in retirement. Roth 401(k) contributions are made after-tax, but withdrawals in retirement are tax-free. Choose Traditional if you expect to be in a lower tax bracket in retirement, or Roth if you expect higher taxes later.`,
       },
     },
     {
       '@type': 'Question',
-      name: 'How much should I contribute to my pension?',
+      name: 'How much should I contribute to my 401(k)?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A common guideline is to contribute half your age as a percentage of salary (e.g., if you start at 30, contribute 15%). The minimum auto-enrolment contribution is 8% total (5% employee, 3% employer). Higher contributions mean more tax relief and a larger retirement pot.',
+        text: 'Financial advisors often recommend contributing at least enough to get your full employer match (free money). Beyond that, aim for 10-15% of your salary including employer contributions. If you can afford it, maximizing your contribution ($23,500 in 2025) provides the greatest tax benefit.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the minimum employer pension contribution?',
+      name: 'What is employer 401(k) matching?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Under auto-enrolment, employers must contribute at least 3% of qualifying earnings to your pension. Many employers offer more generous schemes, with some matching your contributions up to a certain percentage.',
+        text: 'Many employers match a portion of your 401(k) contributions, such as 50% of contributions up to 6% of salary, or dollar-for-dollar up to 3%. This is essentially free money. For example, if you earn $75,000 and your employer matches 50% up to 6%, contributing $4,500 gets you $2,250 in matching.',
       },
     },
   ],
@@ -126,11 +125,11 @@ export default function PensionCalculatorPage() {
                 {TAX_YEAR} Tax Year
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Pension Calculator
+                401(k) Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Calculate how much tax you save on pension contributions. See the real cost after 
-                tax relief and understand the benefits of salary sacrifice.
+                Calculate how much tax you save on 401(k) contributions. See the real cost after
+                tax deferral and understand the benefits of employer matching.
               </p>
             </div>
           </div>
@@ -148,46 +147,67 @@ export default function PensionCalculatorPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
-                Pension Tax Relief Rates {TAX_YEAR}
+                401(k) Tax Savings by Tax Bracket {TAX_YEAR}
               </h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="py-3 px-4 font-semibold text-foreground">Tax Band</th>
-                      <th className="py-3 px-4 font-semibold text-foreground">Income Range</th>
-                      <th className="py-3 px-4 font-semibold text-foreground">Tax Relief</th>
-                      <th className="py-3 px-4 font-semibold text-foreground">£100 costs you</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">Tax Bracket</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">Income Range (Single)</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">Tax Savings</th>
+                      <th className="py-3 px-4 font-semibold text-foreground">$1,000 costs you</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground">Basic Rate</td>
-                      <td className="py-3 px-4 text-muted-foreground">£12,571 - £50,270</td>
-                      <td className="py-3 px-4 text-green-600 dark:text-green-400">20%</td>
-                      <td className="py-3 px-4 text-foreground font-medium">£80</td>
+                      <td className="py-3 px-4 text-foreground">10%</td>
+                      <td className="py-3 px-4 text-muted-foreground">$0 - $11,925</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$100</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$900</td>
                     </tr>
                     <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground">Higher Rate</td>
-                      <td className="py-3 px-4 text-muted-foreground">£50,271 - £125,140</td>
-                      <td className="py-3 px-4 text-green-600 dark:text-green-400">40%</td>
-                      <td className="py-3 px-4 text-foreground font-medium">£60</td>
+                      <td className="py-3 px-4 text-foreground">12%</td>
+                      <td className="py-3 px-4 text-muted-foreground">$11,926 - $48,475</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$120</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$880</td>
                     </tr>
                     <tr className="border-b border-border/50">
-                      <td className="py-3 px-4 text-foreground">Additional Rate</td>
-                      <td className="py-3 px-4 text-muted-foreground">Over £125,140</td>
-                      <td className="py-3 px-4 text-green-600 dark:text-green-400">45%</td>
-                      <td className="py-3 px-4 text-foreground font-medium">£55</td>
+                      <td className="py-3 px-4 text-foreground">22%</td>
+                      <td className="py-3 px-4 text-muted-foreground">$48,476 - $103,350</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$220</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$780</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-4 text-foreground">24%</td>
+                      <td className="py-3 px-4 text-muted-foreground">$103,351 - $197,300</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$240</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$760</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-4 text-foreground">32%</td>
+                      <td className="py-3 px-4 text-muted-foreground">$197,301 - $250,525</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$320</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$680</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-4 text-foreground">35%</td>
+                      <td className="py-3 px-4 text-muted-foreground">$250,526 - $626,350</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$350</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$650</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 text-foreground">+ Salary Sacrifice</td>
-                      <td className="py-3 px-4 text-muted-foreground">Any band</td>
-                      <td className="py-3 px-4 text-green-600 dark:text-green-400">+{currentTaxConfig.niMainRate * 100}% NI</td>
-                      <td className="py-3 px-4 text-foreground font-medium">Even less</td>
+                      <td className="py-3 px-4 text-foreground">37%</td>
+                      <td className="py-3 px-4 text-muted-foreground">Over $626,350</td>
+                      <td className="py-3 px-4 text-green-600 dark:text-green-400">$370</td>
+                      <td className="py-3 px-4 text-foreground font-medium">$630</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+              <p className="text-sm text-muted-foreground mt-4 text-center">
+                Tax savings shown are federal only. State income tax savings vary by state.
+              </p>
             </div>
           </div>
         </section>
@@ -196,35 +216,36 @@ export default function PensionCalculatorPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-foreground mb-6">
-                How Pension Tax Relief Works
+                How 401(k) Tax Savings Work
               </h2>
               <div className="prose prose-neutral dark:prose-invert max-w-none">
                 <p>
-                  Pension contributions receive tax relief, making them one of the most tax-efficient 
-                  ways to save for retirement. When you contribute to a pension, you get relief at 
-                  your marginal income tax rate.
-                </p>
-                
-                <h3>Relief at Source vs Net Pay</h3>
-                <p>
-                  Most workplace pensions use "net pay" arrangements where contributions come from 
-                  your salary before tax is calculated. Personal pensions often use "relief at source" 
-                  where the pension provider claims basic rate relief automatically, and you claim 
-                  higher/additional rate relief through your tax return.
+                  Traditional 401(k) contributions are made with pre-tax dollars, reducing your
+                  taxable income. This means you pay less in federal and state income taxes now,
+                  while your money grows tax-deferred until retirement.
                 </p>
 
-                <h3>Salary Sacrifice Pensions</h3>
+                <h3>Traditional vs Roth 401(k)</h3>
                 <p>
-                  With salary sacrifice, you agree to reduce your salary in exchange for employer 
-                  pension contributions. This means you also save on National Insurance ({currentTaxConfig.niMainRate * 100}%), 
-                  making it even more tax-efficient. Use our calculator above to see the difference.
+                  With a Traditional 401(k), you defer taxes until withdrawal in retirement.
+                  With a Roth 401(k), you contribute after-tax dollars, but qualified withdrawals
+                  in retirement are completely tax-free. Many employers offer both options, and
+                  you can split your contributions between them.
                 </p>
 
-                <h3>Annual Allowance</h3>
+                <h3>Employer Matching</h3>
                 <p>
-                  You can contribute up to £60,000 per year (or 100% of your earnings) to pensions 
-                  with full tax relief. This includes employer contributions. You can also carry 
-                  forward unused allowance from the previous 3 years.
+                  Many employers match a portion of your 401(k) contributions. Common matching
+                  formulas include 50% up to 6% of salary, or dollar-for-dollar up to 3%. Always
+                  contribute at least enough to get your full employer match - it's free money
+                  that can significantly boost your retirement savings.
+                </p>
+
+                <h3>Contribution Limits</h3>
+                <p>
+                  For 2025, the employee contribution limit is $23,500. If you're 50 or older,
+                  you can contribute an additional $7,500 as a catch-up contribution. The total
+                  limit including employer contributions is $70,000 ($77,500 with catch-up).
                 </p>
               </div>
             </div>

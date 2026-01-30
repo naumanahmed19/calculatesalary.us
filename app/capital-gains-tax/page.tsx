@@ -9,7 +9,7 @@ import { RelatedCalculators, taxCalculators } from '@/components/related-calcula
 
 export const metadata: Metadata = {
   title: `US Capital Gains Tax Calculator ${TAX_YEAR} - Property, Stocks & Assets`,
-  description: `Calculate Capital Gains Tax on property, stocks and other assets for ${TAX_YEAR}. See short-term and long-term CGT rates and your tax bill.`,
+  description: `Calculate Capital Gains Tax on property, stocks and other assets for ${TAX_YEAR}. See short-term and long-term CGT rates, NIIT, and your tax bill.`,
   keywords: [
     'capital gains tax calculator us',
     'cgt calculator',
@@ -17,6 +17,8 @@ export const metadata: Metadata = {
     'stock capital gains tax us',
     'capital gains tax rates',
     'capital gains tax rates 2025',
+    'long term capital gains',
+    'short term capital gains',
     TAX_YEAR,
   ],
   openGraph: {
@@ -50,26 +52,34 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'What is the Capital Gains Tax allowance for 2025/26?',
+      name: 'What are the long-term capital gains tax rates for 2025?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The CGT annual exempt amount for 2025/26 is £3,000. This has been significantly reduced from £12,300 in 2022/23. Gains up to this amount are tax-free.',
+        text: 'Long-term capital gains (assets held over 1 year) are taxed at 0%, 15%, or 20% depending on your income. For single filers: 0% up to $47,025; 15% from $47,025 to $518,900; 20% above $518,900.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What are the Capital Gains Tax rates UK?',
+      name: 'What is the difference between short-term and long-term capital gains?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'For 2025/26, CGT rates on residential property are 18% (basic rate) and 24% (higher rate). For other assets including shares, rates are 10% (basic rate) and 20% (higher rate).',
+        text: 'Short-term capital gains (assets held 1 year or less) are taxed as ordinary income at rates up to 37%. Long-term gains (held over 1 year) receive preferential rates of 0%, 15%, or 20%.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Do I pay Capital Gains Tax on my main home?',
+      name: 'Do I pay capital gains tax when I sell my primary home?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'No, your main residence is exempt from CGT through Private Residence Relief. However, CGT applies to second homes and buy-to-let properties.',
+        text: 'You can exclude up to $250,000 of gain ($500,000 for married couples) when selling your primary residence if you lived there at least 2 of the last 5 years. Gains above this exclusion are taxable.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the Net Investment Income Tax (NIIT)?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The NIIT is an additional 3.8% tax on investment income (including capital gains) for individuals with income over $200,000 (single) or $250,000 (married filing jointly).',
       },
     },
   ],
@@ -107,11 +117,11 @@ export default function CapitalGainsTaxPage() {
                 {TAX_YEAR} Tax Year
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Capital Gains Tax Calculator
+                US Capital Gains Tax Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Calculate the CGT due on property, shares and other assets. See how your
-                income affects which rate you pay.
+                Calculate the capital gains tax due on property, stocks and other assets. See how your
+                income and holding period affect your tax rate.
               </p>
             </div>
           </div>
@@ -132,33 +142,43 @@ export default function CapitalGainsTaxPage() {
                 Capital Gains Tax Rates {TAX_YEAR}
               </h2>
               <p className="text-muted-foreground text-center mb-8">
-                Rates depend on your total taxable income and asset type
+                Rates depend on your holding period and total taxable income
               </p>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 overflow-hidden ring-1 ring-border/50">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border/50 bg-muted/50">
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Asset Type</th>
-                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Basic Rate</th>
-                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Higher Rate</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Holding Period</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Tax Rate</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Income Threshold (Single)</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/50">
                     <tr className="hover:bg-muted/30">
-                      <td className="px-4 py-3 text-sm font-medium text-foreground">Residential Property</td>
-                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">18%</td>
-                      <td className="px-4 py-3 text-sm text-right font-semibold text-accent">24%</td>
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">Long-term (1+ year)</td>
+                      <td className="px-4 py-3 text-sm text-right font-semibold text-emerald-600 dark:text-emerald-400">0%</td>
+                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">Up to $47,025</td>
                     </tr>
                     <tr className="hover:bg-muted/30">
-                      <td className="px-4 py-3 text-sm font-medium text-foreground">Shares & Investments</td>
-                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">10%</td>
-                      <td className="px-4 py-3 text-sm text-right font-semibold text-accent">20%</td>
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">Long-term (1+ year)</td>
+                      <td className="px-4 py-3 text-sm text-right font-semibold text-foreground">15%</td>
+                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">$47,025 - $518,900</td>
                     </tr>
                     <tr className="hover:bg-muted/30">
-                      <td className="px-4 py-3 text-sm font-medium text-foreground">Other Assets</td>
-                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">10%</td>
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">Long-term (1+ year)</td>
                       <td className="px-4 py-3 text-sm text-right font-semibold text-accent">20%</td>
+                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">Over $518,900</td>
+                    </tr>
+                    <tr className="hover:bg-muted/30">
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">Short-term (&lt;1 year)</td>
+                      <td className="px-4 py-3 text-sm text-right font-semibold text-amber-600 dark:text-amber-400">10-37%</td>
+                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">Taxed as ordinary income</td>
+                    </tr>
+                    <tr className="hover:bg-muted/30 bg-rose-50/50 dark:bg-rose-900/10">
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">NIIT (high earners)</td>
+                      <td className="px-4 py-3 text-sm text-right font-semibold text-rose-600 dark:text-rose-400">+3.8%</td>
+                      <td className="px-4 py-3 text-sm text-right text-muted-foreground">Income over $200,000</td>
                     </tr>
                   </tbody>
                 </table>
@@ -171,28 +191,27 @@ export default function CapitalGainsTaxPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto space-y-6">
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">Allowable Costs</h3>
+                <h3 className="font-semibold text-foreground mb-3">Cost Basis</h3>
                 <p className="text-sm text-muted-foreground">
-                  You can deduct certain costs from your gain: purchase costs (legal fees, stamp duty),
-                  selling costs (estate agent fees, conveyancing), and improvement costs (extensions,
-                  renovations — not maintenance).
+                  Your cost basis includes the original purchase price plus certain costs: broker commissions,
+                  transfer fees, and for real estate, closing costs and capital improvements (not repairs or maintenance).
                 </p>
               </div>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
-                <h3 className="font-semibold text-foreground mb-3">Private Residence Relief</h3>
+                <h3 className="font-semibold text-foreground mb-3">Primary Residence Exclusion</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your main home is exempt from CGT. If you&apos;ve let out part of it or it wasn&apos;t
-                  always your main home, you may get partial relief. The last 9 months of ownership
-                  are always exempt.
+                  When selling your primary home, you can exclude up to $250,000 of gain ($500,000 for married
+                  couples filing jointly) if you owned and lived in the home for at least 2 of the 5 years
+                  before the sale. Gains above this exclusion are taxable.
                 </p>
               </div>
 
               <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
                 <h3 className="font-semibold text-foreground mb-3">Reporting & Payment</h3>
                 <p className="text-sm text-muted-foreground">
-                  For UK property sales, you must report and pay CGT within 60 days of completion.
-                  For other assets, report on your Self Assessment tax return.
+                  Report capital gains on Schedule D of your federal tax return. You may need to make
+                  estimated tax payments if you expect to owe $1,000 or more in taxes for the year.
                 </p>
               </div>
             </div>

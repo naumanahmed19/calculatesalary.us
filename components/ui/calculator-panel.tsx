@@ -258,7 +258,7 @@ export function QuickSelect<T>({ options, selected, onSelect, className }: Quick
 }
 
 /**
- * Currency Input - Input with £ prefix
+ * Currency Input - Input with $ prefix
  */
 interface CurrencyInputProps {
   id: string
@@ -282,7 +282,7 @@ export function CurrencyInput({
   return (
     <div className="relative">
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-medium text-muted-foreground">
-        £
+        $
       </span>
       <input
         id={id}

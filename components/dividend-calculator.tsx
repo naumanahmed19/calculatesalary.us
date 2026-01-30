@@ -350,7 +350,7 @@ export function DividendCalculator({
                   ? 'bg-green-500/10 text-green-700 dark:text-green-400'
                   : taxStrategy.status === 'warning'
                   ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400'
-                  : 'bg-blue-500/10 text-blue-700 dark:text-blue-400'
+                  : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
               }`}
             >
               <p className="text-sm">{taxStrategy.message}</p>

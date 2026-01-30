@@ -289,7 +289,7 @@ export function MultipleJobsCalculator() {
                   </div>
                   <div className="flex justify-between pt-2 border-t border-border/50">
                     <span className="text-foreground font-medium">Difference</span>
-                    <span className={`font-semibold ${federalDifference + stateDifference > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-blue-600 dark:text-blue-400'}`}>
+                    <span className={`font-semibold ${federalDifference + stateDifference > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                       {federalDifference + stateDifference > 0 ? 'May Owe: ' : 'Refund: '}
                       {formatCurrency(Math.abs(federalDifference + stateDifference), 0)}
                     </span>
@@ -298,9 +298,9 @@ export function MultipleJobsCalculator() {
               </div>
 
               {/* Actual Take Home */}
-              <div className="rounded-xl bg-blue-50 dark:bg-blue-950/30 p-4 ring-1 ring-blue-200 dark:ring-blue-800">
+              <div className="rounded-xl bg-emerald-50 dark:bg-emerald-950/30 p-4 ring-1 ring-emerald-200 dark:ring-emerald-800">
                 <div className="text-sm text-muted-foreground mb-1">Actual Take-Home Pay</div>
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(combinedResult.yearly.takeHomePay, 0)}/year
                 </div>
                 <div className="text-sm text-muted-foreground mt-1">

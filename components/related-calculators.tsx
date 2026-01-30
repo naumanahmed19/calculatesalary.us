@@ -23,34 +23,34 @@ export interface CalculatorItem {
 
 // Default calculators that can be used across pages
 export const defaultCalculators: CalculatorItem[] = [
-  { href: "/", title: "UK Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
+  { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
   { href: "/income-percentile", title: "Income Percentile", description: "See where you rank", icon: TrendingUp },
-  { href: "/average-salary-uk", title: "Average UK Salary", description: "UK salary statistics", icon: BarChart3 },
+  { href: "/average-salary-uk", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
   { href: "/salary-comparison", title: "Salary Comparison", description: "Compare job offers", icon: ArrowRightLeft },
   { href: "/cost-of-living", title: "Cost of Living", description: "Compare city costs", icon: MapPin },
 ];
 
 export const taxCalculators: CalculatorItem[] = [
-  { href: "/", title: "UK Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
-  { href: "/tax-code-checker", title: "Tax Code Checker", description: "Verify your tax code", icon: FileText },
+  { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
+  { href: "/tax-code-checker", title: "Tax Calculator", description: "Federal & state taxes", icon: FileText },
   { href: "/self-employed-tax", title: "Self-Employed Tax", description: "Tax for self-employed", icon: Briefcase },
   { href: "/dividend-calculator", title: "Dividend Calculator", description: "Calculate dividend tax", icon: Coins },
   { href: "/bonus-tax", title: "Bonus Tax", description: "Tax on bonus payments", icon: Gift },
 ];
 
 export const salaryCalculators: CalculatorItem[] = [
-  { href: "/", title: "UK Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
+  { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
   { href: "/income-percentile", title: "Income Percentile", description: "See where you rank", icon: TrendingUp },
-  { href: "/average-salary-uk", title: "Average UK Salary", description: "UK salary statistics", icon: BarChart3 },
+  { href: "/average-salary-uk", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
   { href: "/salary-comparison", title: "Salary Comparison", description: "Compare job offers", icon: ArrowRightLeft },
-  { href: "/london-salary", title: "London Salary", description: "London-specific calculations", icon: Building2 },
+  { href: "/state", title: "State Calculator", description: "State-specific calculations", icon: Building2 },
 ];
 
 export const costOfLivingCalculators: CalculatorItem[] = [
-  { href: "/", title: "UK Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
+  { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
   { href: "/cost-of-living", title: "Cost of Living Index", description: "Compare city costs", icon: MapPin },
   { href: "/income-percentile", title: "Income Percentile", description: "See where you rank", icon: TrendingUp },
-  { href: "/average-salary-uk", title: "Average UK Salary", description: "UK salary statistics", icon: BarChart3 },
+  { href: "/average-salary-uk", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
   { href: "/salary-comparison", title: "Salary Comparison", description: "Compare job offers", icon: ArrowRightLeft },
 ];
 

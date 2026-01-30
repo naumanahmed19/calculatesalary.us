@@ -34,14 +34,14 @@ export const metadata: Metadata = {
 const comparisonSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Salary Comparison Calculator',
-  description: `Compare multiple UK salaries and see take-home pay differences for ${TAX_YEAR}`,
+  name: 'US Salary Comparison Calculator',
+  description: `Compare multiple US salaries and see take-home pay differences for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -54,15 +54,15 @@ const faqSchema = {
       name: 'How do I compare two job offers with different salaries?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Enter both salaries in our comparison tool to see the actual take-home pay difference. A £5,000 salary increase doesn\'t mean £5,000 more in your pocket - after tax and NI, you\'ll typically see 60-70% of the difference depending on your tax band.',
+        text: 'Enter both salaries in our comparison tool to see the actual take-home pay difference. A $10,000 salary increase doesn\'t mean $10,000 more in your pocket - after federal taxes, state taxes, and FICA, you\'ll typically see 65-75% of the difference depending on your tax bracket and state.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the take-home pay difference between £35,000 and £50,000?',
+      name: 'What is the take-home pay difference between $50,000 and $75,000?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'With a £35,000 salary, you\'d take home approximately £28,300/year. At £50,000, you\'d take home around £38,500/year. That\'s a £10,200 difference in take-home pay from a £15,000 gross salary increase.',
+        text: 'With a $50,000 salary (single filer, no state tax), you\'d take home approximately $41,000/year. At $75,000, you\'d take home around $58,000/year. That\'s about a $17,000 difference in take-home pay from a $25,000 gross salary increase.',
       },
     },
     {
@@ -70,7 +70,7 @@ const faqSchema = {
       name: 'How much of a raise will I actually take home?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The percentage depends on your tax band. Basic rate taxpayers keep about 68% of a raise (32% to tax and NI). Higher rate taxpayers keep about 52% (48% to tax and NI). Additional rate taxpayers keep about 47%.',
+        text: 'The percentage depends on your tax bracket and state. In the 22% federal bracket with no state tax, you keep about 70% of a raise (30% to federal tax and FICA). In the 32% bracket in a high-tax state like California, you might keep only 50-55% of a raise.',
       },
     },
     {
@@ -78,7 +78,7 @@ const faqSchema = {
       name: 'Should I accept a job with higher salary but longer commute?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Use our calculator to see the actual take-home difference, then factor in commute costs and time. A £3,000 raise might only net you £2,000 after tax - if your commute costs £150/month more, that\'s £1,800/year eating into your gain.',
+        text: 'Use our calculator to see the actual take-home difference, then factor in commute costs and time. A $5,000 raise might only net you $3,500 after tax - if your commute costs $200/month more, that\'s $2,400/year eating into your gain.',
       },
     },
   ],
@@ -106,10 +106,10 @@ export default function SalaryComparisonPage() {
                 Updated for {TAX_YEAR} Tax Year
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Salary Comparison Calculator
+                US Salary Comparison Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Compare multiple salaries side by side. Perfect for evaluating job offers, 
+                Compare multiple salaries side by side. Perfect for evaluating job offers,
                 understanding the impact of a raise, or comparing positions at different levels.
               </p>
             </div>
@@ -137,15 +137,16 @@ export default function SalaryComparisonPage() {
                     Why Take-Home Pay Matters More Than Gross
                   </h3>
                   <p className="text-muted-foreground">
-                    A £10,000 salary increase doesn't mean £10,000 more in your pocket. 
-                    After Income Tax and National Insurance, you'll typically receive 
-                    52-68% of the increase depending on your tax band.
+                    A $10,000 salary increase doesn't mean $10,000 more in your pocket.
+                    After Federal taxes, State taxes, Social Security, and Medicare, you'll typically receive
+                    50-75% of the increase depending on your tax bracket and state.
                   </p>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Basic rate: Keep ~68% of raise</li>
-                    <li>• Higher rate: Keep ~52% of raise</li>
-                    <li>• Additional rate: Keep ~47% of raise</li>
-                    <li>• £100k+ zone: Keep ~40% (60% marginal rate)</li>
+                    <li>• 12% bracket: Keep ~75% of raise</li>
+                    <li>• 22% bracket: Keep ~70% of raise</li>
+                    <li>• 24% bracket: Keep ~68% of raise</li>
+                    <li>• 32% bracket: Keep ~60% of raise</li>
+                    <li>• High-tax state: Subtract 5-13% more</li>
                   </ul>
                 </div>
 
@@ -157,11 +158,11 @@ export default function SalaryComparisonPage() {
                     When comparing job offers, consider the full package:
                   </p>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• <strong>Pension:</strong> Employer contributions are tax-free benefits</li>
-                    <li>• <strong>Bonuses:</strong> Often taxed at your marginal rate</li>
-                    <li>• <strong>Benefits:</strong> Health insurance, car allowance have cash value</li>
-                    <li>• <strong>Location:</strong> Factor in commute costs and time</li>
-                    <li>• <strong>Remote work:</strong> Can save £100s/month in travel</li>
+                    <li>• <strong>401(k) Match:</strong> Free money that grows tax-deferred</li>
+                    <li>• <strong>Bonuses:</strong> Taxed at your marginal rate</li>
+                    <li>• <strong>Benefits:</strong> Health insurance, HSA, stock options have real value</li>
+                    <li>• <strong>Location:</strong> Factor in state taxes, cost of living, commute</li>
+                    <li>• <strong>Remote work:</strong> Can save $100s/month in travel and relocation</li>
                   </ul>
                 </div>
               </div>

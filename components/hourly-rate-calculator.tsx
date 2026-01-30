@@ -196,15 +196,15 @@ export function HourlyRateCalculator({ initialRate = 20, initialHours = 40 }: Ho
 
             {/* Take Home Breakdown */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-blue-600/10 dark:bg-blue-500/10 p-4 ring-1 ring-blue-600/20 dark:ring-blue-500/20">
+              <div className="rounded-xl bg-emerald-600/10 dark:bg-emerald-500/10 p-4 ring-1 ring-emerald-600/20 dark:ring-emerald-500/20">
                 <div className="text-xs text-muted-foreground mb-1">Monthly Take-Home</div>
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(result.monthly.takeHomePay)}
                 </div>
               </div>
-              <div className="rounded-xl bg-blue-600/10 dark:bg-blue-500/10 p-4 ring-1 ring-blue-600/20 dark:ring-blue-500/20">
+              <div className="rounded-xl bg-emerald-600/10 dark:bg-emerald-500/10 p-4 ring-1 ring-emerald-600/20 dark:ring-emerald-500/20">
                 <div className="text-xs text-muted-foreground mb-1">Yearly Take-Home</div>
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(result.yearly.takeHomePay, 0)}
                 </div>
               </div>
