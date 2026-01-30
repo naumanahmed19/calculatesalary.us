@@ -11,7 +11,7 @@ import './globals.css'
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
-const BASE_URL = 'https://ussalarycalculator.com'
+const BASE_URL = 'https://calculatesalary.us'
 
 export const metadata: Metadata = {
   title: {

@@ -3,7 +3,7 @@ import { getAllJobSlugs } from "@/lib/uk-job-salaries";
 import { COMMON_SALARIES } from "@/lib/us-tax-calculator";
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://calculatesalary.uk";
+const BASE_URL = "https://calculatesalary.us";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages

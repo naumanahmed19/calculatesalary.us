@@ -1,14 +1,14 @@
 {
-  "name": "UK Salary Calculator",
-  "short_name": "UK Salary Calc",
-  "description": "Calculate your UK take-home pay after tax, National Insurance, Student Loans and Pension deductions",
+  "name": "US Salary Calculator",
+  "short_name": "US Salary Calc",
+  "description": "Calculate your US take-home pay after Federal Tax, State Tax, Social Security, Medicare, and 401(k) deductions",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
+  "theme_color": "#2563eb",
   "orientation": "portrait-primary",
   "scope": "/",
-  "lang": "en-GB",
+  "lang": "en-US",
   "categories": ["finance", "utilities", "productivity"],
   "icons": [
     {

@@ -3,7 +3,7 @@ import { TAX_YEAR } from '@/lib/us-tax-calculator'
 
 export const runtime = 'edge'
 
-export const alt = 'UK Salary Calculator - Calculate Your Take Home Pay'
+export const alt = 'US Salary Calculator - Calculate Your Take Home Pay'
 export const size = {
   width: 1200,
   height: 630,
@@ -77,7 +77,7 @@ export default async function Image() {
             marginBottom: '16px',
           }}
         >
-          UK Salary Calculator
+          US Salary Calculator
         </h1>
 
         {/* Subtitle */}
@@ -94,7 +94,7 @@ export default async function Image() {
 
         {/* Feature Tags */}
         <div style={{ display: 'flex', gap: '16px', marginBottom: '40px' }}>
-          {['Income Tax', 'National Insurance', 'Student Loans', 'Pension'].map(
+          {['Federal Tax', 'State Tax', 'Social Security', '401(k)'].map(
             (feature, i) => (
               <div
                 key={feature}
@@ -136,7 +136,7 @@ export default async function Image() {
               Annual Salary
             </span>
             <span style={{ color: 'white', fontSize: '36px', fontWeight: 700 }}>
-              £50,000
+              $75,000
             </span>
           </div>
           <div
@@ -150,7 +150,7 @@ export default async function Image() {
               Take Home Pay
             </span>
             <span style={{ color: '#22c55e', fontSize: '36px', fontWeight: 700 }}>
-              £38,940/year
+              $56,250/year
             </span>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default async function Image() {
             margin: 0,
           }}
         >
-          calculatesalary.uk
+          calculatesalary.us
         </p>
       </div>
     ),

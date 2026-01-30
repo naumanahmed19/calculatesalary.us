@@ -1,4 +1,4 @@
-const BASE_URL = 'https://calculatesalary.uk'
+const BASE_URL = 'https://calculatesalary.us'
 
 export interface BreadcrumbItem {
   name: string
@@ -20,7 +20,7 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
 
 export const BREADCRUMB_ITEMS = {
   home: { name: 'Home', href: '/' },
-  salaries: { name: 'UK Salaries', href: '/salaries' },
+  salaries: { name: 'US Salaries', href: '/salaries' },
   taxBands: { name: 'Tax Bands', href: '/tax-bands' },
   nationalInsurance: { name: 'National Insurance', href: '/national-insurance' },
   studentLoans: { name: 'Student Loans', href: '/student-loans' },
@@ -45,7 +45,7 @@ export const BREADCRUMB_ITEMS = {
   scotland: { name: 'Scottish Tax Calculator', href: '/scotland' },
   londonSalary: { name: 'London Salary Calculator', href: '/london-salary' },
   incomePercentile: { name: 'Income Percentile', href: '/income-percentile' },
-  averageSalaryUk: { name: 'Average UK Salary', href: '/average-salary-uk' },
+  averageSalaryUs: { name: 'Average US Salary', href: '/average-salary-us' },
   netToGross: { name: 'Net to Gross Calculator', href: '/net-to-gross' },
   mortgageAffordability: { name: 'Mortgage Affordability Calculator', href: '/mortgage-affordability' },
   taxRefund: { name: 'Tax Refund Calculator', href: '/tax-refund' },
