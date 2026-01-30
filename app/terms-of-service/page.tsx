@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'Terms of Service for UK Salary Calculator. Please read these terms carefully before using our service.',
+  description: 'Terms of Service for US Salary Calculator. Please read these terms carefully before using our service.',
   robots: {
     index: true,
     follow: true,
@@ -25,7 +25,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">1. Acceptance of Terms</h2>
             <p className="text-muted-foreground leading-relaxed">
-              By accessing and using UK Salary Calculator (&quot;the Site&quot;), you accept and agree to be bound 
+              By accessing and using US Salary Calculator (&quot;the Site&quot;), you accept and agree to be bound
               by these Terms of Service. If you do not agree to these terms, please do not use our Site.
             </p>
           </section>
@@ -33,9 +33,9 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">2. Description of Service</h2>
             <p className="text-muted-foreground leading-relaxed">
-              UK Salary Calculator provides free online tools to estimate take-home pay, income tax, 
-              national insurance contributions, student loan repayments, and other salary-related calculations 
-              for UK taxpayers.
+              US Salary Calculator provides free online tools to estimate take-home pay, federal and state
+              income taxes, FICA contributions, 401(k) savings, and other salary-related calculations
+              for US taxpayers.
             </p>
           </section>
 
@@ -43,8 +43,8 @@ export default function TermsOfServicePage() {
             <h2 className="text-xl font-semibold text-foreground mb-4">3. Disclaimer and Limitations</h2>
             <h3 className="text-lg font-medium text-foreground mb-2">For Informational Purposes Only</h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              The calculations provided by this Site are estimates based on standard UK tax rates and are 
-              intended for informational and educational purposes only. They should not be considered as 
+              The calculations provided by this Site are estimates based on federal and state tax rates and are
+              intended for informational and educational purposes only. They should not be considered as
               financial, tax, or legal advice.
             </p>
 
@@ -57,10 +57,9 @@ export default function TermsOfServicePage() {
 
             <h3 className="text-lg font-medium text-foreground mb-2">Individual Circumstances</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Your actual tax liability may differ based on your individual circumstances, including but 
-              not limited to: benefits in kind, multiple employments, self-employment income, pension 
-              arrangements, marriage allowance, blind person&apos;s allowance, and other tax reliefs or 
-              adjustments.
+              Your actual tax liability may differ based on your individual circumstances, including but
+              not limited to: multiple employments, self-employment income, 401(k) contributions,
+              itemized deductions, tax credits, and other adjustments specific to your situation.
             </p>
           </section>
 
@@ -70,18 +69,18 @@ export default function TermsOfServicePage() {
               For accurate tax calculations and advice specific to your situation, you should:
             </p>
             <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
-              <li>Consult HM Revenue &amp; Customs (HMRC) directly</li>
-              <li>Seek advice from a qualified accountant or tax advisor</li>
-              <li>Contact a Citizens Advice Bureau</li>
-              <li>Use HMRC&apos;s official online services</li>
+              <li>Consult the Internal Revenue Service (IRS) directly at irs.gov</li>
+              <li>Seek advice from a qualified CPA or tax advisor</li>
+              <li>Contact a Volunteer Income Tax Assistance (VITA) program</li>
+              <li>Use IRS Free File or other official tax preparation services</li>
             </ul>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">5. Limitation of Liability</h2>
             <p className="text-muted-foreground leading-relaxed">
-              To the fullest extent permitted by law, UK Salary Calculator and its operators shall not be 
-              liable for any direct, indirect, incidental, special, consequential, or exemplary damages 
+              To the fullest extent permitted by law, US Salary Calculator and its operators shall not be
+              liable for any direct, indirect, incidental, special, consequential, or exemplary damages
               arising from:
             </p>
             <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
@@ -146,9 +145,9 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">11. Governing Law</h2>
             <p className="text-muted-foreground leading-relaxed">
-              These Terms of Service shall be governed by and construed in accordance with the laws of 
-              England and Wales. Any disputes arising from these terms shall be subject to the exclusive 
-              jurisdiction of the courts of England and Wales.
+              These Terms of Service shall be governed by and construed in accordance with the laws of
+              the State of California, United States. Any disputes arising from these terms shall be
+              subject to the exclusive jurisdiction of the courts of California.
             </p>
           </section>
 

@@ -25,7 +25,7 @@ export interface CalculatorItem {
 export const defaultCalculators: CalculatorItem[] = [
   { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
   { href: "/income-percentile", title: "Income Percentile", description: "See where you rank", icon: TrendingUp },
-  { href: "/average-salary-uk", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
+  { href: "/average-salary", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
   { href: "/salary-comparison", title: "Salary Comparison", description: "Compare job offers", icon: ArrowRightLeft },
   { href: "/cost-of-living", title: "Cost of Living", description: "Compare city costs", icon: MapPin },
 ];
@@ -41,7 +41,7 @@ export const taxCalculators: CalculatorItem[] = [
 export const salaryCalculators: CalculatorItem[] = [
   { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
   { href: "/income-percentile", title: "Income Percentile", description: "See where you rank", icon: TrendingUp },
-  { href: "/average-salary-uk", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
+  { href: "/average-salary", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
   { href: "/salary-comparison", title: "Salary Comparison", description: "Compare job offers", icon: ArrowRightLeft },
   { href: "/state", title: "State Calculator", description: "State-specific calculations", icon: Building2 },
 ];
@@ -50,7 +50,7 @@ export const costOfLivingCalculators: CalculatorItem[] = [
   { href: "/", title: "US Salary Calculator", description: "Calculate take-home pay", icon: Calculator },
   { href: "/cost-of-living", title: "Cost of Living Index", description: "Compare city costs", icon: MapPin },
   { href: "/income-percentile", title: "Income Percentile", description: "See where you rank", icon: TrendingUp },
-  { href: "/average-salary-uk", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
+  { href: "/average-salary", title: "Average US Salary", description: "US salary statistics", icon: BarChart3 },
   { href: "/salary-comparison", title: "Salary Comparison", description: "Compare job offers", icon: ArrowRightLeft },
 ];
 

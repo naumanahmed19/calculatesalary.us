@@ -128,10 +128,6 @@ export function formatUSD(amount: number): string {
   return `$${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 }
 
-// Legacy alias for compatibility
-export function formatGBP(amount: number): string {
-  return formatUSD(amount);
-}
 
 // Get comparison pairs for programmatic SEO
 export function getComparisonPairs(): { city1: string; city2: string }[] {
@@ -167,16 +163,3 @@ export function getUSComparisonPairs(): { city1: string; city2: string }[] {
   return pairs;
 }
 
-// Legacy UK comparison pairs
-export function getUKComparisonPairs(): { city1: string; city2: string }[] {
-  const ukCities = UK_CITIES.map(c => c.slug);
-  const pairs: { city1: string; city2: string }[] = [];
-
-  for (let i = 0; i < ukCities.length; i++) {
-    for (let j = i + 1; j < ukCities.length; j++) {
-      pairs.push({ city1: ukCities[i], city2: ukCities[j] });
-    }
-  }
-
-  return pairs;
-}

@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'Privacy Policy for UK Salary Calculator. Learn how we collect, use, and protect your personal information.',
+  description: 'Privacy Policy for US Salary Calculator. Learn how we collect, use, and protect your personal information.',
   robots: {
     index: true,
     follow: true,
@@ -106,17 +106,22 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-foreground mb-4">6. Your Rights (GDPR)</h2>
+            <h2 className="text-xl font-semibold text-foreground mb-4">6. Your Privacy Rights</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              If you are a resident of the UK or European Economic Area, you have the following rights:
+              Depending on your location, you may have the following rights regarding your personal information:
             </p>
+            <h3 className="text-lg font-medium text-foreground mb-2">California Residents (CCPA)</h3>
+            <ul className="list-disc list-inside text-muted-foreground space-y-1 mb-4">
+              <li><strong>Right to Know:</strong> Request information about data collection and sharing</li>
+              <li><strong>Right to Delete:</strong> Request deletion of your personal information</li>
+              <li><strong>Right to Opt-Out:</strong> Opt out of the sale of personal information</li>
+              <li><strong>Right to Non-Discrimination:</strong> Not be discriminated against for exercising your rights</li>
+            </ul>
+            <h3 className="text-lg font-medium text-foreground mb-2">All Users</h3>
             <ul className="list-disc list-inside text-muted-foreground space-y-1">
               <li><strong>Right to Access:</strong> Request a copy of your personal data</li>
-              <li><strong>Right to Rectification:</strong> Request correction of inaccurate data</li>
-              <li><strong>Right to Erasure:</strong> Request deletion of your personal data</li>
-              <li><strong>Right to Restrict Processing:</strong> Request limitation of data processing</li>
-              <li><strong>Right to Data Portability:</strong> Request transfer of your data</li>
-              <li><strong>Right to Object:</strong> Object to processing of your personal data</li>
+              <li><strong>Right to Correction:</strong> Request correction of inaccurate data</li>
+              <li><strong>Right to Deletion:</strong> Request deletion of your personal data</li>
               <li><strong>Right to Withdraw Consent:</strong> Withdraw consent at any time via the cookie banner</li>
             </ul>
           </section>
