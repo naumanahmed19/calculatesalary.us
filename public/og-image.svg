@@ -1,0 +1,91 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+
+  <!-- Grid pattern overlay -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="100" cy="530" r="200" fill="url(#accent-gradient)" opacity="0.1"/>
+  <circle cx="1100" cy="100" r="250" fill="url(#accent-gradient)" opacity="0.1"/>
+
+  <!-- Calculator icon -->
+  <g transform="translate(100, 180)">
+    <rect x="0" y="0" width="80" height="100" rx="8" fill="url(#accent-gradient)" opacity="0.9"/>
+    <rect x="10" y="10" width="60" height="25" rx="4" fill="#1e293b"/>
+    <rect x="10" y="45" width="15" height="15" rx="2" fill="#1e293b"/>
+    <rect x="32" y="45" width="15" height="15" rx="2" fill="#1e293b"/>
+    <rect x="55" y="45" width="15" height="15" rx="2" fill="#1e293b"/>
+    <rect x="10" y="68" width="15" height="15" rx="2" fill="#1e293b"/>
+    <rect x="32" y="68" width="15" height="15" rx="2" fill="#1e293b"/>
+    <rect x="55" y="68" width="15" height="15" rx="2" fill="#1e293b"/>
+  </g>
+
+  <!-- Main title -->
+  <text x="220" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#ffffff">
+    UK Salary Calculator
+  </text>
+
+  <!-- Subtitle -->
+  <text x="220" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="500" fill="#94a3b8">
+    Calculate Your Take Home Pay for 2025/26
+  </text>
+
+  <!-- Feature pills -->
+  <g transform="translate(220, 320)">
+    <!-- Income Tax -->
+    <rect x="0" y="0" width="160" height="44" rx="22" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="80" y="28" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#3b82f6" text-anchor="middle">Income Tax</text>
+
+    <!-- National Insurance -->
+    <rect x="180" y="0" width="210" height="44" rx="22" fill="rgba(139, 92, 246, 0.2)" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="285" y="28" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#8b5cf6" text-anchor="middle">National Insurance</text>
+
+    <!-- Student Loans -->
+    <rect x="410" y="0" width="170" height="44" rx="22" fill="rgba(34, 197, 94, 0.2)" stroke="#22c55e" stroke-width="1"/>
+    <text x="495" y="28" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#22c55e" text-anchor="middle">Student Loans</text>
+
+    <!-- Pension -->
+    <rect x="600" y="0" width="130" height="44" rx="22" fill="rgba(249, 115, 22, 0.2)" stroke="#f97316" stroke-width="1"/>
+    <text x="665" y="28" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#f97316" text-anchor="middle">Pension</text>
+  </g>
+
+  <!-- Sample calculation display -->
+  <g transform="translate(220, 410)">
+    <rect x="0" y="0" width="500" height="120" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+    <text x="30" y="40" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">Annual Salary</text>
+    <text x="30" y="70" font-family="system-ui, sans-serif" font-size="32" font-weight="700" fill="#ffffff">£50,000</text>
+
+    <line x1="200" y1="20" x2="200" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+    <text x="230" y="40" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">Take Home Pay</text>
+    <text x="230" y="70" font-family="system-ui, sans-serif" font-size="32" font-weight="700" fill="#22c55e">£38,940</text>
+    <text x="230" y="95" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">£3,245/month</text>
+  </g>
+
+  <!-- URL -->
+  <text x="220" y="580" font-family="system-ui, sans-serif" font-size="20" font-weight="500" fill="#64748b">
+    uk-salary-calculator.vercel.app
+  </text>
+
+  <!-- Tax Year Badge -->
+  <g transform="translate(950, 520)">
+    <rect x="0" y="0" width="150" height="50" rx="25" fill="url(#accent-gradient)"/>
+    <text x="75" y="33" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">2025/26</text>
+  </g>
+</svg>

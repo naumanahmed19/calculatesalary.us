@@ -1,0 +1,27 @@
+{
+  "name": "UK Salary Calculator",
+  "short_name": "UK Salary Calc",
+  "description": "Calculate your UK take-home pay after tax, National Insurance, Student Loans and Pension deductions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-GB",
+  "categories": ["finance", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-light-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

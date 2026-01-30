@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(curl:*)",
+      "WebSearch",
+      "Bash(node -e:*)",
+      "Bash(npx tsc:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(wc:*)",
+      "Bash(head:*)",
+      "Bash(npm install)",
+      "Bash(npm cache clean:*)",
+      "Bash(dir /b \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\mortgage-affordability\" \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\tax-refund\" \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\child-benefit\" \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\company-car-tax\" \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\maternity-pay\" \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\capital-gains-tax\")",
+      "Bash(dir /b \"c:\\\\Users\\\\nauma\\\\Downloads\\\\salary-vs-uk-wages-2 \\(1\\)\\\\app\\\\salary\")",
+      "Bash(git init:*)",
+      "Bash(git reset:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
