@@ -118,10 +118,9 @@ export default function RootLayout({
   return (
     <html lang="en-US">
       <head>
-        {/* Add Google Analytics when ready */}
-        {/*
+        {/* Google Analytics */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-ID"
+          src="https://www.googletagmanager.com/gtag/js?id=G-7CCMNLSTRQ"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -129,10 +128,9 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'YOUR-GA-ID');
+            gtag('config', 'G-7CCMNLSTRQ');
           `}
         </Script>
-        */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2563eb" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
