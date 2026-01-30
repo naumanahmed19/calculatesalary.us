@@ -7,25 +7,25 @@ import { TAX_YEAR, formatCurrency } from '@/lib/us-tax-calculator'
 import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from '@/components/ad-unit'
 
 export const metadata: Metadata = {
-  title: `UK Income Percentile Calculator ${TAX_YEAR} - Where Do You Rank?`,
-  description: `Find out where your salary ranks in the UK. See if you're in the top 10%, top 1%, or where you fall in the income distribution. Compare your earnings to UK averages for ${TAX_YEAR}.`,
+  title: `US Income Percentile Calculator ${TAX_YEAR} - Where Do You Rank?`,
+  description: `Find out where your salary ranks in the US. See if you're in the top 10%, top 1%, or where you fall in the income distribution. Compare your earnings to US averages for ${TAX_YEAR}.`,
   keywords: [
-    'uk income percentile',
-    'salary percentile uk',
-    'am i rich uk',
-    'top 10 percent salary uk',
-    'top 1 percent income uk',
-    'uk salary ranking',
-    'where does my salary rank uk',
-    'income distribution uk',
-    'uk wage percentile',
+    'us income percentile',
+    'salary percentile usa',
+    'am i rich usa',
+    'top 10 percent salary us',
+    'top 1 percent income usa',
+    'us salary ranking',
+    'where does my salary rank usa',
+    'income distribution us',
+    'us wage percentile',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Income Percentile Calculator ${TAX_YEAR} - Where Do You Rank?`,
-    description: 'Find out where your salary ranks compared to all UK earners.',
+    title: `US Income Percentile Calculator ${TAX_YEAR} - Where Do You Rank?`,
+    description: 'Find out where your salary ranks compared to all US earners.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/income-percentile',
@@ -35,14 +35,14 @@ export const metadata: Metadata = {
 const percentileSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Income Percentile Calculator',
-  description: `Calculate your income percentile ranking in the UK for ${TAX_YEAR}`,
+  name: 'US Income Percentile Calculator',
+  description: `Calculate your income percentile ranking in the US for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 
@@ -52,54 +52,54 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'What salary puts you in the top 10% in the UK?',
+      name: 'What salary puts you in the top 10% in the US?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'To be in the top 10% of UK earners, you need to earn approximately £60,000 or more per year. This puts you ahead of 90% of all UK taxpayers.',
+        text: 'To be in the top 10% of US individual earners, you need to earn approximately $160,000 or more per year. This puts you ahead of 90% of all US workers.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What salary is top 1% in the UK?',
+      name: 'What salary is top 1% in the US?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'To be in the top 1% of UK earners, you need to earn around £180,000 or more per year. The top 1% of taxpayers contribute about 30% of all income tax collected.',
+        text: 'To be in the top 1% of US individual earners, you need to earn around $480,000 or more per year. The top 1% of taxpayers pay approximately 40% of all federal income tax.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the median salary in the UK?',
+      name: 'What is the median salary in the US?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The median UK salary is approximately £35,000 per year (2024 data). This means half of all workers earn more than this, and half earn less.',
+        text: 'The median US individual income is approximately $56,000 per year (2024 data). This means half of all workers earn more than this, and half earn less.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Am I rich if I earn £100,000?',
+      name: 'Am I rich if I earn $200,000?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'At £100,000, you\'re in approximately the top 3-4% of UK earners. While this is well above average, perception of "rich" varies. You\'d have a comfortable lifestyle but may not feel wealthy, especially in London.',
+        text: 'At $200,000, you\'re in approximately the top 5% of US individual earners. While this is well above average, perception of "rich" varies by location. You\'d have a comfortable lifestyle but may not feel wealthy in high cost-of-living cities like San Francisco or New York.',
       },
     },
   ],
 }
 
-// UK income percentile data (approximated from HMRC statistics)
+// US income percentile data (based on Census Bureau / IRS data)
 const PERCENTILE_DATA = [
-  { percentile: 10, salary: 15000 },
-  { percentile: 20, salary: 20000 },
-  { percentile: 25, salary: 23000 },
-  { percentile: 30, salary: 25000 },
-  { percentile: 40, salary: 28000 },
-  { percentile: 50, salary: 35000 },
-  { percentile: 60, salary: 40000 },
-  { percentile: 70, salary: 47000 },
-  { percentile: 75, salary: 52000 },
-  { percentile: 80, salary: 55000 },
-  { percentile: 90, salary: 60000 },
-  { percentile: 95, salary: 80000 },
-  { percentile: 99, salary: 180000 },
+  { percentile: 10, salary: 20000 },
+  { percentile: 20, salary: 28000 },
+  { percentile: 25, salary: 32000 },
+  { percentile: 30, salary: 36000 },
+  { percentile: 40, salary: 44000 },
+  { percentile: 50, salary: 56000 },
+  { percentile: 60, salary: 68000 },
+  { percentile: 70, salary: 85000 },
+  { percentile: 75, salary: 95000 },
+  { percentile: 80, salary: 110000 },
+  { percentile: 90, salary: 160000 },
+  { percentile: 95, salary: 220000 },
+  { percentile: 99, salary: 480000 },
 ]
 
 export default function IncomePercentilePage() {
@@ -123,13 +123,13 @@ export default function IncomePercentilePage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <span className="inline-flex items-center rounded-full bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent mb-6">
-                Based on HMRC Data
+                Based on Census Bureau Data
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
-                UK Income Percentile Calculator
+                US Income Percentile Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-                Find out where your salary ranks compared to all UK earners. Are you in the top 10%?
+                Find out where your salary ranks compared to all US earners. Are you in the top 10%?
                 Top 1%? See exactly where you stand.
               </p>
             </div>
@@ -150,7 +150,7 @@ export default function IncomePercentilePage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-foreground mb-4 text-center">
-                UK Income Percentile Reference Table
+                US Income Percentile Reference Table
               </h2>
               <p className="text-muted-foreground text-center mb-8">
                 Approximate salary thresholds for each percentile band
@@ -175,7 +175,7 @@ export default function IncomePercentilePage() {
                           {formatCurrency(row.salary, 0)}+
                         </td>
                         <td className="px-4 py-3 text-sm text-right text-muted-foreground hidden sm:table-cell">
-                          Earn more than {row.percentile}% of UK
+                          Earn more than {row.percentile}% of US
                         </td>
                       </tr>
                     ))}
@@ -183,7 +183,7 @@ export default function IncomePercentilePage() {
                 </table>
               </div>
               <p className="text-sm text-muted-foreground mt-4 text-center">
-                Data based on HMRC income statistics. Includes all UK taxpayers.
+                Data based on US Census Bureau and IRS income statistics.
               </p>
             </div>
           </div>
@@ -201,27 +201,27 @@ export default function IncomePercentilePage() {
                 <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50 text-center">
                   <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Threshold</div>
                   <div className="text-2xl font-bold text-foreground">Top 25%</div>
-                  <div className="text-lg text-accent mt-1">£52,000+</div>
+                  <div className="text-lg text-accent mt-1">$95,000+</div>
                   <p className="text-sm text-muted-foreground mt-3">
-                    You earn more than three-quarters of UK workers
+                    You earn more than three-quarters of US workers
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-accent/5 p-6 ring-1 ring-accent/20 text-center">
                   <div className="text-xs text-accent uppercase tracking-wide mb-2">Popular Target</div>
                   <div className="text-2xl font-bold text-foreground">Top 10%</div>
-                  <div className="text-lg text-accent mt-1">£60,000+</div>
+                  <div className="text-lg text-accent mt-1">$160,000+</div>
                   <p className="text-sm text-muted-foreground mt-3">
-                    You're in the top decile of UK earners
+                    You're in the top decile of US earners
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 p-6 ring-1 ring-emerald-200 dark:ring-emerald-800 text-center">
                   <div className="text-xs text-emerald-600 dark:text-emerald-400 uppercase tracking-wide mb-2">Elite</div>
                   <div className="text-2xl font-bold text-foreground">Top 1%</div>
-                  <div className="text-lg text-emerald-600 dark:text-emerald-400 mt-1">£180,000+</div>
+                  <div className="text-lg text-emerald-600 dark:text-emerald-400 mt-1">$480,000+</div>
                   <p className="text-sm text-muted-foreground mt-3">
-                    Elite earners - pays ~30% of all UK income tax
+                    Elite earners - pays ~40% of all US income tax
                   </p>
                 </div>
               </div>

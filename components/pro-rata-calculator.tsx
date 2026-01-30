@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { calculateSalary, formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculator'
+import { type FilingStatus } from '@/lib/us-tax-config'
 import { Percent, Wallet } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 interface ProRataCalculatorProps {
   initialSalary?: number
@@ -14,14 +16,16 @@ interface ProRataCalculatorProps {
 }
 
 export function ProRataCalculator({
-  initialSalary = 30000,
-  initialFteHours = 37.5,
-  initialYourHours = 22.5,
+  initialSalary = 75000,
+  initialFteHours = 40,
+  initialYourHours = 24,
 }: ProRataCalculatorProps) {
   const [fteSalary, setFteSalary] = useState(initialSalary)
   const [fteHours, setFteHours] = useState(initialFteHours)
   const [yourHours, setYourHours] = useState(initialYourHours)
   const [inputMode, setInputMode] = useState<'hours' | 'days'>('days')
+  const [filingStatus, setFilingStatus] = useState<FilingStatus>('single')
+  const [state, setState] = useState('TX')
 
   const hoursPerDay = fteHours / 5
   const yourDays = yourHours / hoursPerDay
@@ -29,24 +33,21 @@ export function ProRataCalculator({
   const proRataSalary = (fteSalary / fteHours) * yourHours
   const percentageOfFte = (yourHours / fteHours) * 100
 
-  const result = calculateSalary({
-    baseSalary: proRataSalary,
-    bonus: 0,
-    cashAllowances: 0,
-    pensionContribution: 0,
-    studentLoan: 'none',
-  })
+  const result = useMemo(() => calculateSalary({
+    grossSalary: proRataSalary,
+    filingStatus,
+    state,
+  }), [proRataSalary, filingStatus, state])
 
-  const fteResult = calculateSalary({
-    baseSalary: fteSalary,
-    bonus: 0,
-    cashAllowances: 0,
-    pensionContribution: 0,
-    studentLoan: 'none',
-  })
+  const fteResult = useMemo(() => calculateSalary({
+    grossSalary: fteSalary,
+    filingStatus,
+    state,
+  }), [fteSalary, filingStatus, state])
 
-  const fteHoliday = 25
-  const proRataHoliday = fteHoliday * (yourHours / fteHours)
+  // US typical PTO is 10-15 days
+  const ftePTO = 15
+  const proRataPTO = ftePTO * (yourHours / fteHours)
 
   const handleDaysChange = (days: number) => {
     const hours = days * hoursPerDay
@@ -74,7 +75,7 @@ export function ProRataCalculator({
                 Full-Time Equivalent (FTE) Salary
               </Label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-medium text-muted-foreground">£</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-medium text-muted-foreground">$</span>
                 <Input
                   id="fteSalary"
                   type="number"
@@ -87,7 +88,7 @@ export function ProRataCalculator({
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">/year</span>
               </div>
               <div className="flex flex-wrap gap-2 pt-1">
-                {[26000, 28000, 30000, 35000, 40000].map((salary) => (
+                {[50000, 60000, 75000, 100000, 125000].map((salary) => (
                   <button
                     key={salary}
                     type="button"
@@ -98,7 +99,7 @@ export function ProRataCalculator({
                         : 'bg-muted text-muted-foreground hover:bg-muted/80'
                     }`}
                   >
-                    £{(salary / 1000)}k
+                    ${(salary / 1000)}k
                   </button>
                 ))}
               </div>
@@ -113,14 +114,14 @@ export function ProRataCalculator({
                 id="fteHours"
                 type="number"
                 value={fteHours}
-                onChange={(e) => setFteHours(parseFloat(e.target.value) || 37.5)}
+                onChange={(e) => setFteHours(parseFloat(e.target.value) || 40)}
                 step={0.5}
                 min={1}
                 max={60}
                 className="h-12 text-lg font-semibold bg-background border-border"
               />
               <div className="flex flex-wrap gap-2 pt-1">
-                {[35, 37.5, 40].map((hours) => (
+                {[35, 37.5, 40, 45].map((hours) => (
                   <button
                     key={hours}
                     type="button"
@@ -134,6 +135,37 @@ export function ProRataCalculator({
                     {hours}hrs
                   </button>
                 ))}
+              </div>
+            </div>
+
+            {/* Filing Status & State */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Filing Status</Label>
+                <Select value={filingStatus} onValueChange={(v) => setFilingStatus(v as FilingStatus)}>
+                  <SelectTrigger className="h-10">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="single">Single</SelectItem>
+                    <SelectItem value="married_jointly">Married Jointly</SelectItem>
+                    <SelectItem value="head_of_household">Head of Household</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>State</Label>
+                <Select value={state} onValueChange={setState}>
+                  <SelectTrigger className="h-10">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="TX">Texas</SelectItem>
+                    <SelectItem value="FL">Florida</SelectItem>
+                    <SelectItem value="CA">California</SelectItem>
+                    <SelectItem value="NY">New York</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
@@ -202,7 +234,7 @@ export function ProRataCalculator({
                     className="h-12 text-lg font-semibold bg-background border-border"
                   />
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {[15, 20, 22.5, 25, 30].map((hours) => (
+                    {[16, 20, 24, 30, 32].map((hours) => (
                       <button
                         key={hours}
                         type="button"
@@ -263,28 +295,34 @@ export function ProRataCalculator({
             {/* Deductions */}
             <div className="space-y-2 text-sm">
               <div className="flex justify-between py-2 border-b border-border/50">
-                <span className="text-muted-foreground">Income Tax</span>
-                <span className="text-destructive font-medium">-{formatCurrency(result.yearly.incomeTax, 0)}/yr</span>
+                <span className="text-muted-foreground">Federal Tax</span>
+                <span className="text-destructive font-medium">-{formatCurrency(result.yearly.federalTax, 0)}/yr</span>
               </div>
               <div className="flex justify-between py-2 border-b border-border/50">
-                <span className="text-muted-foreground">National Insurance</span>
-                <span className="text-destructive font-medium">-{formatCurrency(result.yearly.nationalInsurance, 0)}/yr</span>
+                <span className="text-muted-foreground">FICA (SS + Medicare)</span>
+                <span className="text-destructive font-medium">-{formatCurrency(result.yearly.socialSecurity + result.yearly.medicare, 0)}/yr</span>
               </div>
+              {result.yearly.stateTax > 0 && (
+                <div className="flex justify-between py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">State Tax</span>
+                  <span className="text-destructive font-medium">-{formatCurrency(result.yearly.stateTax, 0)}/yr</span>
+                </div>
+              )}
               <div className="flex justify-between py-2">
                 <span className="text-foreground font-medium">Total Deductions</span>
                 <span className="text-destructive font-semibold">-{formatCurrency(result.yearly.totalDeductions, 0)}/yr</span>
               </div>
             </div>
 
-            {/* Holiday Entitlement */}
+            {/* PTO Entitlement */}
             <div className="rounded-xl bg-accent/10 p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium text-foreground">Pro Rata Holiday</div>
-                  <div className="text-xs text-muted-foreground">Based on {fteHoliday} days FTE</div>
+                  <div className="text-sm font-medium text-foreground">Pro Rata PTO</div>
+                  <div className="text-xs text-muted-foreground">Based on {ftePTO} days FTE</div>
                 </div>
                 <div className="text-xl font-bold text-accent">
-                  {proRataHoliday.toFixed(1)} days
+                  {proRataPTO.toFixed(1)} days
                 </div>
               </div>
             </div>
@@ -306,7 +344,7 @@ export function ProRataCalculator({
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Effective Hourly Rate</span>
                   <span className="font-semibold text-accent">
-                    £{(result.yearly.takeHomePay / (yourHours * 52)).toFixed(2)}/hr
+                    ${(result.yearly.takeHomePay / (yourHours * 52)).toFixed(2)}/hr
                   </span>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import type { MetadataRoute } from "next";
 const BASE_URL = "https://calculatesalary.us";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Static pages
+  // Static pages - US-specific calculators only
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -21,25 +21,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/salary-after-tax`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/compare`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/tax-brackets`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/tax-bands`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/national-insurance`,
+      url: `${BASE_URL}/state-taxes`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/fica-taxes`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/student-loans`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/umbrella-calculator`,
+      url: `${BASE_URL}/401k-calculator`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -51,13 +69,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/employer-cost`,
+      url: `${BASE_URL}/hourly-to-salary`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/pro-rata`,
+      url: `${BASE_URL}/employer-cost`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -81,25 +99,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/dividend-calculator`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: `${BASE_URL}/pension-calculator`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/salary-sacrifice`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/marriage-allowance`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -111,37 +111,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/tax-code-checker`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: `${BASE_URL}/pay-rise`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/self-employed-tax`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/redundancy-calculator`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/scotland`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/london-salary`,
+      url: `${BASE_URL}/self-employment-tax`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -151,12 +127,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/average-salary-uk`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
     },
     {
       url: `${BASE_URL}/net-to-gross`,
@@ -177,33 +147,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/child-benefit`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/company-car-tax`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/maternity-pay`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/work-from-home-tax-relief`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: `${BASE_URL}/capital-gains-tax`,
       lastModified: new Date(),
       changeFrequency: "yearly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/cost-of-living`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
@@ -227,17 +179,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Add common salaries
   COMMON_SALARIES.forEach((s) => allSalaries.add(s));
 
-  // Add every £1,000 increment from £15,000 to £100,000
+  // Add every $1,000 increment from $15,000 to $100,000
   for (let s = 15000; s <= 100000; s += 1000) {
     allSalaries.add(s);
   }
 
-  // Add every £5,000 increment from £100,000 to £200,000
+  // Add every $5,000 increment from $100,000 to $200,000
   for (let s = 100000; s <= 200000; s += 5000) {
     allSalaries.add(s);
   }
 
-  // Add every £10,000 increment from £200,000 to £500,000
+  // Add every $10,000 increment from $200,000 to $500,000
   for (let s = 200000; s <= 500000; s += 10000) {
     allSalaries.add(s);
   }
@@ -260,18 +212,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     }),
   );
-
-  // Generate umbrella calculator day rate pages
-  const dayRates = [
-    250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950,
-    1000, 1100, 1200, 1500,
-  ];
-  const dayRatePages: MetadataRoute.Sitemap = dayRates.map((rate) => ({
-    url: `${BASE_URL}/umbrella-calculator/${rate}`,
-    lastModified: new Date(),
-    changeFrequency: "yearly" as const,
-    priority: rate >= 400 && rate <= 800 ? 0.7 : 0.5,
-  }));
 
   // Generate salary-after-tax pages
   const salaryAfterTaxAmounts = [
@@ -352,20 +292,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // Generate London salary pages
-  const londonSalaries = [
-    25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000, 65000, 70000, 75000,
-    80000, 90000, 100000, 120000, 150000,
-  ];
-  const londonSalaryPages: MetadataRoute.Sitemap = londonSalaries.map(
-    (salary) => ({
-      url: `${BASE_URL}/london-salary/${salary}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: salary >= 40000 && salary <= 80000 ? 0.7 : 0.5,
-    }),
-  );
-
   // Generate income percentile pages
   const percentileSalaries = [
     20000, 25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000, 65000, 70000,
@@ -374,20 +300,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const incomePercentilePages: MetadataRoute.Sitemap = percentileSalaries.map(
     (salary) => ({
       url: `${BASE_URL}/income-percentile/${salary}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: salary >= 30000 && salary <= 80000 ? 0.7 : 0.5,
-    }),
-  );
-
-  // Generate Scotland tax pages
-  const scotlandSalaries = [
-    20000, 25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000, 65000, 70000,
-    75000, 80000, 90000, 100000, 125000, 150000,
-  ];
-  const scotlandPages: MetadataRoute.Sitemap = scotlandSalaries.map(
-    (salary) => ({
-      url: `${BASE_URL}/scotland/${salary}`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
       priority: salary >= 30000 && salary <= 80000 ? 0.7 : 0.5,
@@ -407,16 +319,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: amount >= 2000 && amount <= 5000 ? 0.7 : 0.5,
     }),
   );
-
-  // Generate cost of living pages
-  const costOfLivingStaticPages: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/cost-of-living`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-  ];
 
   // Country pages
   const countryCodeMap: Record<string, string> = {
@@ -469,20 +371,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  // Generate child benefit pages (HICBC-relevant income levels)
-  const childBenefitIncomes = [
-    50000, 55000, 60000, 62000, 64000, 66000, 68000, 70000, 72000, 74000,
-    76000, 78000, 80000, 85000, 90000, 100000,
-  ];
-  const childBenefitPages: MetadataRoute.Sitemap = childBenefitIncomes.map(
-    (income) => ({
-      url: `${BASE_URL}/child-benefit/${income}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: income >= 60000 && income <= 80000 ? 0.7 : 0.5,
-    })
-  );
-
   // Generate capital gains tax pages
   const capitalGains = [
     10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000,
@@ -497,57 +385,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  // Generate maternity pay pages
-  const maternitySalaries = [
-    20000, 25000, 28000, 30000, 32000, 35000, 38000, 40000, 45000,
-    50000, 55000, 60000, 70000, 80000, 100000,
-  ];
-  const maternityPayPages: MetadataRoute.Sitemap = maternitySalaries.map(
-    (salary) => ({
-      url: `${BASE_URL}/maternity-pay/${salary}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: salary >= 25000 && salary <= 50000 ? 0.7 : 0.5,
-    })
-  );
-
-  // Generate company car tax pages (P11D values)
-  const p11dValues = [
-    20000, 25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000,
-    70000, 80000, 90000, 100000,
-  ];
-  const companyCarTaxPages: MetadataRoute.Sitemap = p11dValues.map(
-    (p11d) => ({
-      url: `${BASE_URL}/company-car-tax/${p11d}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: p11d >= 30000 && p11d <= 60000 ? 0.7 : 0.5,
-    })
-  );
-
   return [
     ...staticPages,
     ...jobSalaryPages,
     ...salaryPages,
-    ...dayRatePages,
     ...salaryAfterTaxPages,
     ...hourlyRatePages,
     ...hourlyCalcPages,
     ...employerCostPages,
     ...comparisonPages,
-    ...londonSalaryPages,
     ...incomePercentilePages,
-    ...scotlandPages,
     ...netToGrossPages,
-    ...costOfLivingStaticPages,
     ...costOfLivingCountryPages,
     ...costOfLivingCityPages,
     ...costOfLivingComparePages,
     ...mortgageAffordabilityPages,
-    ...childBenefitPages,
     ...capitalGainsTaxPages,
-    ...maternityPayPages,
-    ...companyCarTaxPages,
   ];
 }
 

@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
-import { formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculator'
-import { Receipt, PoundSterling, AlertCircle } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { calculateSalary, formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculator'
+import { currentTaxConfig, type FilingStatus } from '@/lib/us-tax-config'
+import { Receipt, DollarSign, AlertCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
@@ -26,167 +27,185 @@ interface TaxRefundCalculatorProps {
   initialSalary?: number
 }
 
-export function TaxRefundCalculator({ initialSalary = 35000 }: TaxRefundCalculatorProps) {
+export function TaxRefundCalculator({ initialSalary = 75000 }: TaxRefundCalculatorProps) {
   const [annualSalary, setAnnualSalary] = useState(initialSalary)
-  const [taxCode, setTaxCode] = useState('1257L')
-  const [workFromHomeDays, setWorkFromHomeDays] = useState(0)
-  const [uniformExpenses, setUniformExpenses] = useState(0)
-  const [professionalFees, setProfessionalFees] = useState(0)
-  const [mileageClaimable, setMileageClaimable] = useState(0)
-  const [pensionNotClaimed, setPensionNotClaimed] = useState(0)
-  const [giftAidDonations, setGiftAidDonations] = useState(0)
+  const [filingStatus, setFilingStatus] = useState<FilingStatus>('single')
+  const [state, setState] = useState('TX')
+  const [federalWithheld, setFederalWithheld] = useState(0)
+  const [stateWithheld, setStateWithheld] = useState(0)
+  const [retirement401k, setRetirement401k] = useState(0)
+  const [childrenUnder17, setChildrenUnder17] = useState(0)
+  const [studentLoanInterest, setStudentLoanInterest] = useState(0)
+  const [charitableDonations, setCharitableDonations] = useState(0)
 
-  // Standard personal allowance
-  const PERSONAL_ALLOWANCE = 12570
+  const calculation = useMemo(() => {
+    // Calculate actual tax liability
+    const result = calculateSalary({
+      grossSalary: annualSalary,
+      filingStatus,
+      state,
+      retirement401k,
+    })
 
-  // Calculate tax code allowance
-  const getTaxCodeAllowance = (code: string): number => {
-    const numMatch = code.match(/\d+/)
-    if (numMatch) {
-      return parseInt(numMatch[0]) * 10
+    // Child Tax Credit ($2,000 per child under 17, phases out at higher incomes)
+    const ctcPhaseOutStart = filingStatus === 'married_jointly' ? 400000 : 200000
+    let childTaxCredit = childrenUnder17 * 2000
+    if (annualSalary > ctcPhaseOutStart) {
+      const reduction = Math.floor((annualSalary - ctcPhaseOutStart) / 1000) * 50
+      childTaxCredit = Math.max(0, childTaxCredit - reduction)
     }
-    return PERSONAL_ALLOWANCE
-  }
 
-  const actualAllowance = getTaxCodeAllowance(taxCode)
-  const expectedAllowance = PERSONAL_ALLOWANCE
+    // Student loan interest deduction (up to $2,500, phases out)
+    const studentLoanDeduction = Math.min(studentLoanInterest, 2500)
+    const studentLoanTaxSavings = studentLoanDeduction * (result.yearly.marginalTaxRate / 100)
 
-  // Tax rate determination
-  const getTaxRate = (salary: number): number => {
-    if (salary <= 50270) return 0.20
-    if (salary <= 125140) return 0.40
-    return 0.45
-  }
+    // Charitable donations (if itemizing would be beneficial)
+    const standardDeduction = currentTaxConfig.standardDeduction[filingStatus]
+    const potentialItemized = charitableDonations // Simplified - just donations
+    const itemizingBeneficial = potentialItemized > standardDeduction
+    const charitableTaxSavings = itemizingBeneficial
+      ? (potentialItemized - standardDeduction) * (result.yearly.marginalTaxRate / 100)
+      : 0
 
-  const taxRate = getTaxRate(annualSalary)
+    // Total credits and adjustments
+    const totalCredits = childTaxCredit
+    const totalAdjustments = studentLoanTaxSavings + charitableTaxSavings
 
-  // Work from home relief (£6/week flat rate)
-  const wfhRelief = workFromHomeDays > 0 ? 6 * 52 : 0
-  const wfhTaxSaving = wfhRelief * taxRate
+    // Actual tax after credits
+    const actualFederalTax = Math.max(0, result.yearly.federalTax - totalCredits - totalAdjustments)
+    const actualStateTax = result.yearly.stateTax
 
-  // Uniform/tools allowance (flat rate varies by profession, using £60 as typical)
-  const uniformTaxSaving = uniformExpenses * taxRate
+    // Calculate refund or amount owed
+    const federalRefund = federalWithheld - actualFederalTax
+    const stateRefund = stateWithheld - actualStateTax
+    const totalRefund = federalRefund + stateRefund
 
-  // Professional fees (subscriptions to professional bodies)
-  const professionalFeesSaving = professionalFees * taxRate
+    // Estimated withholding if not provided
+    const estimatedFederalWithholding = result.yearly.federalTax
+    const estimatedStateWithholding = result.yearly.stateTax
 
-  // Business mileage (45p per mile first 10,000, 25p after)
-  const mileageTaxSaving = mileageClaimable * taxRate
+    return {
+      actualFederalTax,
+      actualStateTax,
+      federalRefund,
+      stateRefund,
+      totalRefund,
+      childTaxCredit,
+      studentLoanTaxSavings,
+      charitableTaxSavings,
+      totalCredits,
+      totalAdjustments,
+      estimatedFederalWithholding,
+      estimatedStateWithholding,
+      marginalRate: result.yearly.marginalTaxRate,
+      effectiveRate: annualSalary > 0 ? (actualFederalTax / annualSalary) * 100 : 0,
+    }
+  }, [annualSalary, filingStatus, state, federalWithheld, stateWithheld, retirement401k, childrenUnder17, studentLoanInterest, charitableDonations])
 
-  // Pension contributions (higher rate only)
-  const pensionAdditionalRelief = taxRate > 0.20 ? pensionNotClaimed * (taxRate - 0.20) : 0
-
-  // Gift Aid (higher rate relief)
-  const giftAidRelief = taxRate > 0.20 ? giftAidDonations * 0.25 * (taxRate - 0.20) : 0
-
-  // Wrong tax code refund
-  const taxCodeDifference = expectedAllowance - actualAllowance
-  const taxCodeRefund = taxCodeDifference > 0 ? taxCodeDifference * taxRate : 0
-
-  // Total potential refund
-  const totalRefund = wfhTaxSaving + uniformTaxSaving + professionalFeesSaving +
-                      mileageTaxSaving + pensionAdditionalRelief + giftAidRelief + taxCodeRefund
+  // Auto-estimate withholding if user hasn't entered it
+  const displayFederalWithheld = federalWithheld || calculation.estimatedFederalWithholding
+  const displayStateWithheld = stateWithheld || calculation.estimatedStateWithholding
 
   return (
     <CalculatorLayout>
-      {/* Results Panel - Will appear on left due to reverse */}
+      {/* Results Panel */}
       <ResultsPanel
         icon={Receipt}
-        title="Your Potential Refund"
-        description={`Based on ${taxRate * 100}% tax rate`}
+        title="Your Tax Refund Estimate"
+        description={`Based on ${calculation.marginalRate}% marginal rate`}
         position="left"
       >
         {/* Total Refund */}
         <ResultValue
-          value={formatCurrency(totalRefund, 0)}
-          label="Estimated Tax Refund"
-          valueClassName={totalRefund > 0 ? 'text-emerald-600 dark:text-emerald-400' : ''}
+          value={calculation.totalRefund >= 0 ? `+${formatCurrency(calculation.totalRefund, 0)}` : formatCurrency(calculation.totalRefund, 0)}
+          label={calculation.totalRefund >= 0 ? "Estimated Refund" : "Estimated Amount Owed"}
+          valueClassName={calculation.totalRefund >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'}
         />
 
         {/* Breakdown */}
         <div className="space-y-1">
-          {taxCodeRefund > 0 && (
+          <ResultRow
+            label="Federal Refund"
+            value={calculation.federalRefund >= 0 ? `+${formatCurrency(calculation.federalRefund, 0)}` : formatCurrency(calculation.federalRefund, 0)}
+            valueClassName={calculation.federalRefund >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'}
+          />
+          {calculation.stateRefund !== 0 && (
             <ResultRow
-              label="Wrong Tax Code"
-              value={`+${formatCurrency(taxCodeRefund)}`}
-              valueClassName="text-emerald-600 dark:text-emerald-400"
-            />
-          )}
-          {wfhTaxSaving > 0 && (
-            <ResultRow
-              label="Work From Home"
-              value={`+${formatCurrency(wfhTaxSaving)}`}
-              valueClassName="text-emerald-600 dark:text-emerald-400"
-            />
-          )}
-          {uniformTaxSaving > 0 && (
-            <ResultRow
-              label="Uniform/Tools"
-              value={`+${formatCurrency(uniformTaxSaving)}`}
-              valueClassName="text-emerald-600 dark:text-emerald-400"
-            />
-          )}
-          {professionalFeesSaving > 0 && (
-            <ResultRow
-              label="Professional Fees"
-              value={`+${formatCurrency(professionalFeesSaving)}`}
-              valueClassName="text-emerald-600 dark:text-emerald-400"
-            />
-          )}
-          {mileageTaxSaving > 0 && (
-            <ResultRow
-              label="Mileage Claims"
-              value={`+${formatCurrency(mileageTaxSaving)}`}
-              valueClassName="text-emerald-600 dark:text-emerald-400"
-              showBorder={false}
+              label="State Refund"
+              value={calculation.stateRefund >= 0 ? `+${formatCurrency(calculation.stateRefund, 0)}` : formatCurrency(calculation.stateRefund, 0)}
+              valueClassName={calculation.stateRefund >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'}
             />
           )}
         </div>
 
+        {/* Credits Applied */}
+        {(calculation.childTaxCredit > 0 || calculation.studentLoanTaxSavings > 0) && (
+          <ResultCard variant="success">
+            <div className="text-sm font-medium text-foreground mb-2">Credits & Deductions Applied</div>
+            {calculation.childTaxCredit > 0 && (
+              <div className="flex justify-between text-xs">
+                <span>Child Tax Credit ({childrenUnder17} children)</span>
+                <span className="font-semibold">{formatCurrency(calculation.childTaxCredit, 0)}</span>
+              </div>
+            )}
+            {calculation.studentLoanTaxSavings > 0 && (
+              <div className="flex justify-between text-xs mt-1">
+                <span>Student Loan Interest Savings</span>
+                <span className="font-semibold">{formatCurrency(calculation.studentLoanTaxSavings, 0)}</span>
+              </div>
+            )}
+          </ResultCard>
+        )}
+
         {/* Status Message */}
-        <ResultCard variant={totalRefund > 0 ? 'success' : 'accent'}>
-          {totalRefund > 0 ? (
+        <ResultCard variant={calculation.totalRefund >= 0 ? 'success' : 'accent'}>
+          {calculation.totalRefund >= 0 ? (
             <div>
-              <div className="text-sm font-medium text-foreground">You may be owed a refund!</div>
+              <div className="text-sm font-medium text-foreground">You may get a refund!</div>
               <div className="text-xs text-muted-foreground mt-1">
-                Contact HMRC or complete a Self Assessment to claim
+                File your return to claim your refund from the IRS
               </div>
             </div>
           ) : (
             <div>
-              <div className="text-sm font-medium text-foreground">No refund identified</div>
+              <div className="text-sm font-medium text-foreground">You may owe additional taxes</div>
               <div className="text-xs text-muted-foreground mt-1">
-                Add expenses above to check for potential claims
+                Consider adjusting your W-4 withholding to avoid owing next year
               </div>
             </div>
           )}
         </ResultCard>
 
-        {/* Claim Years */}
+        {/* Tax Summary */}
         <ResultCard variant="accent">
-          <div className="text-sm font-medium text-foreground">Claim for Previous Years</div>
-          <div className="text-xs text-muted-foreground mt-1">
-            You can claim tax refunds for the last 4 tax years. If you&apos;ve been missing out,
-            multiply your annual refund by up to 4.
-          </div>
-          {totalRefund > 0 && (
-            <div className="mt-2 text-lg font-bold text-accent">
-              Up to {formatCurrency(totalRefund * 4, 0)} over 4 years
+          <div className="text-sm font-medium text-foreground">Tax Summary</div>
+          <div className="mt-2 space-y-1 text-xs">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Effective Federal Rate</span>
+              <span className="font-semibold">{calculation.effectiveRate.toFixed(1)}%</span>
             </div>
-          )}
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Marginal Rate</span>
+              <span className="font-semibold">{calculation.marginalRate}%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Federal Tax Owed</span>
+              <span className="font-semibold">{formatCurrency(calculation.actualFederalTax, 0)}</span>
+            </div>
+          </div>
         </ResultCard>
       </ResultsPanel>
 
-      {/* Input Panel - Will appear on right due to reverse */}
+      {/* Input Panel */}
       <InputPanel
-        icon={PoundSterling}
-        title="Check Your Tax Situation"
-        description={`See if you're owed a tax refund for ${TAX_YEAR}`}
+        icon={DollarSign}
+        title="Your Tax Situation"
+        description={`Estimate your ${TAX_YEAR} tax refund`}
         position="right"
       >
-        {/* Annual Salary */}
+        {/* Annual Income */}
         <div className="space-y-2">
-          <Label htmlFor="annualSalary">Annual Salary</Label>
+          <Label htmlFor="annualSalary">Annual W-2 Income</Label>
           <CurrencyInput
             id="annualSalary"
             value={annualSalary}
@@ -195,78 +214,88 @@ export function TaxRefundCalculator({ initialSalary = 35000 }: TaxRefundCalculat
           />
         </div>
 
-        {/* Tax Code */}
+        {/* Filing Status */}
         <div className="space-y-2">
-          <Label htmlFor="taxCode">Your Tax Code</Label>
-          <Select value={taxCode} onValueChange={setTaxCode}>
+          <Label>Filing Status</Label>
+          <Select value={filingStatus} onValueChange={(v) => setFilingStatus(v as FilingStatus)}>
             <SelectTrigger className="h-12 text-lg font-semibold bg-background border-border">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1257L">1257L (Standard)</SelectItem>
-              <SelectItem value="1100L">1100L (Emergency)</SelectItem>
-              <SelectItem value="BR">BR (Basic Rate)</SelectItem>
-              <SelectItem value="0T">0T (No Allowance)</SelectItem>
-              <SelectItem value="K">K Code</SelectItem>
+              <SelectItem value="single">Single</SelectItem>
+              <SelectItem value="married_jointly">Married Filing Jointly</SelectItem>
+              <SelectItem value="married_separately">Married Filing Separately</SelectItem>
+              <SelectItem value="head_of_household">Head of Household</SelectItem>
             </SelectContent>
           </Select>
-          {taxCode !== '1257L' && (
-            <p className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
-              <AlertCircle className="h-3 w-3" />
-              You may be on the wrong tax code
-            </p>
-          )}
         </div>
 
-        {/* Work from Home */}
+        {/* State */}
         <div className="space-y-2">
-          <Label htmlFor="wfhDays">Work From Home Days/Week</Label>
+          <Label>State</Label>
+          <Select value={state} onValueChange={setState}>
+            <SelectTrigger className="h-12 text-lg font-semibold bg-background border-border">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="TX">Texas (no state tax)</SelectItem>
+              <SelectItem value="FL">Florida (no state tax)</SelectItem>
+              <SelectItem value="CA">California</SelectItem>
+              <SelectItem value="NY">New York</SelectItem>
+              <SelectItem value="WA">Washington (no state tax)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Federal Withheld */}
+        <div className="space-y-2">
+          <Label htmlFor="federalWithheld">Federal Tax Withheld (from W-2)</Label>
+          <CurrencyInput
+            id="federalWithheld"
+            value={federalWithheld}
+            onChange={setFederalWithheld}
+            step={100}
+          />
+          <p className="text-xs text-muted-foreground">Box 2 on your W-2. Leave at 0 to estimate.</p>
+        </div>
+
+        {/* 401k Contributions */}
+        <div className="space-y-2">
+          <Label htmlFor="retirement401k">401(k) Contributions</Label>
+          <CurrencyInput
+            id="retirement401k"
+            value={retirement401k}
+            onChange={setRetirement401k}
+            step={500}
+          />
+          <p className="text-xs text-muted-foreground">Pre-tax retirement contributions</p>
+        </div>
+
+        {/* Children */}
+        <div className="space-y-2">
+          <Label htmlFor="children">Children Under 17</Label>
           <Input
-            id="wfhDays"
+            id="children"
             type="number"
-            value={workFromHomeDays}
-            onChange={(e) => setWorkFromHomeDays(parseInt(e.target.value) || 0)}
+            value={childrenUnder17}
+            onChange={(e) => setChildrenUnder17(parseInt(e.target.value) || 0)}
             min={0}
-            max={5}
+            max={10}
             className="h-12 text-lg font-semibold bg-background border-border"
           />
-          <p className="text-xs text-muted-foreground">£6/week tax relief if required by employer</p>
+          <p className="text-xs text-muted-foreground">$2,000 Child Tax Credit per child</p>
         </div>
 
-        {/* Uniform/Tools */}
+        {/* Student Loan Interest */}
         <div className="space-y-2">
-          <Label htmlFor="uniform">Uniform/Tools Expenses</Label>
+          <Label htmlFor="studentLoan">Student Loan Interest Paid</Label>
           <CurrencyInput
-            id="uniform"
-            value={uniformExpenses}
-            onChange={setUniformExpenses}
-            step={10}
+            id="studentLoan"
+            value={studentLoanInterest}
+            onChange={setStudentLoanInterest}
+            step={100}
           />
-          <p className="text-xs text-muted-foreground">Cleaning/maintaining work uniform or tools</p>
-        </div>
-
-        {/* Professional Fees */}
-        <div className="space-y-2">
-          <Label htmlFor="profFees">Professional Body Fees</Label>
-          <CurrencyInput
-            id="profFees"
-            value={professionalFees}
-            onChange={setProfessionalFees}
-            step={10}
-          />
-          <p className="text-xs text-muted-foreground">HMRC-approved professional subscriptions</p>
-        </div>
-
-        {/* Mileage */}
-        <div className="space-y-2">
-          <Label htmlFor="mileage">Business Mileage (£ value)</Label>
-          <CurrencyInput
-            id="mileage"
-            value={mileageClaimable}
-            onChange={setMileageClaimable}
-            step={10}
-          />
-          <p className="text-xs text-muted-foreground">45p/mile for first 10,000, 25p/mile after</p>
+          <p className="text-xs text-muted-foreground">Deductible up to $2,500</p>
         </div>
       </InputPanel>
     </CalculatorLayout>
