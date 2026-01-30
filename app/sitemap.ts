@@ -1,5 +1,5 @@
 import { getAllCountries, getAllCities, getComparisonPairs } from "@/lib/cost-of-living";
-import { getAllJobSlugs } from "@/lib/uk-job-salaries";
+import { getAllJobSlugs } from "@/lib/us-job-salaries";
 import { COMMON_SALARIES } from "@/lib/us-tax-calculator";
 import type { MetadataRoute } from "next";
 

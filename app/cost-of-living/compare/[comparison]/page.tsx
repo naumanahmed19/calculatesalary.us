@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     calculateEquivalentSalary,
-    formatGBP,
+    formatUSD,
     getCityBySlug,
     getComparisonPairs
 } from "@/lib/cost-of-living";
@@ -302,15 +302,15 @@ export default async function ComparisonPage({ params }: PageProps) {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/50">
-                    {[30000, 40000, 50000, 60000, 80000, 100000].map((salary) => {
+                    {[50000, 75000, 100000, 125000, 150000, 200000].map((salary) => {
                       const equivalent = calculateEquivalentSalary(salary, city1.slug, city2.slug);
                       const diff = equivalent - salary;
 
                       return (
                         <tr key={salary} className="hover:bg-muted/30">
-                          <td className="px-4 py-3 text-sm font-medium text-foreground">{formatGBP(salary)}</td>
+                          <td className="px-4 py-3 text-sm font-medium text-foreground">{formatUSD(salary)}</td>
                           <td className="px-4 py-3 text-sm text-accent font-semibold">
-                            {formatGBP(equivalent)}
+                            {formatUSD(equivalent)}
                           </td>
                           <td className={`px-4 py-3 text-sm text-right ${
                             diff < 0
@@ -318,8 +318,8 @@ export default async function ComparisonPage({ params }: PageProps) {
                               : "text-rose-600 dark:text-rose-400"
                           }`}>
                             {diff < 0
-                              ? `${formatGBP(Math.abs(diff))} less`
-                              : `${formatGBP(diff)} more`}
+                              ? `${formatUSD(Math.abs(diff))} less`
+                              : `${formatUSD(diff)} more`}
                           </td>
                         </tr>
                       );
@@ -347,8 +347,8 @@ export default async function ComparisonPage({ params }: PageProps) {
                 has {city2.rentIndex}.
               </p>
               <p>
-                <strong>Average Salaries:</strong> {city1.name}: {formatGBP(city1.averageNetSalaryGBP)}/month vs{" "}
-                {city2.name}: {formatGBP(city2.averageNetSalaryGBP)}/month (both in GBP).
+                <strong>Average Salaries:</strong> {city1.name}: {formatUSD(city1.averageNetSalaryUSD)}/month vs{" "}
+                {city2.name}: {formatUSD(city2.averageNetSalaryUSD)}/month (both in USD).
               </p>
               <p>
                 Out of 6 categories, <strong>{city1.name}</strong> wins {city1Wins}, while{" "}
@@ -358,7 +358,7 @@ export default async function ComparisonPage({ params }: PageProps) {
                 <Link href="/cost-of-living" className="text-accent hover:underline">
                   Compare more cities
                 </Link>{" "}or calculate your{" "}
-                <Link href="/" className="text-accent hover:underline">UK take-home pay</Link>.
+                <Link href="/" className="text-accent hover:underline">US take-home pay</Link>.
               </p>
             </div>
           </div>

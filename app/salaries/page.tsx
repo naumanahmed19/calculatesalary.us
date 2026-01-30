@@ -2,32 +2,32 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SidebarLayout } from '@/components/sidebar-layout'
 import { formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculator'
-import { getCategoriesWithCounts, UK_JOB_SALARIES } from '@/lib/uk-job-salaries'
+import { getCategoriesWithCounts, US_JOB_SALARIES } from '@/lib/us-job-salaries'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
 export const metadata: Metadata = {
-  title: `UK Average Salaries by Job ${TAX_YEAR} - Salary Guide & Comparison`,
-  description: `Compare UK salaries by job title for ${TAX_YEAR}. Average salaries, salary ranges, and take-home pay for ${UK_JOB_SALARIES.length}+ professions. Technology, healthcare, finance and more.`,
+  title: `US Average Salaries by Job ${TAX_YEAR} - Salary Guide & Comparison`,
+  description: `Compare US salaries by job title for ${TAX_YEAR}. Average salaries, salary ranges, and take-home pay for ${US_JOB_SALARIES.length}+ professions. Technology, healthcare, finance and more.`,
   keywords: [
-    'uk average salary',
-    'uk salaries by job',
-    'average salary uk 2025',
-    'salary by job title uk',
-    'uk salary guide',
-    'salary comparison uk',
-    'what is a good salary uk',
-    'uk salary checker',
-    'how much should i earn uk',
+    'us average salary',
+    'us salaries by job',
+    'average salary us 2025',
+    'salary by job title us',
+    'us salary guide',
+    'salary comparison us',
+    'what is a good salary us',
+    'us salary checker',
+    'how much should i earn us',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Average Salaries by Job ${TAX_YEAR} - Complete Guide`,
-    description: `Compare UK salaries by job title. Find average salaries and take-home pay for ${UK_JOB_SALARIES.length}+ professions.`,
+    title: `US Average Salaries by Job ${TAX_YEAR} - Complete Guide`,
+    description: `Compare US salaries by job title. Find average salaries and take-home pay for ${US_JOB_SALARIES.length}+ professions.`,
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/salaries',
@@ -38,7 +38,7 @@ export default function SalariesPage() {
   const categoriesWithJobs = getCategoriesWithCounts()
   
   // Sort jobs by average salary for "Top Paying" section
-  const topPayingJobs = [...UK_JOB_SALARIES]
+  const topPayingJobs = [...US_JOB_SALARIES]
     .sort((a, b) => b.averageSalary - a.averageSalary)
     .slice(0, 10)
 
@@ -57,11 +57,11 @@ export default function SalariesPage() {
                 {TAX_YEAR} Tax Year
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-4">
-                UK Salaries by Job Title
+                US Salaries by Job Title
               </h1>
               <p className="text-lg text-muted-foreground">
-                Explore average salaries, salary ranges, and take-home pay for {UK_JOB_SALARIES.length}+ professions 
-                across the UK. Data includes regional variations and career progression.
+                Explore average salaries, salary ranges, and take-home pay for {US_JOB_SALARIES.length}+ professions
+                across the US. Data includes regional variations and career progression.
               </p>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function SalariesPage() {
         <section className="py-12 bg-muted/30 border-b border-border/40">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold text-foreground mb-6">
-              Top 10 Highest Paying Jobs in the UK
+              Top 10 Highest Paying Jobs in the US
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
               {topPayingJobs.map((job, index) => (
@@ -176,22 +176,22 @@ export default function SalariesPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto prose prose-sm">
               <h2 className="text-xl font-bold text-foreground mb-4">
-                About UK Salary Data
+                About US Salary Data
               </h2>
               <div className="text-sm text-muted-foreground space-y-4 leading-relaxed">
                 <p>
-                  Our UK salary data is compiled from multiple sources including job boards, recruitment agencies, 
-                  and industry surveys. Salaries are updated for the {TAX_YEAR} tax year and reflect current 
-                  market conditions across different regions of the United Kingdom.
+                  Our US salary data is compiled from multiple sources including the Bureau of Labor Statistics,
+                  job boards, and industry surveys. Salaries are updated for the {TAX_YEAR} tax year and reflect
+                  current market conditions across different regions of the United States.
                 </p>
                 <p>
-                  Each job profile includes average salaries, entry-level and senior-level pay ranges, 
-                  regional variations (London, South East, and national averages), required skills, 
+                  Each job profile includes average salaries, entry-level and senior-level pay ranges,
+                  regional variations (New York, California, Texas, and national averages), required skills,
                   qualifications, and typical career progression paths.
                 </p>
                 <p>
-                  Use our salary calculator to see exactly how much you would take home after tax and 
-                  National Insurance deductions at any salary level.
+                  Use our salary calculator to see exactly how much you would take home after federal tax,
+                  state tax, and FICA deductions at any salary level.
                 </p>
               </div>
             </div>

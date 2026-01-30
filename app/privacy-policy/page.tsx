@@ -25,9 +25,9 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">1. Introduction</h2>
             <p className="text-muted-foreground leading-relaxed">
-              UK Salary Calculator (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy. 
-              This Privacy Policy explains how we collect, use, and safeguard your information when you visit 
-              our website myincomecalculator.co.uk (the &quot;Site&quot;).
+              US Salary Calculator (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
+              This Privacy Policy explains how we collect, use, and safeguard your information when you visit
+              our website calculatesalary.us (the &quot;Site&quot;).
             </p>
           </section>
 
@@ -157,7 +157,7 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-xl font-semibold text-foreground mb-4">11. Contact Us</h2>
             <p className="text-muted-foreground leading-relaxed">
               If you have any questions about this Privacy Policy or wish to exercise your rights, 
-              please contact us at: privacy@myincomecalculator.co.uk
+              please contact us at: privacy@calculatesalary.us
             </p>
           </section>
         </div>

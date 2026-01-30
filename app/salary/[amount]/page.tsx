@@ -14,7 +14,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-const BASE_URL = 'https://ussalarycalculator.com'
+const BASE_URL = 'https://calculatesalary.us'
 
 interface PageProps {
   params: Promise<{ amount: string }>

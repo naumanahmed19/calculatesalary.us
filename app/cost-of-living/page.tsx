@@ -5,13 +5,13 @@ import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-    formatGBP,
+    formatUSD,
     getAllCities,
     getBestValueCities,
     getCheapestCities,
     getMostExpensiveCities
 } from "@/lib/cost-of-living";
-import { UK_CITIES } from "@/lib/cost-of-living/data-uk";
+import { US_CITIES } from "@/lib/cost-of-living/data-us";
 import {
     ArrowRight,
     Building2,
@@ -25,9 +25,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Cost of Living Calculator UK | Compare Cities & Living Costs",
-  description: "Compare cost of living across UK cities and worldwide. See how London compares to Manchester, Birmingham, Edinburgh, and international cities. Make informed relocation decisions.",
-  keywords: "cost of living UK, living costs comparison, UK city costs, rent prices UK, London vs Manchester, relocate UK",
+  title: "Cost of Living Calculator USA | Compare Cities & Living Costs",
+  description: "Compare cost of living across US cities and worldwide. See how New York compares to San Francisco, Austin, Chicago, and international cities. Make informed relocation decisions.",
+  keywords: "cost of living USA, living costs comparison, US city costs, rent prices USA, NYC vs San Francisco, relocate USA, cost of living by city",
 };
 
 export default function CostOfLivingPage() {
@@ -36,8 +36,8 @@ export default function CostOfLivingPage() {
   const expensiveCities = getMostExpensiveCities(6);
   const bestValueCities = getBestValueCities(6);
 
-  // UK cities sorted by cost
-  const ukCitiesSorted = [...UK_CITIES].sort((a, b) => a.costIndex - b.costIndex);
+  // US cities sorted by cost
+  const usCitiesSorted = [...US_CITIES].sort((a, b) => a.costIndex - b.costIndex);
 
   return (
     <SidebarLayout>
@@ -51,14 +51,14 @@ export default function CostOfLivingPage() {
             <div className="max-w-3xl mx-auto text-center">
               <span className="inline-flex items-center rounded-full bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent mb-6">
                 <MapPin className="h-3 w-3 mr-1" />
-                {UK_CITIES.length} UK Cities + International Comparisons
+                {US_CITIES.length} US Cities + International Comparisons
               </span>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-4">
                 Cost of Living Calculator
               </h1>
               <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
                 Calculate what salary you need in different cities to maintain your lifestyle.
-                Compare living costs across UK and international destinations.
+                Compare living costs across US and international destinations.
               </p>
             </div>
           </div>
@@ -81,8 +81,8 @@ export default function CostOfLivingPage() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
               <Card>
                 <CardHeader className="pb-2">
-                  <CardDescription>UK Cities</CardDescription>
-                  <CardTitle className="text-3xl">{UK_CITIES.length}</CardTitle>
+                  <CardDescription>US Cities</CardDescription>
+                  <CardTitle className="text-3xl">{US_CITIES.length}</CardTitle>
                 </CardHeader>
               </Card>
               <Card>
@@ -95,10 +95,10 @@ export default function CostOfLivingPage() {
                 <CardHeader className="pb-2">
                   <CardDescription className="flex items-center gap-1">
                     <TrendingDown className="h-3 w-3 text-emerald-500" />
-                    Cheapest UK City
+                    Most Affordable US City
                   </CardDescription>
                   <CardTitle className="text-2xl text-emerald-600 dark:text-emerald-400">
-                    {ukCitiesSorted[0]?.name}
+                    {usCitiesSorted[0]?.name}
                   </CardTitle>
                 </CardHeader>
               </Card>
@@ -109,7 +109,7 @@ export default function CostOfLivingPage() {
                     Most Expensive
                   </CardDescription>
                   <CardTitle className="text-2xl text-rose-600 dark:text-rose-400">
-                    London
+                    San Francisco
                   </CardTitle>
                 </CardHeader>
               </Card>
@@ -117,7 +117,7 @@ export default function CostOfLivingPage() {
           </div>
         </section>
 
-        {/* UK Cities Section */}
+        {/* US Cities Section */}
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
@@ -126,16 +126,16 @@ export default function CostOfLivingPage() {
                   <Building2 className="h-5 w-5 text-accent" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-foreground">UK Cities</h2>
-                  <p className="text-sm text-muted-foreground">Compare living costs across major UK cities</p>
+                  <h2 className="text-2xl font-bold text-foreground">US Cities</h2>
+                  <p className="text-sm text-muted-foreground">Compare living costs across major US cities</p>
                 </div>
               </div>
-              
+
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {UK_CITIES.map((city) => (
+                {US_CITIES.map((city) => (
                   <Link
                     key={city.slug}
-                    href={`/cost-of-living/gb/${city.slug}`}
+                    href={`/cost-of-living/us/${city.slug}`}
                     className="group"
                   >
                     <Card className="h-full transition-all hover:ring-2 hover:ring-accent/50 hover:shadow-md">
@@ -149,7 +149,7 @@ export default function CostOfLivingPage() {
                               Pop: {(city.population / 1000000).toFixed(1)}M
                             </CardDescription>
                           </div>
-                          <Badge variant={city.costIndex < 80 ? "default" : city.costIndex > 95 ? "destructive" : "secondary"}>
+                          <Badge variant={city.costIndex < 70 ? "default" : city.costIndex > 90 ? "destructive" : "secondary"}>
                             {city.costIndex}
                           </Badge>
                         </div>
@@ -162,17 +162,19 @@ export default function CostOfLivingPage() {
                           </div>
                           <div className="text-sm">
                             <span className="text-muted-foreground">Avg Salary:</span>
-                            <span className="ml-1 font-medium">{formatGBP(city.averageNetSalaryGBP)}</span>
+                            <span className="ml-1 font-medium">{formatUSD(city.averageNetSalaryUSD)}</span>
                           </div>
                         </div>
                         <p className={`text-sm font-medium ${
-                          city.costIndex < 100 
-                            ? "text-emerald-600 dark:text-emerald-400" 
+                          city.costIndex < 100
+                            ? "text-emerald-600 dark:text-emerald-400"
                             : "text-foreground"
                         }`}>
-                          {city.costIndex < 100 
-                            ? `${100 - city.costIndex}% cheaper than London`
-                            : "London (baseline)"}
+                          {city.costIndex < 100
+                            ? `${100 - city.costIndex}% cheaper than NYC`
+                            : city.costIndex > 100
+                              ? `${city.costIndex - 100}% more expensive than NYC`
+                              : "NYC (baseline)"}
                         </p>
                       </CardContent>
                     </Card>
@@ -195,10 +197,10 @@ export default function CostOfLivingPage() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">Best Value Cities Worldwide</h2>
-                  <p className="text-sm text-muted-foreground">Highest salary-to-cost ratio for UK expats</p>
+                  <p className="text-sm text-muted-foreground">Highest salary-to-cost ratio for Americans</p>
                 </div>
               </div>
-              
+
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {bestValueCities.slice(0, 6).map((city, index) => (
                   <Link
@@ -230,9 +232,9 @@ export default function CostOfLivingPage() {
                             </div>
                           </div>
                           <div>
-                            <div className="text-xs text-muted-foreground">Avg Salary (GBP)</div>
+                            <div className="text-xs text-muted-foreground">Avg Salary (USD)</div>
                             <div className="text-lg font-semibold text-foreground">
-                              {formatGBP(city.averageNetSalaryGBP)}
+                              {formatUSD(city.averageNetSalaryUSD)}
                             </div>
                           </div>
                         </div>
@@ -255,7 +257,7 @@ export default function CostOfLivingPage() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">International Comparisons</h2>
-                  <p className="text-sm text-muted-foreground">How UK cities compare to popular expat destinations</p>
+                  <p className="text-sm text-muted-foreground">How US cities compare to popular expat destinations</p>
                 </div>
               </div>
 
@@ -295,7 +297,7 @@ export default function CostOfLivingPage() {
                       <TrendingUp className="h-5 w-5 text-rose-500" />
                       Most Expensive Cities
                     </CardTitle>
-                    <CardDescription>Global comparison including London</CardDescription>
+                    <CardDescription>Global comparison including NYC</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -327,24 +329,24 @@ export default function CostOfLivingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl font-bold text-foreground mb-4">
-                Understanding Cost of Living in the UK
+                Understanding Cost of Living in the USA
               </h2>
               <div className="prose prose-sm dark:prose-invert max-w-none">
                 <p>
-                  The cost of living varies significantly across UK cities. <strong>London</strong> remains
-                  the most expensive city with a cost index of 100 (our baseline). However, cities like{" "}
-                  <strong>{ukCitiesSorted[0]?.name}</strong> offer living costs that are{" "}
-                  <strong>{100 - ukCitiesSorted[0]?.costIndex}% lower</strong> than London.
+                  The cost of living varies significantly across US cities. <strong>New York City</strong> and{" "}
+                  <strong>San Francisco</strong> are among the most expensive cities with cost indices around 100-105
+                  (NYC is our baseline). However, cities like <strong>{usCitiesSorted[0]?.name}</strong> offer
+                  living costs that are <strong>{100 - usCitiesSorted[0]?.costIndex}% lower</strong> than NYC.
                 </p>
                 <p>
-                  For those considering relocation within the UK or abroad, understanding these cost 
-                  differences is crucial for making informed financial decisions. Our calculator helps 
-                  you compare not just overall costs, but specific categories like rent, groceries, 
+                  For those considering relocation within the US or abroad, understanding these cost
+                  differences is crucial for making informed financial decisions. Our calculator helps
+                  you compare not just overall costs, but specific categories like rent, groceries,
                   transport, and utilities.
                 </p>
                 <h3>Key Factors We Compare</h3>
                 <ul>
-                  <li><strong>Rent Index:</strong> Housing costs relative to London</li>
+                  <li><strong>Rent Index:</strong> Housing costs relative to NYC</li>
                   <li><strong>Groceries Index:</strong> Food and daily essentials</li>
                   <li><strong>Transport Index:</strong> Public transport and commuting costs</li>
                   <li><strong>Restaurants Index:</strong> Dining out and entertainment</li>

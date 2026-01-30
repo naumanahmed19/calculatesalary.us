@@ -8,23 +8,23 @@ import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad
 import { RelatedCalculators, taxCalculators } from '@/components/related-calculators'
 
 export const metadata: Metadata = {
-  title: `UK Tax Refund Calculator ${TAX_YEAR} - Check If HMRC Owes You Money`,
-  description: `Find out if you're owed a tax refund from HMRC. Check for wrong tax codes, work from home relief, uniform expenses, and more for ${TAX_YEAR}.`,
+  title: `US Tax Refund Calculator ${TAX_YEAR} - Estimate Your IRS Refund`,
+  description: `Find out if you're owed a tax refund from the IRS. Estimate your federal tax refund based on withholdings, deductions, and credits for ${TAX_YEAR}.`,
   keywords: [
-    'tax refund calculator uk',
+    'tax refund calculator us',
     'am i owed a tax refund',
-    'hmrc tax refund',
-    'paye tax refund uk',
-    'tax rebate calculator uk',
-    'overpaid tax uk',
-    'wrong tax code refund',
+    'irs tax refund',
+    'federal tax refund',
+    'tax refund estimator us',
+    'overpaid tax us',
+    'w4 withholding refund',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Tax Refund Calculator ${TAX_YEAR} - Check If HMRC Owes You Money`,
-    description: 'Find out if you\'re owed a tax refund from HMRC.',
+    title: `US Tax Refund Calculator ${TAX_YEAR} - Estimate Your IRS Refund`,
+    description: 'Find out if you\'re owed a tax refund from the IRS.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/tax-refund',

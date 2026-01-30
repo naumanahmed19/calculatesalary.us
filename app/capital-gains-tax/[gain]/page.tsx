@@ -87,9 +87,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     openGraph: {
       title: `Capital Gains Tax on ${formattedGain}`,
-      description: `Calculate Capital Gains Tax on a ${formattedGain} profit for property, shares, and other assets.`,
+      description: `Calculate Capital Gains Tax on a ${formattedGain} profit for property, stocks, and other assets.`,
       type: 'website',
-      locale: 'en_GB',
+      locale: 'en_US',
     },
     alternates: {
       canonical: `/capital-gains-tax/${gain}`,

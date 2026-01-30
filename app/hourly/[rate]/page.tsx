@@ -8,7 +8,7 @@ import { currentTaxConfig } from '@/lib/us-tax-config'
 import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
-const BASE_URL = 'https://calculatesalary.com'
+const BASE_URL = 'https://calculatesalary.us'
 
 // Common hourly rates to pre-generate
 const COMMON_HOURLY_RATES = [

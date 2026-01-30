@@ -3,6 +3,7 @@ import { COUNTRIES_DATA } from "./countries";
 import { EUROPE_CITIES } from "./data-europe";
 import { GLOBAL_CITIES } from "./data-global";
 import { UK_CITIES } from "./data-uk";
+import { US_CITIES } from "./data-us";
 import { CityComparison, CityData, CountryData } from "./types";
 
 // Re-export types
@@ -14,7 +15,7 @@ export function getAllCountries(): CountryData[] {
 }
 
 export function getAllCities(): CityData[] {
-  return [...UK_CITIES, ...EUROPE_CITIES, ...GLOBAL_CITIES];
+  return [...US_CITIES, ...UK_CITIES, ...EUROPE_CITIES, ...GLOBAL_CITIES];
 }
 
 export function getCountryBySlug(slug: string): CountryData | undefined {
@@ -60,7 +61,7 @@ export function getBestValueCities(limit = 10): (CityData & { valueRatio: number
   return getAllCities()
     .map((city) => ({
       ...city,
-      valueRatio: city.averageNetSalaryGBP / (city.costIndex / 100),
+      valueRatio: city.averageNetSalaryUSD / (city.costIndex / 100),
     }))
     .sort((a, b) => b.valueRatio - a.valueRatio)
     .slice(0, limit);
@@ -81,7 +82,7 @@ export function compareCities(city1Slug: string, city2Slug: string): CityCompari
     city2,
     costDifference: city1 && city2 ? city2.costIndex - city1.costIndex : 0,
     rentDifference: city1 && city2 ? city2.rentIndex - city1.rentIndex : 0,
-    salaryDifference: city1 && city2 ? city2.averageNetSalaryGBP - city1.averageNetSalaryGBP : 0,
+    salaryDifference: city1 && city2 ? city2.averageNetSalaryUSD - city1.averageNetSalaryUSD : 0,
   };
 }
 
@@ -101,14 +102,14 @@ export function calculateEquivalentSalary(
 
 // Calculate purchasing power
 export function calculatePurchasingPower(
-  salaryGBP: number,
+  salaryUSD: number,
   citySlug: string
 ): { purchasingPower: number; equivalent: number } {
   const city = getCityBySlug(citySlug);
-  if (!city) return { purchasingPower: 100, equivalent: salaryGBP };
+  if (!city) return { purchasingPower: 100, equivalent: salaryUSD };
 
-  // How much this salary is worth relative to London
-  const purchasingPower = (salaryGBP / (city.costIndex / 100));
+  // How much this salary is worth relative to NYC
+  const purchasingPower = (salaryUSD / (city.costIndex / 100));
   const equivalent = Math.round(purchasingPower);
 
   return { purchasingPower, equivalent };
@@ -118,26 +119,31 @@ export function calculatePurchasingPower(
 export function formatLocalCurrency(
   amount: number,
   currencySymbol: string,
-  locale = "en-GB"
+  locale = "en-US"
 ): string {
   return `${currencySymbol}${amount.toLocaleString(locale, { maximumFractionDigits: 0 })}`;
 }
 
+export function formatUSD(amount: number): string {
+  return `$${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+}
+
+// Legacy alias for compatibility
 export function formatGBP(amount: number): string {
-  return `£${amount.toLocaleString("en-GB", { maximumFractionDigits: 0 })}`;
+  return formatUSD(amount);
 }
 
 // Get comparison pairs for programmatic SEO
 export function getComparisonPairs(): { city1: string; city2: string }[] {
   const popularCities = [
-    "london", "manchester", "birmingham", "edinburgh",
-    "berlin", "amsterdam", "paris", "dublin",
-    "new-york", "san-francisco", "toronto", "dubai",
-    "sydney", "singapore", "zurich"
+    "new-york", "san-francisco", "los-angeles", "chicago",
+    "austin", "seattle", "denver", "boston", "miami", "dallas",
+    "london", "berlin", "amsterdam", "paris", "dublin",
+    "toronto", "dubai", "sydney", "singapore"
   ];
 
   const pairs: { city1: string; city2: string }[] = [];
-  
+
   for (let i = 0; i < popularCities.length; i++) {
     for (let j = i + 1; j < popularCities.length; j++) {
       pairs.push({ city1: popularCities[i], city2: popularCities[j] });
@@ -147,11 +153,25 @@ export function getComparisonPairs(): { city1: string; city2: string }[] {
   return pairs;
 }
 
-// Get UK city comparison pairs (for targeted SEO)
+// Get US city comparison pairs (for targeted SEO)
+export function getUSComparisonPairs(): { city1: string; city2: string }[] {
+  const usCities = US_CITIES.map(c => c.slug);
+  const pairs: { city1: string; city2: string }[] = [];
+
+  for (let i = 0; i < usCities.length; i++) {
+    for (let j = i + 1; j < usCities.length; j++) {
+      pairs.push({ city1: usCities[i], city2: usCities[j] });
+    }
+  }
+
+  return pairs;
+}
+
+// Legacy UK comparison pairs
 export function getUKComparisonPairs(): { city1: string; city2: string }[] {
   const ukCities = UK_CITIES.map(c => c.slug);
   const pairs: { city1: string; city2: string }[] = [];
-  
+
   for (let i = 0; i < ukCities.length; i++) {
     for (let j = i + 1; j < ukCities.length; j++) {
       pairs.push({ city1: ukCities[i], city2: ukCities[j] });

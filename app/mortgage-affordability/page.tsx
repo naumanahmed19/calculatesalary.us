@@ -8,22 +8,22 @@ import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
 export const metadata: Metadata = {
-  title: `UK Mortgage Affordability Calculator ${TAX_YEAR} - How Much Can I Borrow?`,
-  description: `Calculate how much mortgage you can afford based on your salary. See maximum borrowing, monthly payments, and property prices for ${TAX_YEAR}.`,
+  title: `US Mortgage Affordability Calculator ${TAX_YEAR} - How Much Can I Borrow?`,
+  description: `Calculate how much mortgage you can afford based on your salary. See maximum borrowing, monthly payments, and home prices for ${TAX_YEAR}.`,
   keywords: [
-    'mortgage affordability calculator uk',
-    'how much can i borrow mortgage uk',
-    'mortgage calculator uk',
+    'mortgage affordability calculator us',
+    'how much can i borrow mortgage',
+    'mortgage calculator us',
     'how much mortgage can i get',
-    'mortgage based on salary uk',
-    'house affordability calculator uk',
+    'mortgage based on salary',
+    'house affordability calculator',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Mortgage Affordability Calculator ${TAX_YEAR} - How Much Can I Borrow?`,
-    description: 'Calculate how much mortgage you can afford based on your salary in the UK.',
+    title: `US Mortgage Affordability Calculator ${TAX_YEAR} - How Much Can I Borrow?`,
+    description: 'Calculate how much mortgage you can afford based on your salary.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/mortgage-affordability',

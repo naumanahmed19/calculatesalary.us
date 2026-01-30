@@ -15,7 +15,7 @@ export interface CityData {
   currency: string;
   currencySymbol: string;
   
-  // Cost indices (London = 100 baseline)
+  // Cost indices (New York City = 100 baseline)
   costIndex: number;
   rentIndex: number;
   groceriesIndex: number;
@@ -24,10 +24,10 @@ export interface CityData {
   utilitiesIndex: number;
   childcareIndex?: number; // Optional: for better family cost comparison
   healthcareIndex?: number; // Optional: for healthcare cost comparison
-  
+
   // Salary data
   averageNetSalary: number; // In local currency, monthly
-  averageNetSalaryGBP: number; // Converted to GBP
+  averageNetSalaryUSD: number; // Converted to USD
   medianNetSalary?: number; // Optional: median salary
   
   // Metadata
@@ -55,7 +55,7 @@ export interface CountryData {
   code: string;
   currency: string;
   currencySymbol: string;
-  exchangeRateToGBP: number;
+  exchangeRateToUSD: number;
   cities: CityData[];
   description: string;
   flagEmoji: string;

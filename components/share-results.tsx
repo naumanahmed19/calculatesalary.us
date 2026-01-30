@@ -41,7 +41,7 @@ ${yearly.retirement401k > 0 ? `• 401(k): ${formatCurrency(yearly.retirement401
 📈 Effective Tax Rate: ${yearly.effectiveTaxRate.toFixed(1)}%
 📈 Marginal Tax Rate: ${yearly.marginalTaxRate}%
 
-Calculated at ussalarycalculator.com`
+Calculated at calculatesalary.us`
 }
 
 function generateEmailBody(result: SalaryResult, grossIncome: number): string {

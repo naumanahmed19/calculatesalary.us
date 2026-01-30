@@ -2,7 +2,7 @@ import { SidebarLayout } from "@/components/sidebar-layout";
 import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from "@/components/ad-unit";
 import { RelatedCalculators, costOfLivingCalculators } from "@/components/related-calculators";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatGBP, getCountryBySlug } from "@/lib/cost-of-living";
+import { formatUSD, getCountryBySlug } from "@/lib/cost-of-living";
 import { ArrowRight, Building2, TrendingDown, TrendingUp } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -10,7 +10,9 @@ import { notFound } from "next/navigation";
 
 // Map country codes to slugs
 const codeToSlug: Record<string, string> = {
+  us: "united-states",
   gb: "united-kingdom",
+  ca: "canada",
   de: "germany",
   nl: "netherlands",
   fr: "france",
@@ -19,8 +21,11 @@ const codeToSlug: Record<string, string> = {
   ch: "switzerland",
   ie: "ireland",
   pl: "poland",
-  us: "united-states",
-  ca: "canada",
+  at: "austria",
+  cz: "czech-republic",
+  hu: "hungary",
+  se: "sweden",
+  dk: "denmark",
   ae: "united-arab-emirates",
   sg: "singapore",
   au: "australia",
@@ -195,7 +200,7 @@ export default async function CountryPage({ params }: PageProps) {
 
                         <div className="flex items-center justify-between pt-3 border-t border-border/50">
                           <span className="text-sm text-muted-foreground">Avg Salary</span>
-                          <span className="font-semibold">{formatGBP(city.averageNetSalaryGBP)}/mo</span>
+                          <span className="font-semibold">{formatUSD(city.averageNetSalaryUSD)}/mo</span>
                         </div>
                       </CardContent>
                     </Card>
@@ -224,12 +229,12 @@ export default async function CountryPage({ params }: PageProps) {
               </p>
               <p>
                 Average net salaries in {country.name} range from{" "}
-                <strong>{formatGBP(Math.min(...country.cities.map(c => c.averageNetSalaryGBP)))}</strong> to{" "}
-                <strong>{formatGBP(Math.max(...country.cities.map(c => c.averageNetSalaryGBP)))}</strong>{" "}
-                per month when converted to GBP.
+                <strong>{formatUSD(Math.min(...country.cities.map(c => c.averageNetSalaryUSD)))}</strong> to{" "}
+                <strong>{formatUSD(Math.max(...country.cities.map(c => c.averageNetSalaryUSD)))}</strong>{" "}
+                per month when converted to USD.
               </p>
               <p>
-                Compare these costs with UK cities using our{" "}
+                Compare these costs with US cities using our{" "}
                 <Link href="/cost-of-living" className="text-accent hover:underline">
                   cost of living calculator
                 </Link>, or calculate your take-home pay with our{" "}

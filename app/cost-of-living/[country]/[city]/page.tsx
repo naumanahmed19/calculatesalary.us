@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     calculateEquivalentSalary,
-    formatGBP,
+    formatUSD,
     getAllCities,
     getAllCitySlugs,
     getCityBySlug
@@ -49,15 +49,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "City Not Found" };
   }
 
-  const londonComparison = city.costIndex < 100 
-    ? `${100 - city.costIndex}% cheaper than London`
-    : city.costIndex > 100 
-      ? `${city.costIndex - 100}% more expensive than London`
-      : `same as London`;
+  const nycComparison = city.costIndex < 100
+    ? `${100 - city.costIndex}% cheaper than NYC`
+    : city.costIndex > 100
+      ? `${city.costIndex - 100}% more expensive than NYC`
+      : `same as NYC`;
 
   return {
-    title: `Cost of Living in ${city.name}, ${city.country} | ${londonComparison}`,
-    description: `Cost of living in ${city.name}: ${londonComparison}. Average salary: ${formatGBP(city.averageNetSalaryGBP)}/month. Rent index: ${city.rentIndex}. Compare with UK cities.`,
+    title: `Cost of Living in ${city.name}, ${city.country} | ${nycComparison}`,
+    description: `Cost of living in ${city.name}: ${nycComparison}. Average salary: ${formatUSD(city.averageNetSalaryUSD)}/month. Rent index: ${city.rentIndex}. Compare with US cities.`,
   };
 }
 
@@ -69,9 +69,9 @@ export default async function CityPage({ params }: PageProps) {
     notFound();
   }
 
-  // Get similar UK cities for comparison
+  // Get similar US cities for comparison
   const allCities = getAllCities();
-  const ukCities = allCities.filter(c => c.countryCode === "GB" && c.slug !== city.slug);
+  const usCities = allCities.filter(c => c.countryCode === "US" && c.slug !== city.slug);
   
   const costCategories = [
     { name: "Overall Cost", index: city.costIndex, icon: MapPin },
@@ -151,7 +151,7 @@ export default async function CityPage({ params }: PageProps) {
                   <Card className="text-center">
                     <CardHeader className="pb-3 pt-3 px-4">
                       <CardDescription className="text-xs">Avg Net Salary</CardDescription>
-                      <CardTitle className="text-2xl">{formatGBP(city.averageNetSalaryGBP)}/mo</CardTitle>
+                      <CardTitle className="text-2xl">{formatUSD(city.averageNetSalaryUSD)}/mo</CardTitle>
                     </CardHeader>
                   </Card>
                 </div>
@@ -165,7 +165,7 @@ export default async function CityPage({ params }: PageProps) {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-xl font-bold text-foreground mb-6">
-                Cost Breakdown vs London (Index 100)
+                Cost Breakdown vs NYC (Index 100)
               </h2>
               
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -200,7 +200,7 @@ export default async function CityPage({ params }: PageProps) {
                                 {diff}% pricier
                               </span>
                             ) : (
-                              "Same as London"
+                              "Same as NYC"
                             )}
                           </span>
                         </div>
@@ -226,7 +226,7 @@ export default async function CityPage({ params }: PageProps) {
                 <div>
                   <h2 className="text-xl font-bold text-foreground">Salary Equivalence</h2>
                   <p className="text-sm text-muted-foreground">
-                    How much you'd need to earn in {city.name} to match a London salary
+                    How much you'd need to earn in {city.name} to match a NYC salary
                   </p>
                 </div>
               </div>
@@ -235,28 +235,28 @@ export default async function CityPage({ params }: PageProps) {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border/50 bg-muted/50">
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">London Salary</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">NYC Salary</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Equivalent in {city.name}</th>
                       <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Difference</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/50">
-                    {[30000, 40000, 50000, 60000, 75000, 100000].map((salary) => {
-                      const equivalent = calculateEquivalentSalary(salary, "london", city.slug);
+                    {[50000, 75000, 100000, 125000, 150000, 200000].map((salary) => {
+                      const equivalent = calculateEquivalentSalary(salary, "new-york", city.slug);
                       const diff = equivalent - salary;
 
                       return (
                         <tr key={salary} className="hover:bg-muted/30">
-                          <td className="px-4 py-3 text-sm font-medium text-foreground">{formatGBP(salary)}</td>
+                          <td className="px-4 py-3 text-sm font-medium text-foreground">{formatUSD(salary)}</td>
                           <td className="px-4 py-3 text-sm text-accent font-semibold">
-                            {formatGBP(equivalent)}
+                            {formatUSD(equivalent)}
                           </td>
                           <td className={`px-4 py-3 text-sm text-right ${
                             diff < 0
                               ? "text-emerald-600 dark:text-emerald-400"
                               : "text-rose-600 dark:text-rose-400"
                           }`}>
-                            {diff < 0 ? `Save ${formatGBP(Math.abs(diff))}` : `Need ${formatGBP(diff)} more`}
+                            {diff < 0 ? `Save ${formatUSD(Math.abs(diff))}` : `Need ${formatUSD(diff)} more`}
                           </td>
                         </tr>
                       );
@@ -268,41 +268,41 @@ export default async function CityPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Compare with UK Cities */}
-        {city.countryCode !== "GB" && ukCities.length > 0 && (
+        {/* Compare with US Cities */}
+        {city.countryCode !== "US" && usCities.length > 0 && (
           <section className="py-12 bg-muted/30 border-t border-border/40">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-xl font-bold text-foreground mb-6">
-                  Compare with UK Cities
+                  Compare with US Cities
                 </h2>
-                
+
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                  {ukCities.slice(0, 4).map((ukCity) => {
-                    const costDiff = city.costIndex - ukCity.costIndex;
-                    
+                  {usCities.slice(0, 4).map((usCity) => {
+                    const costDiff = city.costIndex - usCity.costIndex;
+
                     return (
                       <Link
-                        key={ukCity.slug}
-                        href={`/cost-of-living/compare/${city.slug}-vs-${ukCity.slug}`}
+                        key={usCity.slug}
+                        href={`/cost-of-living/compare/${city.slug}-vs-${usCity.slug}`}
                         className="group"
                       >
                         <Card className="h-full transition-all hover:ring-2 hover:ring-accent/50">
                           <CardHeader className="pb-2">
                             <div className="flex items-center justify-between">
                               <CardTitle className="text-base group-hover:text-accent transition-colors">
-                                vs {ukCity.name}
+                                vs {usCity.name}
                               </CardTitle>
                               <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
                             </div>
                           </CardHeader>
                           <CardContent>
                             <div className={`text-lg font-bold ${
-                              costDiff < 0 
-                                ? "text-emerald-600 dark:text-emerald-400" 
+                              costDiff < 0
+                                ? "text-emerald-600 dark:text-emerald-400"
                                 : "text-rose-600 dark:text-rose-400"
                             }`}>
-                              {costDiff < 0 
+                              {costDiff < 0
                                 ? `${Math.abs(costDiff)}% cheaper`
                                 : costDiff > 0
                                   ? `${costDiff}% pricier`
@@ -326,17 +326,17 @@ export default async function CityPage({ params }: PageProps) {
               <h2>Living in {city.name}: What to Expect</h2>
               <p>
                 {city.name} has a cost of living index of <strong>{city.costIndex}</strong>, meaning it is{" "}
-                {city.costIndex < 100 
-                  ? `${100 - city.costIndex}% cheaper than London`
+                {city.costIndex < 100
+                  ? `${100 - city.costIndex}% cheaper than NYC`
                   : city.costIndex > 100
-                    ? `${city.costIndex - 100}% more expensive than London`
-                    : "comparable to London"
+                    ? `${city.costIndex - 100}% more expensive than NYC`
+                    : "comparable to NYC"
                 } in overall living costs.
               </p>
               <p>
                 The average net monthly salary in {city.name} is approximately{" "}
                 <strong>{city.currencySymbol}{city.averageNetSalary.toLocaleString()}</strong>{" "}
-                ({formatGBP(city.averageNetSalaryGBP)} when converted to GBP).
+                ({formatUSD(city.averageNetSalaryUSD)} when converted to USD).
               </p>
               <h3>Cost Breakdown</h3>
               <ul>
@@ -350,7 +350,7 @@ export default async function CityPage({ params }: PageProps) {
                 Key highlights: {city.highlights.join(", ")}.
               </p>
               <p>
-                Use our <Link href="/" className="text-accent hover:underline">UK salary calculator</Link> to 
+                Use our <Link href="/" className="text-accent hover:underline">US salary calculator</Link> to
                 see your take-home pay, or <Link href="/cost-of-living" className="text-accent hover:underline">
                 compare with other cities</Link>.
               </p>

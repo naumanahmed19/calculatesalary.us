@@ -9,14 +9,14 @@ import {
 } from '@/components/ui/calculator-panel'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { calculateEquivalentSalary, formatGBP, getAllCities } from '@/lib/cost-of-living'
+import { calculateEquivalentSalary, formatUSD, getAllCities } from '@/lib/cost-of-living'
 import { ArrowRight, Calculator, Equal, MapPin, TrendingDown, TrendingUp, Wallet } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 export function CostOfLivingCalculator() {
-  const [salary, setSalary] = useState<number>(50000)
-  const [fromCity, setFromCity] = useState<string>('london')
-  const [toCity, setToCity] = useState<string>('manchester')
+  const [salary, setSalary] = useState<number>(75000)
+  const [fromCity, setFromCity] = useState<string>('new-york')
+  const [toCity, setToCity] = useState<string>('austin')
 
   const allCities = useMemo(() => getAllCities(), [])
 
@@ -145,17 +145,17 @@ export function CostOfLivingCalculator() {
                     ? 'text-accent'
                     : 'text-accent'
               }`}>
-                {formatGBP(equivalentSalary)}
+                {formatUSD(equivalentSalary)}
               </span>
               <span className="text-lg text-muted-foreground">/year</span>
             </div>
 
             <div className="mt-2 flex items-center gap-4 text-sm">
               <span className="text-muted-foreground">
-                {formatGBP(Math.round(equivalentSalary / 12))}/month
+                {formatUSD(Math.round(equivalentSalary / 12))}/month
               </span>
               <span className="text-muted-foreground">
-                {formatGBP(Math.round(equivalentSalary / 52))}/week
+                {formatUSD(Math.round(equivalentSalary / 52))}/week
               </span>
             </div>
           </div>
@@ -163,11 +163,11 @@ export function CostOfLivingCalculator() {
           <div className="space-y-1">
             <ResultRow
               label="Current Salary"
-              value={formatGBP(salary)}
+              value={formatUSD(salary)}
             />
             <ResultRow
               label="Salary Difference"
-              value={`${difference >= 0 ? '+' : ''}${formatGBP(difference)}`}
+              value={`${difference >= 0 ? '+' : ''}${formatUSD(difference)}`}
               valueClassName={
                 difference < 0
                   ? 'text-emerald-600 dark:text-emerald-400'
@@ -226,7 +226,7 @@ export function CostOfLivingCalculator() {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">Salary</span>
-                  <span className="font-medium">{formatGBP(salary)}</span>
+                  <span className="font-medium">{formatUSD(salary)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">Cost Index</span>
@@ -238,7 +238,7 @@ export function CostOfLivingCalculator() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">Avg Salary</span>
-                  <span className="font-medium">{formatGBP(fromCityData?.averageNetSalaryGBP || 0)}</span>
+                  <span className="font-medium">{formatUSD(fromCityData?.averageNetSalaryUSD || 0)}</span>
                 </div>
               </div>
             </div>
@@ -265,7 +265,7 @@ export function CostOfLivingCalculator() {
                         : difference > 0
                           ? 'text-rose-600 dark:text-rose-400'
                           : 'text-foreground'
-                    }`}>{formatGBP(equivalentSalary)}</span>
+                    }`}>{formatUSD(equivalentSalary)}</span>
                   </div>
                 </div>
                 <div className="flex justify-between">
@@ -278,7 +278,7 @@ export function CostOfLivingCalculator() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">Avg Salary</span>
-                  <span className="font-medium">{formatGBP(toCityData?.averageNetSalaryGBP || 0)}</span>
+                  <span className="font-medium">{formatUSD(toCityData?.averageNetSalaryUSD || 0)}</span>
                 </div>
               </div>
             </div>
@@ -304,11 +304,11 @@ export function CostOfLivingCalculator() {
                 <div>
                   {difference < 0 ? (
                     <p className="text-sm text-emerald-700 dark:text-emerald-300">
-                      <strong>Good news!</strong> You&apos;d need <strong>{formatGBP(Math.abs(difference))} less</strong> ({Math.abs(percentDiff)}% lower) in {toCityData?.name} to maintain your lifestyle.
+                      <strong>Good news!</strong> You&apos;d need <strong>{formatUSD(Math.abs(difference))} less</strong> ({Math.abs(percentDiff)}% lower) in {toCityData?.name} to maintain your lifestyle.
                     </p>
                   ) : difference > 0 ? (
                     <p className="text-sm text-rose-700 dark:text-rose-300">
-                      You&apos;d need <strong>{formatGBP(difference)} more</strong> ({percentDiff}% higher) in {toCityData?.name} to maintain the same standard of living.
+                      You&apos;d need <strong>{formatUSD(difference)} more</strong> ({percentDiff}% higher) in {toCityData?.name} to maintain the same standard of living.
                     </p>
                   ) : (
                     <p className="text-sm text-muted-foreground">
@@ -333,33 +333,33 @@ export function CostOfLivingCalculator() {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-muted/50 rounded-xl p-4">
               <div className="text-sm text-muted-foreground mb-1">Yearly</div>
-              <div className="font-semibold text-xl text-foreground">{formatGBP(equivalentSalary)}</div>
+              <div className="font-semibold text-xl text-foreground">{formatUSD(equivalentSalary)}</div>
               <div className="text-xs text-muted-foreground mt-1">
                 {difference !== 0 && (
                   <span className={difference < 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>
-                    {difference >= 0 ? '+' : ''}{formatGBP(difference)}
+                    {difference >= 0 ? '+' : ''}{formatUSD(difference)}
                   </span>
                 )}
               </div>
             </div>
             <div className="bg-muted/50 rounded-xl p-4">
               <div className="text-sm text-muted-foreground mb-1">Monthly</div>
-              <div className="font-semibold text-xl text-foreground">{formatGBP(Math.round(equivalentSalary / 12))}</div>
+              <div className="font-semibold text-xl text-foreground">{formatUSD(Math.round(equivalentSalary / 12))}</div>
               <div className="text-xs text-muted-foreground mt-1">
                 {difference !== 0 && (
                   <span className={difference < 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>
-                    {difference >= 0 ? '+' : ''}{formatGBP(Math.round(difference / 12))}
+                    {difference >= 0 ? '+' : ''}{formatUSD(Math.round(difference / 12))}
                   </span>
                 )}
               </div>
             </div>
             <div className="bg-muted/50 rounded-xl p-4">
               <div className="text-sm text-muted-foreground mb-1">Weekly</div>
-              <div className="font-semibold text-xl text-foreground">{formatGBP(Math.round(equivalentSalary / 52))}</div>
+              <div className="font-semibold text-xl text-foreground">{formatUSD(Math.round(equivalentSalary / 52))}</div>
               <div className="text-xs text-muted-foreground mt-1">
                 {difference !== 0 && (
                   <span className={difference < 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>
-                    {difference >= 0 ? '+' : ''}{formatGBP(Math.round(difference / 52))}
+                    {difference >= 0 ? '+' : ''}{formatUSD(Math.round(difference / 52))}
                   </span>
                 )}
               </div>

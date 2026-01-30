@@ -8,24 +8,24 @@ import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
 export const metadata: Metadata = {
-  title: `UK Minimum Wage Calculator ${TAX_YEAR} - National Living Wage Rates`,
-  description: `Calculate earnings on UK National Minimum Wage and National Living Wage for ${TAX_YEAR}. See annual salary and take-home pay for £12.21/hour (23+), £10.00 (18-20), and apprentice rates.`,
+  title: `US Minimum Wage Calculator ${TAX_YEAR} - Federal & State Rates`,
+  description: `Calculate earnings on US Federal Minimum Wage and state minimum wages for ${TAX_YEAR}. See annual salary and take-home pay for $7.25/hour federal rate and higher state rates.`,
   keywords: [
-    'minimum wage calculator uk',
-    'national living wage 2025',
-    'national minimum wage calculator',
-    'minimum wage uk 2025',
+    'minimum wage calculator us',
+    'federal minimum wage 2025',
+    'state minimum wage calculator',
+    'minimum wage us 2025',
     'living wage calculator',
-    'minimum wage age 18',
-    'minimum wage under 18',
-    'apprentice wage calculator',
+    'minimum wage by state',
+    'tipped minimum wage',
     'minimum wage salary calculator',
+    TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Minimum Wage Calculator ${TAX_YEAR}`,
-    description: 'Calculate annual salary and take-home pay on National Minimum Wage and Living Wage.',
+    title: `US Minimum Wage Calculator ${TAX_YEAR}`,
+    description: 'Calculate annual salary and take-home pay on Federal and State Minimum Wage.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/minimum-wage',

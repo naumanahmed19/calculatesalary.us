@@ -7,24 +7,24 @@ import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from '@/
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
 export const metadata: Metadata = {
-  title: `Net to Gross Salary Calculator UK ${TAX_YEAR} - Reverse Tax Calculator`,
-  description: `Calculate the gross salary needed to achieve your desired take-home pay in the UK. Reverse tax calculator for ${TAX_YEAR}. Enter your target net income and find the required gross salary.`,
+  title: `Net to Gross Salary Calculator US ${TAX_YEAR} - Reverse Tax Calculator`,
+  description: `Calculate the gross salary needed to achieve your desired take-home pay in the US. Reverse tax calculator for ${TAX_YEAR}. Enter your target net income and find the required gross salary.`,
   keywords: [
-    'net to gross calculator uk',
-    'reverse tax calculator uk',
+    'net to gross calculator us',
+    'reverse tax calculator us',
     'gross from net calculator',
     'what gross salary for net',
     'calculate gross from take home pay',
-    'uk salary reverse calculator',
+    'us salary reverse calculator',
     'net to gross salary converter',
-    'take home pay to gross uk',
+    'take home pay to gross us',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `Net to Gross Salary Calculator UK ${TAX_YEAR}`,
+    title: `Net to Gross Salary Calculator US ${TAX_YEAR}`,
     description: 'Calculate the gross salary needed to achieve your desired take-home pay.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/net-to-gross',

@@ -7,7 +7,7 @@ import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from '@/
 import { ArrowUpDown, Wallet, Calculator } from 'lucide-react'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
-const BASE_URL = 'https://calculatesalary.com'
+const BASE_URL = 'https://calculatesalary.us'
 
 // Common monthly net targets for static generation
 const COMMON_NET_AMOUNTS = [

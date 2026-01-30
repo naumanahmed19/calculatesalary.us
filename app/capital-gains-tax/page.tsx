@@ -8,22 +8,22 @@ import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad
 import { RelatedCalculators, taxCalculators } from '@/components/related-calculators'
 
 export const metadata: Metadata = {
-  title: `UK Capital Gains Tax Calculator ${TAX_YEAR} - Property, Shares & Assets`,
-  description: `Calculate Capital Gains Tax on property, shares and other assets for ${TAX_YEAR}. See CGT rates, allowances and your tax bill.`,
+  title: `US Capital Gains Tax Calculator ${TAX_YEAR} - Property, Stocks & Assets`,
+  description: `Calculate Capital Gains Tax on property, stocks and other assets for ${TAX_YEAR}. See short-term and long-term CGT rates and your tax bill.`,
   keywords: [
-    'capital gains tax calculator uk',
+    'capital gains tax calculator us',
     'cgt calculator',
     'property capital gains tax',
-    'shares capital gains tax uk',
-    'capital gains tax allowance',
+    'stock capital gains tax us',
+    'capital gains tax rates',
     'capital gains tax rates 2025',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Capital Gains Tax Calculator ${TAX_YEAR}`,
-    description: 'Calculate Capital Gains Tax on property, shares and other assets.',
+    title: `US Capital Gains Tax Calculator ${TAX_YEAR}`,
+    description: 'Calculate Capital Gains Tax on property, stocks and other assets.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/capital-gains-tax',
@@ -33,14 +33,14 @@ export const metadata: Metadata = {
 const cgtSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Capital Gains Tax Calculator',
-  description: `Calculate CGT on property and shares for ${TAX_YEAR}`,
+  name: 'US Capital Gains Tax Calculator',
+  description: `Calculate CGT on property and stocks for ${TAX_YEAR}`,
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'GBP',
+    priceCurrency: 'USD',
   },
 }
 

@@ -8,7 +8,7 @@ import { TrendingUp, Users, Target } from 'lucide-react'
 import { Progress } from '@/components/ui/progress'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
-const BASE_URL = 'https://calculatesalary.com'
+const BASE_URL = 'https://calculatesalary.us'
 
 // US income percentile data (approximated from Census Bureau and BLS statistics)
 const PERCENTILE_THRESHOLDS = [

@@ -7,24 +7,24 @@ import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: `UK Salary Comparison Calculator ${TAX_YEAR} - Compare Take Home Pay`,
-  description: `Compare multiple UK salaries side by side. See take-home pay differences, tax deductions, and find out how much more you'd earn with a raise or new job offer for ${TAX_YEAR}.`,
+  title: `US Salary Comparison Calculator ${TAX_YEAR} - Compare Take Home Pay`,
+  description: `Compare multiple US salaries side by side. See take-home pay differences, tax deductions, and find out how much more you'd earn with a raise or new job offer for ${TAX_YEAR}.`,
   keywords: [
-    'salary comparison uk',
+    'salary comparison us',
     'compare salaries',
-    'uk salary comparison tool',
+    'us salary comparison tool',
     'take home pay comparison',
     'salary difference calculator',
-    'compare job offers uk',
+    'compare job offers us',
     'salary raise calculator',
-    'uk tax comparison',
+    'us tax comparison',
     TAX_YEAR,
   ],
   openGraph: {
-    title: `UK Salary Comparison Calculator ${TAX_YEAR}`,
+    title: `US Salary Comparison Calculator ${TAX_YEAR}`,
     description: 'Compare multiple salaries and see the difference in take-home pay after tax.',
     type: 'website',
-    locale: 'en_GB',
+    locale: 'en_US',
   },
   alternates: {
     canonical: '/salary-comparison',

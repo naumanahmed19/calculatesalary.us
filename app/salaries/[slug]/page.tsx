@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { HeaderAd, MobileHeaderAd, InContentAd, InArticleAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
-const BASE_URL = 'https://calculatesalary.com'
+const BASE_URL = 'https://calculatesalary.us'
 
 interface PageProps {
   params: Promise<{ slug: string }>
