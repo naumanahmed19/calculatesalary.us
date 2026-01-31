@@ -2,6 +2,7 @@ import { getAllCountries, getAllCities, getComparisonPairs } from "@/lib/cost-of
 import { getAllJobSlugs } from "@/lib/us-job-salaries";
 import { COMMON_SALARIES } from "@/lib/us-tax-calculator";
 import { getAllSavingsSlugs } from "@/lib/savings-calculator";
+import { US_BENEFITS } from "@/lib/benefits/us-benefits-data";
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://calculatesalary.us";
@@ -406,6 +407,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  // Benefits pages
+  const benefitsMainPage: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/benefits`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+  ];
+
+  const benefitsPages: MetadataRoute.Sitemap = US_BENEFITS.map((benefit) => ({
+    url: `${BASE_URL}/benefits/${benefit.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     ...staticPages,
     ...jobSalaryPages,
@@ -424,6 +442,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...capitalGainsTaxPages,
     ...savingsCalculatorStaticPage,
     ...savingsPages,
+    ...benefitsMainPage,
+    ...benefitsPages,
   ];
 }
 
