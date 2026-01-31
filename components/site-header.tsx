@@ -1,7 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { Calculator, Menu, Briefcase, Search } from 'lucide-react'
+import {
+  Calculator,
+  Menu,
+  Briefcase,
+  Search,
+  HandCoins,
+  ChevronDown,
+  Clock,
+  Accessibility,
+  Stethoscope,
+  Utensils,
+  Baby,
+  Home,
+  Receipt,
+  Shield,
+} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { TAX_YEAR } from '@/lib/us-tax-calculator'
 import { CalculatorSearch } from '@/components/calculator-search'
@@ -10,8 +25,20 @@ interface SiteHeaderProps {
   onMenuClick?: () => void
 }
 
+const benefitCategories = [
+  { name: 'Retirement Benefits', href: '/benefits?category=retirement', icon: Clock, color: 'text-orange-500' },
+  { name: 'Disability Benefits', href: '/benefits?category=disability', icon: Accessibility, color: 'text-blue-500' },
+  { name: 'Healthcare', href: '/benefits?category=healthcare', icon: Stethoscope, color: 'text-red-500' },
+  { name: 'Food Assistance', href: '/benefits?category=food', icon: Utensils, color: 'text-green-500' },
+  { name: 'Family Support', href: '/benefits?category=family', icon: Baby, color: 'text-pink-500' },
+  { name: 'Housing Assistance', href: '/benefits?category=housing', icon: Home, color: 'text-amber-500' },
+  { name: 'Tax Credits', href: '/benefits?category=tax-credits', icon: Receipt, color: 'text-emerald-500' },
+  { name: 'Veterans Benefits', href: '/benefits?category=veterans', icon: Shield, color: 'text-indigo-500' },
+]
+
 export function SiteHeader({ onMenuClick }: SiteHeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [benefitsOpen, setBenefitsOpen] = useState(false)
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -61,6 +88,50 @@ export function SiteHeader({ onMenuClick }: SiteHeaderProps) {
 
           {/* Right section - Links */}
           <div className="flex items-center gap-4 shrink-0">
+            {/* Benefits Dropdown */}
+            <div
+              className="relative hidden md:block"
+              onMouseEnter={() => setBenefitsOpen(true)}
+              onMouseLeave={() => setBenefitsOpen(false)}
+            >
+              <Link
+                href="/benefits"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
+              >
+                <HandCoins className="h-4 w-4" />
+                Benefits
+                <ChevronDown className={`h-3 w-3 transition-transform ${benefitsOpen ? 'rotate-180' : ''}`} />
+              </Link>
+              {benefitsOpen && (
+                <div className="absolute right-0 top-full pt-2 z-50">
+                  <div className="w-72 rounded-xl border border-border/50 bg-background/95 backdrop-blur-sm p-3 shadow-xl">
+                    <div className="grid gap-1">
+                      {benefitCategories.map((category) => {
+                        const Icon = category.icon
+                        return (
+                          <Link
+                            key={category.href}
+                            href={category.href}
+                            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-muted transition-colors"
+                          >
+                            <Icon className={`h-4 w-4 ${category.color}`} />
+                            <span className="font-medium text-foreground">{category.name}</span>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                    <div className="mt-2 pt-2 border-t border-border/50">
+                      <Link
+                        href="/benefits"
+                        className="flex items-center justify-center gap-2 rounded-lg bg-accent/10 px-3 py-2 text-sm font-medium text-accent hover:bg-accent/20 transition-colors"
+                      >
+                        View All Benefits
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link
               href="/salaries"
               className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
