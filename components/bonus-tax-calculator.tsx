@@ -237,23 +237,23 @@ export function BonusTaxCalculator({
             </div>
 
             <div className="mt-6 space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+              <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
                 <span className="text-sm text-emerald-200">Gross Bonus</span>
                 <span className="font-semibold text-white">{formatCurrency(calculation.bonusAmount, 0)}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+              <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
                 <span className="text-sm text-emerald-200">Federal Tax</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualFederalTax, 0)}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+              <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
                 <span className="text-sm text-emerald-200">State Tax</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualStateTax, 0)}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+              <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
                 <span className="text-sm text-emerald-200">Social Security</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualSocialSecurity, 0)}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+              <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
                 <span className="text-sm text-emerald-200">Medicare</span>
                 <span className="font-semibold text-amber-300">−{formatCurrency(calculation.actualMedicare, 0)}</span>
               </div>
@@ -264,7 +264,7 @@ export function BonusTaxCalculator({
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-blue-500/40">
+          <div className="mt-6 pt-4 border-t border-emerald-500/40">
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
                 <p className="text-xs text-emerald-200">Effective Tax Rate</p>

@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useState, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -11,8 +12,26 @@ import { Switch } from '@/components/ui/switch'
 import type { SalaryInput, SalaryResult, FilingStatus } from '@/lib/us-tax-calculator'
 import { calculateSalary, formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculator'
 import { getAllStates } from '@/lib/us-tax-config'
-import { SalaryCharts } from '@/components/salary-charts'
 import { ShareResults } from '@/components/share-results'
+
+// Lazy load heavy chart components - they use Recharts which is ~300KB
+const SalaryCharts = dynamic(
+  () => import('@/components/salary-charts').then(mod => ({ default: mod.SalaryCharts })),
+  {
+    loading: () => (
+      <div className="mx-auto max-w-4xl mt-12">
+        <div className="animate-pulse">
+          <div className="h-8 bg-muted rounded w-1/3 mb-4"></div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="h-[300px] bg-muted rounded-3xl"></div>
+            <div className="h-[300px] bg-muted rounded-3xl"></div>
+          </div>
+        </div>
+      </div>
+    ),
+    ssr: false,
+  }
+)
 
 // Quick salary presets (US context)
 const QUICK_SALARIES = [40000, 60000, 80000, 100000, 150000]
@@ -296,7 +315,7 @@ export function SalaryCalculatorForm({
               <span>Taxable Income</span>
               <span className="font-medium text-white">{formatCurrency(result.yearly.taxableIncome)}</span>
             </li>
-            <li className="flex justify-between gap-x-3 pt-3 border-t border-blue-500/40">
+            <li className="flex justify-between gap-x-3 pt-3 border-t border-emerald-500/40">
               <span>Federal Tax</span>
               <span className="font-medium text-amber-200">-{formatCurrency(result.yearly.federalTax)}</span>
             </li>
@@ -330,14 +349,14 @@ export function SalaryCalculatorForm({
                 <span className="font-medium text-amber-200">-{formatCurrency(result.yearly.hsaContribution)}</span>
               </li>
             )}
-            <li className="flex justify-between gap-x-3 pt-3 border-t border-blue-500/40">
+            <li className="flex justify-between gap-x-3 pt-3 border-t border-emerald-500/40">
               <span>Total Deductions</span>
               <span className="font-medium text-amber-200">-{formatCurrency(result.yearly.totalDeductions)}</span>
             </li>
           </ul>
 
           {/* Tax Rates */}
-          <div className="mt-8 pt-6 border-t border-blue-500/40 grid grid-cols-2 gap-4">
+          <div className="mt-8 pt-6 border-t border-emerald-500/40 grid grid-cols-2 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold text-white">{result.yearly.effectiveTaxRate.toFixed(1)}%</p>
               <p className="text-xs text-emerald-100 mt-1">Effective Rate</p>

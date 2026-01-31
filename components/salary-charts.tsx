@@ -39,7 +39,7 @@ export function USSalaryComparisonChart({ salary, formattedSalary }: { salary: n
     { name: 'Minimum Wage', value: US_WAGE_DATA.minimum, fill: '#d1d5db' },
     { name: 'US Median', value: US_WAGE_DATA.median, fill: '#9ca3af' },
     { name: 'US Mean', value: US_WAGE_DATA.mean, fill: '#6b7280' },
-    { name: 'Your Salary', value: salary, fill: '#2563eb' },
+    { name: 'Your Salary', value: salary, fill: '#059669' },
   ].sort((a, b) => a.value - b.value)
 
   const getPercentileText = (salary: number): string => {
@@ -65,7 +65,7 @@ export function USSalaryComparisonChart({ salary, formattedSalary }: { salary: n
 
       <ChartContainer
         config={{
-          value: { label: 'Salary', color: '#2563eb' },
+          value: { label: 'Salary', color: '#059669' },
         }}
         className="h-[200px]"
       >
@@ -136,7 +136,7 @@ export function TaxBreakdownChart({ result, formattedSalary }: { result: SalaryR
     {
       name: 'Take Home',
       value: yearly.takeHomePay,
-      fill: '#2563eb',
+      fill: '#059669',
       percentage: ((yearly.takeHomePay / yearly.grossIncome) * 100).toFixed(1)
     },
     {
@@ -289,7 +289,7 @@ export function RetirementBenefitsChart({ salary, retirement401k, formattedSalar
 
       <ChartContainer
         config={{
-          federalSavings: { label: 'Federal Tax Saved', color: '#2563eb' },
+          federalSavings: { label: 'Federal Tax Saved', color: '#059669' },
         }}
         className="h-[220px]"
       >
@@ -325,7 +325,7 @@ export function RetirementBenefitsChart({ salary, retirement401k, formattedSalar
               wrapperStyle={{ paddingTop: 10 }}
               formatter={(value) => <span className="text-sm text-muted-foreground">{value}</span>}
             />
-            <Bar dataKey="federalSavings" name="Tax Saved" fill="#2563eb" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="federalSavings" name="Tax Saved" fill="#059669" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartContainer>

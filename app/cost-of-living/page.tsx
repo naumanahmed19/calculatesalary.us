@@ -252,8 +252,8 @@ export default function CostOfLivingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <div className="flex items-center gap-3 mb-6">
-                <div className="rounded-xl bg-blue-500/10 p-2">
-                  <Globe className="h-5 w-5 text-blue-500" />
+                <div className="rounded-xl bg-emerald-500/10 p-2">
+                  <Globe className="h-5 w-5 text-emerald-500" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">International Comparisons</h2>

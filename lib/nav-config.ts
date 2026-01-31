@@ -20,6 +20,7 @@ import {
   Shield,
   TrendingUp,
   Users,
+  Wallet,
 } from 'lucide-react'
 
 export type NavItem = {
@@ -137,6 +138,12 @@ export const navSections: NavSection[] = [
         href: '/pension-calculator',
         icon: PiggyBank,
         description: '401(k) contribution calculator',
+      },
+      {
+        title: 'Savings Calculator',
+        href: '/savings-calculator',
+        icon: Wallet,
+        description: 'Compound interest growth',
       },
     ],
   },

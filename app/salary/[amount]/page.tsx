@@ -399,9 +399,9 @@ function SummaryCard({
   highlight?: boolean
 }) {
   return (
-    <div className={`rounded-2xl p-4 text-center ring-1 ${highlight ? 'bg-blue-50 dark:bg-blue-950/30 ring-blue-200 dark:ring-blue-800' : 'bg-card/60 dark:bg-card/40 ring-border/50'}`}>
+    <div className={`rounded-2xl p-4 text-center ring-1 ${highlight ? 'bg-emerald-50 dark:bg-emerald-950/30 ring-emerald-200 dark:ring-emerald-800' : 'bg-card/60 dark:bg-card/40 ring-border/50'}`}>
       <div className="text-xs text-muted-foreground mb-1">{label}</div>
-      <div className={`text-xl font-bold ${highlight ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>{value}</div>
+      <div className={`text-xl font-bold ${highlight ? 'text-emerald-600 dark:text-emerald-400' : 'text-foreground'}`}>{value}</div>
       <div className="text-xs text-muted-foreground">{subtext}</div>
     </div>
   )

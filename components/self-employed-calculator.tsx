@@ -243,28 +243,28 @@ export function SelfEmployedCalculator() {
           </div>
 
           <div className="mt-8 space-y-3 flex-1">
-            <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+            <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
               <span className="text-sm text-emerald-200">Net Profit</span>
               <span className="font-semibold text-white">{formatCurrency(calculation.netProfit)}</span>
             </div>
-            <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+            <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
               <span className="text-sm text-emerald-200">Self-Employment Tax</span>
               <span className="font-semibold text-amber-300">-{formatCurrency(calculation.totalSelfEmploymentTax)}</span>
             </div>
-            <div className="flex justify-between items-center py-2 border-b border-blue-500/40 pl-4">
+            <div className="flex justify-between items-center py-2 border-b border-emerald-500/40 pl-4">
               <span className="text-xs text-emerald-300">↳ Social Security ({(currentTaxConfig.selfEmployment.socialSecurityRate * 100).toFixed(1)}%)</span>
               <span className="text-sm text-emerald-200">{formatCurrency(calculation.socialSecurityTax)}</span>
             </div>
-            <div className="flex justify-between items-center py-2 border-b border-blue-500/40 pl-4">
+            <div className="flex justify-between items-center py-2 border-b border-emerald-500/40 pl-4">
               <span className="text-xs text-emerald-300">↳ Medicare ({(currentTaxConfig.selfEmployment.medicareRate * 100).toFixed(1)}%)</span>
               <span className="text-sm text-emerald-200">{formatCurrency(calculation.medicareTax)}</span>
             </div>
-            <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+            <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
               <span className="text-sm text-emerald-200">Federal Income Tax</span>
               <span className="font-semibold text-amber-300">-{formatCurrency(calculation.federalTax)}</span>
             </div>
             {sepIraContribution > 0 && (
-              <div className="flex justify-between items-center py-2 border-b border-blue-500/40">
+              <div className="flex justify-between items-center py-2 border-b border-emerald-500/40">
                 <span className="text-sm text-emerald-200">SEP-IRA Contribution</span>
                 <span className="font-semibold text-emerald-300">-{formatCurrency(sepIraContribution)}</span>
               </div>
@@ -275,7 +275,7 @@ export function SelfEmployedCalculator() {
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-blue-500/40">
+          <div className="mt-6 pt-4 border-t border-emerald-500/40">
             <div className="text-center">
               <p className="text-sm text-emerald-200">SE Tax Deduction (50%)</p>
               <p className="text-lg font-semibold text-emerald-300">{formatCurrency(calculation.deductiblePortion)}</p>

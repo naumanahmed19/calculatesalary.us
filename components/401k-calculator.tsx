@@ -341,7 +341,7 @@ export function Calculator401k() {
           </div>
 
           {/* Per Paycheck */}
-          <div className="mt-auto pt-6 border-t border-blue-500/40">
+          <div className="mt-auto pt-6 border-t border-emerald-500/40">
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
                 <p className="text-2xl font-bold text-white">{formatCurrency(calculation.monthlyContribution, 0)}</p>

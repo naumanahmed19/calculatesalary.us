@@ -1,6 +1,7 @@
 import { getAllCountries, getAllCities, getComparisonPairs } from "@/lib/cost-of-living";
 import { getAllJobSlugs } from "@/lib/us-job-salaries";
 import { COMMON_SALARIES } from "@/lib/us-tax-calculator";
+import { getAllSavingsSlugs } from "@/lib/savings-calculator";
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://calculatesalary.us";
@@ -385,6 +386,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  // Generate savings calculator pages
+  const savingsCalculatorStaticPage: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/savings-calculator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+  ];
+
+  // Dynamic savings pages use /savings/ URL for better SEO
+  const savingsPages: MetadataRoute.Sitemap = getAllSavingsSlugs().map(
+    (slug) => ({
+      url: `${BASE_URL}/savings/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "yearly" as const,
+      priority: slug.includes("a-month") ? 0.8 : 0.6,
+    })
+  );
+
   return [
     ...staticPages,
     ...jobSalaryPages,
@@ -401,6 +422,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...costOfLivingComparePages,
     ...mortgageAffordabilityPages,
     ...capitalGainsTaxPages,
+    ...savingsCalculatorStaticPage,
+    ...savingsPages,
   ];
 }
 

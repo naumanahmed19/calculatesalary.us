@@ -47,13 +47,13 @@ export default function FICATaxesPage() {
             <div className="max-w-4xl mx-auto">
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Social Security */}
-                <div className="rounded-3xl bg-blue-50 dark:bg-blue-950/30 p-8 ring-1 ring-blue-200 dark:ring-blue-800">
+                <div className="rounded-3xl bg-emerald-50 dark:bg-emerald-950/30 p-8 ring-1 ring-emerald-200 dark:ring-emerald-800">
                   <h2 className="text-xl font-bold text-foreground mb-4">Social Security (OASDI)</h2>
 
                   <div className="space-y-4">
                     <div>
                       <p className="text-sm text-muted-foreground">Employee Rate</p>
-                      <p className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+                      <p className="text-4xl font-bold text-emerald-600 dark:text-emerald-400">
                         {(config.socialSecurity.rate * 100).toFixed(1)}%
                       </p>
                     </div>
@@ -68,7 +68,7 @@ export default function FICATaxesPage() {
                       </p>
                     </div>
 
-                    <div className="pt-4 border-t border-blue-200 dark:border-blue-800">
+                    <div className="pt-4 border-t border-emerald-200 dark:border-emerald-800">
                       <p className="text-sm text-muted-foreground">Maximum Employee SS Tax</p>
                       <p className="text-xl font-semibold text-foreground">
                         {formatCurrency(ssMax, 0)}
