@@ -360,7 +360,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/cost-of-living/compare/${city1}-vs-${city2}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: 0.8,
     })
   );
 

@@ -7,17 +7,26 @@ import {
     calculateEquivalentSalary,
     formatUSD,
     getCityBySlug,
-    getComparisonPairs
+    getComparisonPairs,
+    getRelatedComparisons
 } from "@/lib/cost-of-living";
 import {
     ArrowRightLeft,
+    Baby,
     BarChart3,
+    Briefcase,
     Bus,
     Check,
     DollarSign,
+    GraduationCap,
+    Heart,
     Home,
+    MapPin,
     Scale,
+    Shield,
     ShoppingCart,
+    Sparkles,
+    Users,
     Utensils,
     Zap
 } from "lucide-react";
@@ -114,10 +123,48 @@ export default async function ComparisonPage({ params }: PageProps) {
   const city1Wins = categories.filter(c => getWinner(c.key) === "city1").length;
   const city2Wins = categories.filter(c => getWinner(c.key) === "city2").length;
   const costDiff = city2.costIndex - city1.costIndex;
+  const cheaper = costDiff > 0 ? city1.name : city2.name;
+
+  const relatedComparisons = getRelatedComparisons(city1.slug, 3).concat(getRelatedComparisons(city2.slug, 3));
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `Is it cheaper to live in ${city1.name} or ${city2.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${cheaper} is ${Math.abs(costDiff)}% cheaper than ${cheaper === city1.name ? city2.name : city1.name} for standard living costs including rent, groceries, and transport.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `How much is rent in ${city1.name} compared to ${city2.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Rent in ${city1.name} is ${city1.rentIndex > city2.rentIndex ? 'higher' : 'lower'} than ${city2.name}. The rent index is ${city1.rentIndex} vs ${city2.rentIndex}.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `What salary do I need in ${city2.name} to live like I do in ${city1.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `If you earn ${formatUSD(75000)} in ${city1.name}, you would need approximately ${formatUSD(calculateEquivalentSalary(75000, city1.slug, city2.slug))} in ${city2.name} to maintain the same standard of living.`
+        }
+      }
+    ]
+  };
 
   return (
     <SidebarLayout>
       <main id="main-content" className="flex-1">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
         <HeaderAd />
         <MobileHeaderAd />
 
@@ -168,6 +215,22 @@ export default async function ComparisonPage({ params }: PageProps) {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Verdict Section */}
+        <section className="py-12 bg-card border-b border-border/40">
+          <div className="container mx-auto px-4">
+             <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-2xl font-bold mb-4">The Verdict</h2>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  Living in <strong className="text-foreground">{city1.name}</strong> is <strong className={costDiff > 0 ? "text-emerald-600" : "text-rose-600"}>{Math.abs(costDiff)}% {costDiff > 0 ? "cheaper" : "more expensive"}</strong> than <strong className="text-foreground">{city2.name}</strong>.
+                  <br className="mb-4" />
+                  If you move from {city1.name} to {city2.name}, you will pay {city1.rentIndex < city2.rentIndex ? "more" : "less"} for housing
+                  and {city1.groceriesIndex < city2.groceriesIndex ? "more" : "less"} for daily groceries.
+                  To maintain the same standard of life as a {formatUSD(75000)} salary in {city1.name}, you would need to earn about <span className="font-semibold text-foreground">{formatUSD(calculateEquivalentSalary(75000, city1.slug, city2.slug))}</span> in {city2.name}.
+                </p>
+             </div>
           </div>
         </section>
 
@@ -295,6 +358,351 @@ export default async function ComparisonPage({ params }: PageProps) {
           </div>
         </section>
 
+        {/* City Profiles - Unique Content */}
+        <section className="py-12 border-t border-border/40">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="rounded-xl bg-accent/10 p-2">
+                  <MapPin className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">City Profiles</h2>
+                  <p className="text-sm text-muted-foreground">What makes each city unique</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* City 1 Profile */}
+                <Card className="hover:shadow-md transition-all">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <span className="text-lg">{city1.name}</span>
+                      <Badge variant="outline" className="text-xs">{city1.country}</Badge>
+                    </CardTitle>
+                    <CardDescription>{city1.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-foreground mb-2">Why people love {city1.name}:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {city1.highlights.map((highlight) => (
+                          <Badge key={highlight} variant="secondary" className="text-xs">
+                            <Sparkles className="h-3 w-3 mr-1" />
+                            {highlight}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="rounded-lg bg-muted/50 p-2 text-center">
+                        <div className="text-muted-foreground text-xs">Population</div>
+                        <div className="font-semibold">{city1.population.toLocaleString()}</div>
+                      </div>
+                      <div className="rounded-lg bg-muted/50 p-2 text-center">
+                        <div className="text-muted-foreground text-xs">Avg. Salary</div>
+                        <div className="font-semibold">{formatUSD(city1.averageNetSalaryUSD)}/mo</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* City 2 Profile */}
+                <Card className="hover:shadow-md transition-all">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <span className="text-lg">{city2.name}</span>
+                      <Badge variant="outline" className="text-xs">{city2.country}</Badge>
+                    </CardTitle>
+                    <CardDescription>{city2.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-foreground mb-2">Why people love {city2.name}:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {city2.highlights.map((highlight) => (
+                          <Badge key={highlight} variant="secondary" className="text-xs">
+                            <Sparkles className="h-3 w-3 mr-1" />
+                            {highlight}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="rounded-lg bg-muted/50 p-2 text-center">
+                        <div className="text-muted-foreground text-xs">Population</div>
+                        <div className="font-semibold">{city2.population.toLocaleString()}</div>
+                      </div>
+                      <div className="rounded-lg bg-muted/50 p-2 text-center">
+                        <div className="text-muted-foreground text-xs">Avg. Salary</div>
+                        <div className="font-semibold">{formatUSD(city2.averageNetSalaryUSD)}/mo</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Real Cost Examples */}
+        <section className="py-12 bg-muted/30 border-t border-border/40">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="rounded-xl bg-accent/10 p-2">
+                  <ShoppingCart className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">Real Monthly Costs</h2>
+                  <p className="text-sm text-muted-foreground">Estimated costs based on NYC baseline prices</p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-card/60 dark:bg-card/40 overflow-hidden ring-1 ring-border/50">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border/50 bg-muted/50">
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Expense</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">{city1.name}</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">{city2.name}</th>
+                      <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Savings</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/50">
+                    {[
+                      { name: "1-bed apartment (city center)", baseline: 3500, key: "rentIndex" as const },
+                      { name: "Monthly groceries", baseline: 450, key: "groceriesIndex" as const },
+                      { name: "Dining out (10 meals)", baseline: 350, key: "restaurantsIndex" as const },
+                      { name: "Public transport pass", baseline: 130, key: "transportIndex" as const },
+                      { name: "Utilities (electric, heating, water)", baseline: 200, key: "utilitiesIndex" as const },
+                    ].map((item) => {
+                      const cost1 = Math.round(item.baseline * city1[item.key] / 100);
+                      const cost2 = Math.round(item.baseline * city2[item.key] / 100);
+                      const savings = cost2 - cost1;
+                      return (
+                        <tr key={item.name} className="hover:bg-muted/30">
+                          <td className="px-4 py-3 text-sm text-foreground">{item.name}</td>
+                          <td className="px-4 py-3 text-sm text-right font-medium">{formatUSD(cost1)}</td>
+                          <td className="px-4 py-3 text-sm text-right font-medium">{formatUSD(cost2)}</td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${
+                            savings > 0 ? "text-emerald-600" : savings < 0 ? "text-rose-600" : "text-muted-foreground"
+                          }`}>
+                            {savings > 0 ? `+${formatUSD(savings)}` : savings < 0 ? formatUSD(savings) : "—"}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    <tr className="bg-muted/50 font-semibold">
+                      <td className="px-4 py-3 text-sm">Total Monthly</td>
+                      <td className="px-4 py-3 text-sm text-right">
+                        {formatUSD(Math.round(3500 * city1.rentIndex / 100 + 450 * city1.groceriesIndex / 100 + 350 * city1.restaurantsIndex / 100 + 130 * city1.transportIndex / 100 + 200 * city1.utilitiesIndex / 100))}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-right">
+                        {formatUSD(Math.round(3500 * city2.rentIndex / 100 + 450 * city2.groceriesIndex / 100 + 350 * city2.restaurantsIndex / 100 + 130 * city2.transportIndex / 100 + 200 * city2.utilitiesIndex / 100))}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-right">
+                        {(() => {
+                          const total1 = Math.round(3500 * city1.rentIndex / 100 + 450 * city1.groceriesIndex / 100 + 350 * city1.restaurantsIndex / 100 + 130 * city1.transportIndex / 100 + 200 * city1.utilitiesIndex / 100);
+                          const total2 = Math.round(3500 * city2.rentIndex / 100 + 450 * city2.groceriesIndex / 100 + 350 * city2.restaurantsIndex / 100 + 130 * city2.transportIndex / 100 + 200 * city2.utilitiesIndex / 100);
+                          const diff = total2 - total1;
+                          return <span className={diff > 0 ? "text-emerald-600" : diff < 0 ? "text-rose-600" : ""}>
+                            {diff > 0 ? `+${formatUSD(diff)}` : diff < 0 ? formatUSD(diff) : "—"}
+                          </span>;
+                        })()}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3 text-center">
+                * Estimates based on NYC = 100 index. Actual costs vary by lifestyle and location within city.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Who Should Choose Section */}
+        <section className="py-12 border-t border-border/40">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="rounded-xl bg-accent/10 p-2">
+                  <Users className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">Who Should Choose Which City?</h2>
+                  <p className="text-sm text-muted-foreground">Recommendations based on your priorities</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="border-l-4 border-l-emerald-500">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Choose {city1.name} if you...</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {city1.costIndex < city2.costIndex && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <DollarSign className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <span>Want lower overall living costs ({Math.abs(costDiff)}% cheaper)</span>
+                        </li>
+                      )}
+                      {city1.rentIndex < city2.rentIndex && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Home className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <span>Are looking for more affordable housing</span>
+                        </li>
+                      )}
+                      {(city1.safetyIndex ?? 0) > (city2.safetyIndex ?? 0) && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Shield className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <span>Prioritize safety (score: {city1.safetyIndex}/100)</span>
+                        </li>
+                      )}
+                      {city1.averageNetSalaryUSD > city2.averageNetSalaryUSD && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Briefcase className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <span>Want higher earning potential ({formatUSD(city1.averageNetSalaryUSD)}/mo avg)</span>
+                        </li>
+                      )}
+                      {(city1.childcareIndex ?? 999) < (city2.childcareIndex ?? 999) && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Baby className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <span>Have children (lower childcare costs)</span>
+                        </li>
+                      )}
+                      {city1.highlights.some(h => h.toLowerCase().includes("startup") || h.toLowerCase().includes("tech")) && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <GraduationCap className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <span>Work in tech or startups</span>
+                        </li>
+                      )}
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-l-4 border-l-blue-500">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Choose {city2.name} if you...</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {city2.costIndex < city1.costIndex && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <DollarSign className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <span>Want lower overall living costs ({Math.abs(costDiff)}% cheaper)</span>
+                        </li>
+                      )}
+                      {city2.rentIndex < city1.rentIndex && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Home className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <span>Are looking for more affordable housing</span>
+                        </li>
+                      )}
+                      {(city2.safetyIndex ?? 0) > (city1.safetyIndex ?? 0) && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Shield className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <span>Prioritize safety (score: {city2.safetyIndex}/100)</span>
+                        </li>
+                      )}
+                      {city2.averageNetSalaryUSD > city1.averageNetSalaryUSD && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Briefcase className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <span>Want higher earning potential ({formatUSD(city2.averageNetSalaryUSD)}/mo avg)</span>
+                        </li>
+                      )}
+                      {(city2.childcareIndex ?? 999) < (city1.childcareIndex ?? 999) && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <Baby className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <span>Have children (lower childcare costs)</span>
+                        </li>
+                      )}
+                      {city2.highlights.some(h => h.toLowerCase().includes("startup") || h.toLowerCase().includes("tech")) && (
+                        <li className="flex items-start gap-2 text-sm">
+                          <GraduationCap className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <span>Work in tech or startups</span>
+                        </li>
+                      )}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quality of Life Comparison */}
+        {(city1.qualityOfLifeIndex || city1.safetyIndex || city2.qualityOfLifeIndex || city2.safetyIndex) && (
+          <section className="py-12 bg-muted/30 border-t border-border/40">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="rounded-xl bg-accent/10 p-2">
+                    <Heart className="h-5 w-5 text-accent" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-foreground">Quality of Life & Safety</h2>
+                    <p className="text-sm text-muted-foreground">Beyond just costs - what matters for daily life</p>
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {city1.qualityOfLifeIndex && (
+                    <Card className="text-center">
+                      <CardHeader className="pb-2">
+                        <CardDescription>{city1.name}</CardDescription>
+                        <CardTitle className="text-3xl text-foreground">{city1.qualityOfLifeIndex}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-xs text-muted-foreground">Quality of Life Score</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                  {city2.qualityOfLifeIndex && (
+                    <Card className="text-center">
+                      <CardHeader className="pb-2">
+                        <CardDescription>{city2.name}</CardDescription>
+                        <CardTitle className="text-3xl text-foreground">{city2.qualityOfLifeIndex}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-xs text-muted-foreground">Quality of Life Score</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                  {city1.safetyIndex && (
+                    <Card className="text-center">
+                      <CardHeader className="pb-2">
+                        <CardDescription>{city1.name}</CardDescription>
+                        <CardTitle className={`text-3xl ${city1.safetyIndex >= 80 ? "text-emerald-600" : city1.safetyIndex >= 60 ? "text-amber-600" : "text-rose-600"}`}>
+                          {city1.safetyIndex}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-xs text-muted-foreground">Safety Score</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                  {city2.safetyIndex && (
+                    <Card className="text-center">
+                      <CardHeader className="pb-2">
+                        <CardDescription>{city2.name}</CardDescription>
+                        <CardTitle className={`text-3xl ${city2.safetyIndex >= 80 ? "text-emerald-600" : city2.safetyIndex >= 60 ? "text-amber-600" : "text-rose-600"}`}>
+                          {city2.safetyIndex}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-xs text-muted-foreground">Safety Score</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Salary Equivalence */}
         <section className="py-12 bg-muted/30 border-t border-border/40">
           <div className="container mx-auto px-4">
@@ -384,6 +792,30 @@ export default async function ComparisonPage({ params }: PageProps) {
         </section>
 
         <RelatedCalculators calculators={costOfLivingCalculators} />
+
+        {/* Related Comparisons */}
+        <section className="py-12 bg-muted/30 border-t border-border/40">
+           <div className="container mx-auto px-4">
+             <div className="max-w-4xl mx-auto">
+               <h3 className="text-xl font-bold mb-6 text-center">Other Comparisons</h3>
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                 {relatedComparisons.map((pair, i) => (
+                    <Link
+                      key={i}
+                      href={`/cost-of-living/compare/${pair.city1}-vs-${pair.city2}`}
+                      className="block p-4 rounded-lg bg-card border border-border/50 hover:border-accent/50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between text-sm font-medium">
+                         <span>{pair.city1.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>
+                         <span className="text-muted-foreground text-xs">vs</span>
+                         <span>{pair.city2.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>
+                      </div>
+                    </Link>
+                 ))}
+               </div>
+             </div>
+           </div>
+        </section>
 
         <FooterAd />
       </main>

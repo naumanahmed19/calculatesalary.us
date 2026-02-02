@@ -62,6 +62,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
+function calculateClosingCosts(price: number): { lenderFees: number; titleInsurance: number; escrow: number; total: number } {
+  // Average US closing costs are 2-5% of purchase price
+  const lenderFees = Math.round(price * 0.01); // 1% - origination, processing
+  const titleInsurance = Math.round(price * 0.005); // 0.5% - title insurance and search
+  const escrow = Math.round(price * 0.015); // 1.5% - escrow, appraisal, inspection
+
+  return {
+    lenderFees,
+    titleInsurance,
+    escrow,
+    total: lenderFees + titleInsurance + escrow
+  };
+}
+
+function calculatePropertyTax(price: number): number {
+  // Average US property tax rate is ~1.1% annually
+  return Math.round(price * 0.011 / 12);
+}
+
 export default async function MortgageAffordabilitySalaryPage({ params }: PageProps) {
   const { salary: salaryParam } = await params
   const salary = parseInt(salaryParam, 10)
@@ -87,6 +106,12 @@ export default async function MortgageAffordabilitySalaryPage({ params }: PagePr
     { name: `${formattedSalary} Salary`, href: `/mortgage-affordability/${salary}` },
   ])
 
+  // Estimate home price (assuming 20% down + 3.5x borrowing)
+  const estimatedHomePrice = Math.round(borrowing35x / 0.8);
+  const closingCosts = calculateClosingCosts(estimatedHomePrice);
+  const monthlyPropertyTax = calculatePropertyTax(estimatedHomePrice);
+  const monthlyHomeownersInsurance = Math.round(estimatedHomePrice * 0.003 / 12); // ~0.3% annually
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -105,6 +130,22 @@ export default async function MortgageAffordabilitySalaryPage({ params }: PagePr
         acceptedAnswer: {
           '@type': 'Answer',
           text: `Borrowing ${formatCurrency(borrowing35x, 0)} at 6.5% over 30 years would cost approximately ${formatCurrency(monthlyPayment)} per month (principal and interest only). Your actual rate may be higher or lower.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `How much down payment do I need on a ${formattedSalary} salary?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `A 20% down payment on a home affordable with this salary would be approximately ${formatCurrency(estimatedHomePrice * 0.2, 0)}. This allows you to buy a home worth ${formatCurrency(estimatedHomePrice, 0)} and avoid PMI.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What are closing costs on a ${formattedSalary} salary mortgage?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `For a home worth ${formatCurrency(estimatedHomePrice, 0)}, expect closing costs of approximately ${formatCurrency(closingCosts.total, 0)} (2-5% of purchase price), covering lender fees, title insurance, and escrow.`,
         },
       },
     ],
@@ -209,6 +250,61 @@ export default async function MortgageAffordabilitySalaryPage({ params }: PagePr
                   Buying with a partner? If they also earn {formattedSalary}, your combined borrowing power
                   would be {formatCurrency(borrowing35x * 2, 0)} at 3.5x. This significantly increases
                   what you can afford.
+                </p>
+              </div>
+
+              {/* Closing Costs Section - NEW */}
+              <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
+                <h3 className="font-semibold text-foreground mb-3">Estimated Closing Costs</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Based on a home value of approx. {formatCurrency(estimatedHomePrice, 0)} (assuming 20% down payment).
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Lender Fees (origination, processing)</span>
+                    <span className="font-medium text-foreground">{formatCurrency(closingCosts.lenderFees, 0)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Title Insurance & Search</span>
+                    <span className="font-medium text-foreground">{formatCurrency(closingCosts.titleInsurance, 0)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Escrow, Appraisal & Inspection</span>
+                    <span className="font-medium text-foreground">{formatCurrency(closingCosts.escrow, 0)}</span>
+                  </div>
+                  <div className="pt-2 border-t border-border/50 flex justify-between font-semibold">
+                    <span>Total Estimated Closing Costs</span>
+                    <span>{formatCurrency(closingCosts.total, 0)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Monthly Housing Costs - NEW */}
+              <div className="rounded-2xl bg-card/60 dark:bg-card/40 p-6 ring-1 ring-border/50">
+                <h3 className="font-semibold text-foreground mb-3">Full Monthly Housing Costs</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Your true monthly housing cost includes more than just principal & interest.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Principal & Interest (P&I)</span>
+                    <span className="font-medium text-foreground">{formatCurrency(monthlyPayment, 0)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Property Tax (est. 1.1%/year)</span>
+                    <span className="font-medium text-foreground">{formatCurrency(monthlyPropertyTax, 0)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Homeowners Insurance</span>
+                    <span className="font-medium text-foreground">{formatCurrency(monthlyHomeownersInsurance, 0)}</span>
+                  </div>
+                  <div className="pt-2 border-t border-border/50 flex justify-between font-semibold">
+                    <span>Total Monthly (PITI)</span>
+                    <span>{formatCurrency(Math.round(monthlyPayment + monthlyPropertyTax + monthlyHomeownersInsurance), 0)}</span>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  * PITI = Principal, Interest, Taxes, Insurance. HOA fees not included.
                 </p>
               </div>
             </div>

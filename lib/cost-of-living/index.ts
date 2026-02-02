@@ -164,3 +164,13 @@ export function getUSComparisonPairs(): { city1: string; city2: string }[] {
   return pairs;
 }
 
+// Get related comparisons for a given city
+export function getRelatedComparisons(citySlug: string, limit = 6): { city1: string; city2: string }[] {
+  const allPairs = getComparisonPairs();
+  return allPairs
+    .filter(pair => pair.city1 === citySlug || pair.city2 === citySlug)
+    .filter(pair => pair.city1 !== pair.city2)
+    .sort(() => 0.5 - Math.random()) // Shuffle for variety
+    .slice(0, limit);
+}
+
