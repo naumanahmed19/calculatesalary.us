@@ -6,7 +6,9 @@ import { SidebarLayout } from '@/components/sidebar-layout'
 import { calculateSalary, formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculator'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
+
+const BASE_URL = 'https://calculatesalary.us'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -51,33 +53,42 @@ export async function generateStaticParams() {
   return Array.from(new Set(params.map(p => p.slug))).map(slug => ({ slug }))
 }
 
-function parseSalariesFromSlug(slug: string): [number, number] | null {
+function parseSalariesFromSlug(slug: string): { s1: number; s2: number; needsRedirect: boolean; canonicalSlug: string } | null {
   const match = slug.match(/^(\d+)-vs-(\d+)$/)
   if (!match) return null
 
-  const s1 = parseInt(match[1])
-  const s2 = parseInt(match[2])
+  const rawS1 = parseInt(match[1])
+  const rawS2 = parseInt(match[2])
 
-  if (isNaN(s1) || isNaN(s2)) return null
+  if (isNaN(rawS1) || isNaN(rawS2)) return null
   // Basic validation to prevent abuse/weird numbers
-  if (s1 < 1000 || s1 > 10000000 || s2 < 1000 || s2 > 10000000) return null
+  if (rawS1 < 1000 || rawS1 > 10000000 || rawS2 < 1000 || rawS2 > 10000000) return null
 
-  return [s1, s2]
+  // Normalize: always put lower value first
+  const s1 = Math.min(rawS1, rawS2)
+  const s2 = Math.max(rawS1, rawS2)
+  const canonicalSlug = `${s1}-vs-${s2}`
+  const needsRedirect = slug !== canonicalSlug
+
+  return { s1, s2, needsRedirect, canonicalSlug }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const salaries = parseSalariesFromSlug(slug)
+  const parsed = parseSalariesFromSlug(slug)
 
-  if (!salaries) {
+  if (!parsed) {
     return {
       title: 'Salary Comparison Not Found',
     }
   }
 
-  const [s1, s2] = salaries
+  const { s1, s2, canonicalSlug } = parsed
   const f1 = formatCurrency(s1, 0)
   const f2 = formatCurrency(s2, 0)
+
+  // Don't index extreme salary comparisons
+  const isExtreme = s1 < 10000 || s2 > 1000000
 
   return {
     title: `${f1} vs ${f2} - Take Home Pay Comparison US ${TAX_YEAR}`,
@@ -89,20 +100,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
     },
     alternates: {
-      canonical: `/compare/${slug}`,
+      canonical: `${BASE_URL}/compare/${canonicalSlug}`,
     },
+    ...(isExtreme && { robots: { index: false, follow: true } }),
   }
 }
 
 export default async function ComparisonPage({ params }: PageProps) {
   const { slug } = await params
-  const salaries = parseSalariesFromSlug(slug)
+  const parsed = parseSalariesFromSlug(slug)
 
-  if (!salaries) {
+  if (!parsed) {
     notFound()
   }
 
-  const [s1, s2] = salaries
+  // Redirect to canonical URL if values are in wrong order
+  if (parsed.needsRedirect) {
+    redirect(`/compare/${parsed.canonicalSlug}`)
+  }
+
+  const { s1, s2 } = parsed
   const f1 = formatCurrency(s1, 0)
   const f2 = formatCurrency(s2, 0)
 

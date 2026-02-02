@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/employer-cost/${salary}`,
+      canonical: `${BASE_URL}/employer-cost/${salary}`,
     },
   }
 }

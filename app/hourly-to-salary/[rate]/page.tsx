@@ -7,6 +7,7 @@ import { calculateSalary, formatCurrency, TAX_YEAR } from '@/lib/us-tax-calculat
 import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
+const BASE_URL = 'https://calculatesalary.us'
 const COMMON_HOURLY_RATES = [10, 12, 15, 18, 20, 22, 25, 28, 30, 35, 40, 45, 50, 60, 75, 100]
 
 interface PageProps {
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/hourly-to-salary/${rate}`,
+      canonical: `${BASE_URL}/hourly-to-salary/${rate}`,
     },
   }
 }

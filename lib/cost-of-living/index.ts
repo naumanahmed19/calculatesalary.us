@@ -136,12 +136,13 @@ export function getComparisonPairs(): { city1: string; city2: string }[] {
     "austin", "seattle", "denver", "boston", "miami", "dallas",
     "london", "berlin", "amsterdam", "paris", "dublin",
     "toronto", "dubai", "sydney", "singapore"
-  ];
+  ].sort(); // Sort alphabetically for consistent canonical URLs
 
   const pairs: { city1: string; city2: string }[] = [];
 
   for (let i = 0; i < popularCities.length; i++) {
     for (let j = i + 1; j < popularCities.length; j++) {
+      // Since array is sorted, city1 will always be alphabetically first
       pairs.push({ city1: popularCities[i], city2: popularCities[j] });
     }
   }

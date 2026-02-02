@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/savings/${slug}`,
+      canonical: `${BASE_URL}/savings/${slug}`,
     },
   }
 }

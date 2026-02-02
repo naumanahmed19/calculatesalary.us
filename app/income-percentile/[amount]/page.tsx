@@ -131,7 +131,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/income-percentile/${salary}`,
+      canonical: `${BASE_URL}/income-percentile/${salary}`,
     },
   }
 }

@@ -8,6 +8,8 @@ import { generateBreadcrumbSchema, BREADCRUMB_ITEMS } from '@/lib/breadcrumb-sch
 import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, salaryCalculators } from '@/components/related-calculators'
 
+const BASE_URL = 'https://calculatesalary.us'
+
 interface PageProps {
   params: Promise<{ salary: string }>
 }
@@ -55,7 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/mortgage-affordability/${salary}`,
+      canonical: `${BASE_URL}/mortgage-affordability/${salary}`,
     },
   }
 }

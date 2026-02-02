@@ -39,6 +39,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const meta = generateSalaryPageMeta(salary)
 
+  // Don't index extreme salary values (outside typical US salary range)
+  const isExtreme = salary < 10000 || salary > 1000000
+
   return {
     title: meta.title,
     description: meta.description,
@@ -50,8 +53,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/salary/${salary}`,
+      canonical: `${BASE_URL}/salary/${salary}`,
     },
+    ...(isExtreme && { robots: { index: false, follow: true } }),
   }
 }
 

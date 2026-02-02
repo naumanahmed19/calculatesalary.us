@@ -175,24 +175,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Generate dynamic salary pages
-  // Includes common salaries plus additional increments for comprehensive coverage
+  // Focus on realistic salary ranges to improve crawl budget efficiency
   const allSalaries = new Set<number>();
 
-  // Add common salaries
-  COMMON_SALARIES.forEach((s) => allSalaries.add(s));
+  // Add common salaries (from us-tax-calculator)
+  COMMON_SALARIES.forEach((s) => {
+    // Only include if within reasonable range
+    if (s >= 15000 && s <= 250000) {
+      allSalaries.add(s);
+    }
+  });
 
-  // Add every $1,000 increment from $15,000 to $100,000
+  // Add every $1,000 increment from $15,000 to $100,000 (most common US salaries)
   for (let s = 15000; s <= 100000; s += 1000) {
     allSalaries.add(s);
   }
 
-  // Add every $5,000 increment from $100,000 to $200,000
-  for (let s = 100000; s <= 200000; s += 5000) {
+  // Add every $2,500 increment from $100,000 to $175,000
+  for (let s = 100000; s <= 175000; s += 2500) {
     allSalaries.add(s);
   }
 
-  // Add every $10,000 increment from $200,000 to $500,000
-  for (let s = 200000; s <= 500000; s += 10000) {
+  // Add every $10,000 increment from $175,000 to $250,000
+  for (let s = 175000; s <= 250000; s += 10000) {
     allSalaries.add(s);
   }
 

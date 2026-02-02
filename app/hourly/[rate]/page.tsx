@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/hourly/${rate}`,
+      canonical: `${BASE_URL}/hourly/${rate}`,
     },
   }
 }

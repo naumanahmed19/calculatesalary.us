@@ -8,6 +8,8 @@ import { generateBreadcrumbSchema, BREADCRUMB_ITEMS } from '@/lib/breadcrumb-sch
 import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from '@/components/ad-unit'
 import { RelatedCalculators, taxCalculators } from '@/components/related-calculators'
 
+const BASE_URL = 'https://calculatesalary.us'
+
 interface PageProps {
   params: Promise<{ gain: string }>
 }
@@ -122,7 +124,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/capital-gains-tax/${gain}`,
+      canonical: `${BASE_URL}/capital-gains-tax/${gain}`,
     },
   }
 }

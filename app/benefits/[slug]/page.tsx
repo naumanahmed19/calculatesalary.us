@@ -1,3 +1,5 @@
+const BASE_URL = 'https://calculatesalary.us'
+
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { RelatedCalculators, salaryCalculators } from "@/components/related-calculators"
 import { HeaderAd, MobileHeaderAd, InContentAd, FooterAd } from "@/components/ad-unit"
@@ -69,7 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: benefit.shortDescription,
     },
     alternates: {
-      canonical: `/benefits/${slug}`,
+      canonical: `${BASE_URL}/benefits/${slug}`,
     },
   }
 }

@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     alternates: {
-      canonical: `/net-to-gross/${monthlyNet}`,
+      canonical: `${BASE_URL}/net-to-gross/${monthlyNet}`,
     },
   }
 }

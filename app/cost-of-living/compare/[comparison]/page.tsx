@@ -23,16 +23,27 @@ import {
 } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+
+const BASE_URL = "https://calculatesalary.us";
 
 interface PageProps {
   params: Promise<{ comparison: string }>;
 }
 
-function parseComparison(slug: string): { city1: string; city2: string } | null {
+function parseComparison(slug: string): { city1: string; city2: string; needsRedirect: boolean; canonicalSlug: string } | null {
   const match = slug.match(/^(.+)-vs-(.+)$/);
   if (!match) return null;
-  return { city1: match[1], city2: match[2] };
+
+  const rawCity1 = match[1];
+  const rawCity2 = match[2];
+
+  // Normalize: always put alphabetically first city first
+  const [city1, city2] = [rawCity1, rawCity2].sort();
+  const canonicalSlug = `${city1}-vs-${city2}`;
+  const needsRedirect = slug !== canonicalSlug;
+
+  return { city1, city2, needsRedirect, canonicalSlug };
 }
 
 export async function generateStaticParams() {
@@ -45,9 +56,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { comparison } = await params;
   const parsed = parseComparison(comparison);
-  
+
   if (!parsed) return { title: "Comparison Not Found" };
-  
+
   const city1 = getCityBySlug(parsed.city1);
   const city2 = getCityBySlug(parsed.city2);
 
@@ -61,6 +72,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${city1.name} vs ${city2.name} Cost of Living | Which is Cheaper?`,
     description: `Compare cost of living: ${city1.name} vs ${city2.name}. ${cheaper} is ${Math.abs(costDiff)}% cheaper. See rent, groceries, transport and salary comparisons.`,
+    alternates: {
+      canonical: `${BASE_URL}/cost-of-living/compare/${parsed.canonicalSlug}`,
+    },
   };
 }
 
@@ -69,6 +83,11 @@ export default async function ComparisonPage({ params }: PageProps) {
   const parsed = parseComparison(comparison);
 
   if (!parsed) notFound();
+
+  // Redirect to canonical URL if cities are in wrong order
+  if (parsed.needsRedirect) {
+    redirect(`/cost-of-living/compare/${parsed.canonicalSlug}`);
+  }
 
   const city1 = getCityBySlug(parsed.city1);
   const city2 = getCityBySlug(parsed.city2);
