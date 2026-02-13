@@ -35,6 +35,8 @@ interface PageProps {
   params: Promise<{ country: string }>;
 }
 
+export const revalidate = false
+
 export async function generateStaticParams() {
   return Object.keys(codeToSlug).map((code) => ({ country: code }));
 }

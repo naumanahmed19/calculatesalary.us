@@ -140,6 +140,8 @@ function getAffordabilityContext(salary: number, monthlyTakeHome: number): { ite
   ]
 }
 
+export const revalidate = false
+
 export async function generateStaticParams() {
   return COMMON_SALARIES.map((salary) => ({ amount: salary.toString() }))
 }

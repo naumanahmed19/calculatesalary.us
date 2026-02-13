@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og'
 import { TAX_YEAR } from '@/lib/us-tax-calculator'
 
 export const runtime = 'edge'
+export const revalidate = false
 
 export const alt = 'US Salary Calculator - Calculate Your Take Home Pay'
 export const size = {

@@ -22,6 +22,8 @@ interface PageProps {
 }
 
 // Generate static params for common salaries
+export const revalidate = false
+
 export async function generateStaticParams() {
   return COMMON_SALARIES.map((salary) => ({
     amount: salary.toString(),

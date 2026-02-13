@@ -125,6 +125,8 @@ function getSpendingContext(monthlyDiff: number): { item: string; description: s
   return items.slice(0, 4)
 }
 
+export const revalidate = false
+
 export async function generateStaticParams() {
   const params: { slug: string }[] = []
 

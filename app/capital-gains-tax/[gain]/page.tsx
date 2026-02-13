@@ -156,6 +156,8 @@ function getGainInsights(gain: number): { title: string; description: string; ti
   }
 }
 
+export const revalidate = false
+
 export async function generateStaticParams() {
   return CAPITAL_GAINS.map((gain) => ({
     gain: gain.toString(),

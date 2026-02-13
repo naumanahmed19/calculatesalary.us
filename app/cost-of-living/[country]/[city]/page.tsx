@@ -30,6 +30,8 @@ interface PageProps {
   params: Promise<{ country: string; city: string }>;
 }
 
+export const revalidate = false
+
 export async function generateStaticParams() {
   const slugs = getAllCitySlugs();
   return slugs.map(({ city }) => {

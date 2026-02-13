@@ -55,6 +55,8 @@ function parseComparison(slug: string): { city1: string; city2: string; needsRed
   return { city1, city2, needsRedirect, canonicalSlug };
 }
 
+export const revalidate = false
+
 export async function generateStaticParams() {
   const pairs = getComparisonPairs();
   return pairs.map(({ city1, city2 }) => ({
