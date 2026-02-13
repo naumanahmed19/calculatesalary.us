@@ -53,6 +53,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Cost of Living in ${country.name} | ${country.cities.length} Cities Compared`,
     description: `Compare cost of living across ${country.cities.length} cities in ${country.name}. See rent, groceries, transport costs and average salaries.`,
+    alternates: {
+      canonical: `https://calculatesalary.us/cost-of-living/${countryCode.toLowerCase()}`,
+    },
   };
 }
 

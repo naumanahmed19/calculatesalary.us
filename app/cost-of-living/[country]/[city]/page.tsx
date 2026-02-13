@@ -60,6 +60,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Cost of Living in ${city.name}, ${city.country} | ${nycComparison}`,
     description: `Cost of living in ${city.name}: ${nycComparison}. Average salary: ${formatUSD(city.averageNetSalaryUSD)}/month. Rent index: ${city.rentIndex}. Compare with US cities.`,
+    alternates: {
+      canonical: `https://calculatesalary.us/cost-of-living/${countryCode.toLowerCase()}/${citySlug}`,
+    },
   };
 }
 
