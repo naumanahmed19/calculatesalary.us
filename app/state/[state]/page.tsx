@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${config.name} Salary Calculator ${TAX_YEAR} - ${taxType}`,
     description: `Calculate your take-home pay in ${config.name} for ${TAX_YEAR}. ${config.name} has ${!config.hasIncomeTax ? 'no state income tax' : config.flatRate ? `a flat ${(config.flatRate * 100).toFixed(2)}% state income tax` : 'a progressive state income tax'}. See federal tax, state tax, and FICA deductions.`,
     alternates: {
-      canonical: `https://calculatesalary.us/state/${stateSlug}`,
+      canonical: `https://calculatesalary.us/state/${state}`,
     },
     keywords: [`${config.name} salary calculator`, `${config.name} income tax`, `${stateCode} tax rate`, `${config.name} take home pay`, `${TAX_YEAR} ${config.name} taxes`],
   }

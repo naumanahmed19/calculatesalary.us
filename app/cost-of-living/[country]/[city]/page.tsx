@@ -44,7 +44,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { city: citySlug } = await params;
+  const { country: countryCode, city: citySlug } = await params;
   const city = getCityBySlug(citySlug);
 
   if (!city) {
