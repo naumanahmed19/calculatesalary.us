@@ -19,8 +19,6 @@ interface PageProps {
   params: Promise<{ amount: string }>
 }
 
-export const revalidate = false
-
 export async function generateStaticParams() {
   return COMMON_NET_AMOUNTS.map((amount) => ({
     amount: amount.toString(),

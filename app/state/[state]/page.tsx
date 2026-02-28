@@ -12,8 +12,6 @@ interface PageProps {
 }
 
 // Generate static params for all states
-export const revalidate = false
-
 export async function generateStaticParams() {
   return Object.keys(STATE_TAX_CONFIGS).map((code) => ({
     state: code.toLowerCase(),

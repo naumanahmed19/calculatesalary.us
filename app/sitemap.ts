@@ -9,8 +9,6 @@ const BASE_URL = "https://calculatesalary.us";
 // Update this date when content actually changes (e.g., new tax year)
 const LAST_CONTENT_UPDATE = new Date("2025-04-06");
 
-export const revalidate = false;
-
 export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages - US-specific calculators only
   const staticPages: MetadataRoute.Sitemap = [

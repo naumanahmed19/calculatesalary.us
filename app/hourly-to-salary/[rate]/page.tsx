@@ -59,8 +59,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export const revalidate = false
-
 export function generateStaticParams() {
   return COMMON_HOURLY_RATES.map((rate) => ({
     rate: rate.toString(),

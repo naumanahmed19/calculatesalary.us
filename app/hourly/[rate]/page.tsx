@@ -159,8 +159,6 @@ function getAffordabilityContext(monthlyTakeHome: number): { item: string; affor
   ]
 }
 
-export const revalidate = false
-
 export async function generateStaticParams() {
   return COMMON_HOURLY_RATES.map((rate) => ({
     rate: rate.toString(),

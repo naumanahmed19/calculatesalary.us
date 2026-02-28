@@ -56,8 +56,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export const revalidate = false
-
 export function generateStaticParams() {
   return COMMON_SALARIES.map((salary) => ({
     amount: salary.toString(),

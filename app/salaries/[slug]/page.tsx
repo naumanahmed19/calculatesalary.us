@@ -18,8 +18,6 @@ interface PageProps {
 }
 
 // Generate static params for all jobs
-export const revalidate = false
-
 export async function generateStaticParams() {
   return getAllJobSlugs().map((slug) => ({ slug }))
 }

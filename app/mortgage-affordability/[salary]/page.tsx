@@ -20,8 +20,6 @@ const MORTGAGE_SALARIES = [
   125000, 150000, 175000, 200000, 250000
 ]
 
-export const revalidate = false
-
 export async function generateStaticParams() {
   return MORTGAGE_SALARIES.map((salary) => ({
     salary: salary.toString(),
